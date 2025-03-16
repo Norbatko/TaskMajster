@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -28,17 +29,24 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MainPage () {
-        Scaffold(
-            topBar = {
-                SpaceToolbar(
-                    title = "Main Page"
-                )
-            },
-        ) { innerPadding ->
+    Scaffold(
+        topBar = {
+            SpaceToolbar(
+                title = "TaskMajster"
+            )
+        },
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+            .fillMaxWidth()
+            .padding(innerPadding)
+        ) {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.Start
             ) {
                 MenuButton(
                     text = "Play random",
@@ -50,18 +58,27 @@ fun MainPage () {
                     icon = Icons.Default.PlayArrow,
                     onClick = { }
                 )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.End
+            ) {
                 MenuButton(
                     text = "Tasks",
                     icon = Icons.Default.Menu,
                     onClick = { }
                 )
                 MenuButton(
-                    text = "Tasks",
+                    text = "Gameplans",
                     icon = Icons.AutoMirrored.Filled.List,
                     onClick = { }
                 )
             }
         }
+    }
 }
 
 @Composable
@@ -98,34 +115,31 @@ fun MenuButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(16.dp),
+        modifier = Modifier.fillMaxWidth(0.8f)
+            .height(100.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Black
         ),
         shape = MaterialTheme.shapes.medium
     ) {
         Row(
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimary
+                tint = Color.White
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 text = text,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
         }
     }
 }
-
 
 @Preview
 @Composable

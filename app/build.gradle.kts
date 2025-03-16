@@ -51,6 +51,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
     // Android Studio Preview support
     implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation(libs.androidx.monitor)
+    implementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.junit.junit)
+    androidTestImplementation(libs.testng)
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.compose.material3:material3")
 
