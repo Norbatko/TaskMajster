@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainPage (
     onTasksClicked: () -> Unit,
+    onGameplansClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -76,7 +77,7 @@ fun MainPage (
                 MenuButton(
                     text = "Gameplans",
                     icon = Icons.AutoMirrored.Filled.List,
-                    onClick = { }
+                    onClick = { onGameplansClicked }
                 )
             }
         }
@@ -148,6 +149,7 @@ fun MenuButton(
 @Composable
 fun MainPagePreview() {
     MainPage(
-        onTasksClicked = { }
+        onTasksClicked = { },
+        onGameplansClicked = {}
     )
 }
