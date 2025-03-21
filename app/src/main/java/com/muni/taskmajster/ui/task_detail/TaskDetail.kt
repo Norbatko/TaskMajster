@@ -49,12 +49,14 @@ import androidx.compose.ui.unit.dp
 val LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus auctor accumsan mauris, at consectetur urna porttitor eu. Pellentesque nulla tellus, semper eu ex id, mollis vestibulum ante. Vestibulum sit amet magna at odio consequat feugiat sit amet ut magna. Etiam congue sapien non eleifend fringilla. Nullam sit amet nisl at justo varius ullamcorper eu ac risus. Pellentesque in consequat neque. Nulla auctor erat id posuere tristique. Aliquam cursus ipsum mi. Integer gravida orci ac sem egestas, vel lobortis libero iaculis. Aenean viverra dictum metus, eget volutpat turpis sodales at. Pellentesque odio magna, aliquet a euismod et, laoreet sit amet massa. Aliquam non mattis orci. Donec ornare at neque quis sodales. Proin at volutpat orci.)"
 
 @Composable
-fun TaskDetail() {
+fun TaskDetail(
+    onArrowBackClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             TaskDetailToolbar(
                 title = "Task: Name",
-                onBackClick = {},
+                onArrowBackClick = onArrowBackClick,
                 onEditClick = {},
                 onDeleteClick = {}
             )
@@ -108,14 +110,14 @@ fun TaskDetail() {
 }
 
 @Composable
-fun TaskDetailToolbar(title: String, onBackClick: () -> Unit, onEditClick: () -> Unit, onDeleteClick: () -> Unit) {
+fun TaskDetailToolbar(title: String, onArrowBackClick: () -> Unit, onEditClick: () -> Unit, onDeleteClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = onBackClick) {
+        IconButton(onClick = onArrowBackClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back"
@@ -222,5 +224,5 @@ fun PhotoGallery(photoList: List<Int>) {
 @Preview
 @Composable
 fun TaskDetailPreview() {
-    TaskDetail()
+    TaskDetail(onArrowBackClick = {})
 }

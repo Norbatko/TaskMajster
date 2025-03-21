@@ -30,7 +30,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ListOfTasks(
-    onArrowBackClicked: () -> Unit
+    onArrowBackClicked: () -> Unit,
+    onTaskClick: () -> Unit
 ) {
     print("JSEM TU")
     Scaffold(
@@ -47,7 +48,7 @@ fun ListOfTasks(
             .padding(innerPadding)
         ) {
             items(15) { index ->
-                TaskItem()
+                TaskItem(onTaskClick = onTaskClick)
             }
         }
     }
@@ -93,12 +94,14 @@ fun TopBar(
 }
 
 @Composable
-fun TaskItem() {
+fun TaskItem(
+    onTaskClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
-            .clickable(onClick = {}),
+            .clickable(onClick = onTaskClick),
     ) {
         Row(
             modifier = Modifier
@@ -150,6 +153,7 @@ fun TaskItem() {
 @Composable
 fun ListOfTasksPreview() {
     ListOfTasks(
-        onArrowBackClicked = {}
+        onArrowBackClicked = {},
+        onTaskClick = {}
     )
 }

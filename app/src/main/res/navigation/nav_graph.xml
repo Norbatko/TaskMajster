@@ -19,10 +19,18 @@
     <fragment
         android:id="@+id/listOfTasksFragment"
         android:name="com.muni.taskmajster.ui.list_of_tasks.ListOfTasksFragment"
-        android:label="ListOfTasksFragment" />
+        android:label="ListOfTasksFragment" >
+        <action
+            android:id="@+id/action_listOfTasksFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listOfGameplansFragment"
         android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
         android:label="ListOfGameplansFragment" />
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
+        android:label="TaskDetailFragment" />
 
 </navigation>

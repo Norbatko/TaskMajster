@@ -13,6 +13,10 @@ class ListOfTasksFragment: Fragment() {
         ComposeView(requireContext()).apply {
             setContent {
                 ListOfTasks(
+                    onTaskClick = {
+                        findNavController()
+                            .navigate(ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment())
+                    },
                     onArrowBackClicked = {
                         findNavController()
                             .navigateUp()
