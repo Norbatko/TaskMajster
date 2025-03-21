@@ -7,6 +7,22 @@
     <fragment
         android:id="@+id/mainPageFragment"
         android:name="com.muni.taskmajster.ui.main_page.MainPageFragment"
-        android:label="MainPageFragment" />
+        android:label="MainPageFragment" >
+        <action
+            android:id="@+id/action_mainPageFragment_to_listOfTasksFragment"
+            app:destination="@id/listOfTasksFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_listOfGameplansFragment"
+            app:destination="@id/listOfGameplansFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listOfTasksFragment"
+        android:name="com.muni.taskmajster.ui.list_of_tasks.ListOfTasksFragment"
+        android:label="ListOfTasksFragment" />
+    <fragment
+        android:id="@+id/listOfGameplansFragment"
+        android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
+        android:label="ListOfGameplansFragment" />
 
 </navigation>

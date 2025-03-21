@@ -1,4 +1,4 @@
-package com.muni.taskmajster.ui.main_page
+package com.muni.taskmajster.ui.list_of_tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,19 +8,14 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
-class MainPageFragment: Fragment() {
+class ListOfTasksFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                MainPage(
-                    onTasksClicked = {
+                ListOfTasks(
+                    onArrowBackClicked = {
                         findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfTasksFragment())
-                        print("detekuji menu klik")
-                    },
-                    onGameplansClicked = {
-                        findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfGameplansFragment())
+                            .navigateUp()
                     }
                 )
             }
