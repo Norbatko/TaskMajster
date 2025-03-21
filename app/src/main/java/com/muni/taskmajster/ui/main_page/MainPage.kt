@@ -72,12 +72,12 @@ fun MainPage (
                 MenuButton(
                     text = "Tasks",
                     icon = Icons.Default.Menu,
-                    onClick = { onTasksClicked }
+                    onClick = onTasksClicked
                 )
                 MenuButton(
                     text = "Gameplans",
                     icon = Icons.AutoMirrored.Filled.List,
-                    onClick = { onGameplansClicked }
+                    onClick = onGameplansClicked
                 )
             }
         }

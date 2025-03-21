@@ -65,7 +65,7 @@ fun TopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = {onArrowBackClicked},
+            onClick = onArrowBackClicked,
             content = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
