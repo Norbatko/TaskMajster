@@ -28,18 +28,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MainPage () {
+fun MainPage (
+    onTasksClicked: () -> Unit,
+    onGameplansClicked: () -> Unit,
+) {
     Scaffold(
         topBar = {
-            SpaceToolbar(
+            Toolbar(
                 title = "TaskMajster"
             )
         },
     ) { innerPadding ->
         Column(
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(innerPadding)
+                .fillMaxWidth()
+                .padding(innerPadding)
         ) {
             Column(
                 modifier = Modifier
@@ -69,12 +72,12 @@ fun MainPage () {
                 MenuButton(
                     text = "Tasks",
                     icon = Icons.Default.Menu,
-                    onClick = { }
+                    onClick = onTasksClicked
                 )
                 MenuButton(
                     text = "Gameplans",
                     icon = Icons.AutoMirrored.Filled.List,
-                    onClick = { }
+                    onClick = onGameplansClicked
                 )
             }
         }
@@ -82,7 +85,7 @@ fun MainPage () {
 }
 
 @Composable
-fun SpaceToolbar(
+fun Toolbar(
     title: String,
 ) {
     Row {
@@ -115,7 +118,8 @@ fun MenuButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(0.8f)
+        modifier = Modifier
+            .fillMaxWidth(0.8f)
             .height(100.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Black
@@ -144,5 +148,8 @@ fun MenuButton(
 @Preview
 @Composable
 fun MainPagePreview() {
-    MainPage()
+    MainPage(
+        onTasksClicked = { },
+        onGameplansClicked = {}
+    )
 }
