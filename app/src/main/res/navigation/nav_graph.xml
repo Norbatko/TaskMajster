@@ -30,6 +30,14 @@
     <fragment
         android:id="@+id/playingTaskPageFragment"
         android:name="com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragment"
-        android:label="PlayingTaskPageFragment" />
+        android:label="PlayingTaskPageFragment" >
+        <action
+            android:id="@+id/action_playingTaskPageFragment_to_endOfTaskPageFragment"
+            app:destination="@id/endOfTaskPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/endOfTaskPageFragment"
+        android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
+        android:label="EndOfTaskPageFragment" />
 
 </navigation>
