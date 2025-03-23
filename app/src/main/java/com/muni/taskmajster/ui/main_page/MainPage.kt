@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 fun MainPage (
     onTasksClicked: () -> Unit,
     onGameplansClicked: () -> Unit,
+    onPlayRandomClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -54,7 +55,7 @@ fun MainPage (
                 MenuButton(
                     text = "Play random",
                     icon = Icons.Default.Refresh,
-                    onClick = { }
+                    onClick = onPlayRandomClicked
                 )
                 MenuButton(
                     text = "Play gameplan",
@@ -150,6 +151,7 @@ fun MenuButton(
 fun MainPagePreview() {
     MainPage(
         onTasksClicked = { },
-        onGameplansClicked = {}
+        onGameplansClicked = { },
+        onPlayRandomClicked = { }
     )
 }
