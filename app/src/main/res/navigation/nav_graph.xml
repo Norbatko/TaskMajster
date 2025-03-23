@@ -22,7 +22,11 @@
     <fragment
         android:id="@+id/listOfTasksFragment"
         android:name="com.muni.taskmajster.ui.list_of_tasks.ListOfTasksFragment"
-        android:label="ListOfTasksFragment" />
+        android:label="ListOfTasksFragment" >
+        <action
+            android:id="@+id/action_listOfTasksFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listOfGameplansFragment"
         android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
@@ -35,6 +39,10 @@
             android:id="@+id/action_playingTaskPageFragment_to_endOfTaskPageFragment"
             app:destination="@id/endOfTaskPageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
+        android:label="TaskDetailFragment" />
     <fragment
         android:id="@+id/endOfTaskPageFragment"
         android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
