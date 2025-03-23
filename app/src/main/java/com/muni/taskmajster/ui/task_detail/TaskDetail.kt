@@ -43,8 +43,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import java.io.File
 
 val LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus auctor accumsan mauris, at consectetur urna porttitor eu. Pellentesque nulla tellus, semper eu ex id, mollis vestibulum ante. Vestibulum sit amet magna at odio consequat feugiat sit amet ut magna. Etiam congue sapien non eleifend fringilla. Nullam sit amet nisl at justo varius ullamcorper eu ac risus. Pellentesque in consequat neque. Nulla auctor erat id posuere tristique. Aliquam cursus ipsum mi. Integer gravida orci ac sem egestas, vel lobortis libero iaculis. Aenean viverra dictum metus, eget volutpat turpis sodales at. Pellentesque odio magna, aliquet a euismod et, laoreet sit amet massa. Aliquam non mattis orci. Donec ornare at neque quis sodales. Proin at volutpat orci.)"
 
@@ -65,7 +67,8 @@ fun TaskDetail(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -96,14 +99,18 @@ fun TaskDetail(
             Spacer(modifier = Modifier.size(32.dp))
 
             Text(
-                text = "Time to complete: XXX seconds"
+                text = "Time to complete: XXX seconds",
+                modifier = Modifier.padding(10.dp)
             )
 
             HorizontalDivider(thickness = 2.dp, color = Color.Black)
 
-            Text(text = "Photos from previous games")
+            Text(
+                text = "Photos from previous games",
+                fontSize = 25.sp,
+                modifier = Modifier.padding(20.dp))
 
-            PhotoGallery((1..13).toList())
+            PhotoGrid((1..13).toList())
 
         }
     }
@@ -181,27 +188,67 @@ fun TaskButton(
 }
 
 @Composable
+fun PhotoGrid(photoList: List<Int>) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val file = File("/storage/emulated/0/Pictures/IMG_20250322_193456.jpg")
+
+        val rows = photoList.chunked(3)  // Group images into rows of 3
+        for (row in rows) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                for (photoResId in row) {
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .size(120.dp)  // Ensure a fixed size
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color.Gray),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = file,
+                            contentDescription = "Stored Image",
+                            modifier = Modifier.size(100.dp)
+                        )
+//                        Text(
+//                            text = "Photo $photoResId",
+//                            color = Color.White,
+//                            style = MaterialTheme.typography.bodySmall
+//                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun PhotoGallery(photoList: List<Int>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier.fillMaxSize()
     ) {
         items(photoList.size) { photoResId ->
-//            val painter = runCatching {
-//                painterResource(id = photoResId)
-//            }.getOrNull()
+            val painter = runCatching {
+                painterResource(id = photoResId)
+            }.getOrNull()
 
-//            if (painter != null) {
-//                Image(
-//                    painter = painter,
-//                    contentDescription = "Gallery Photo",
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .padding(4.dp)
-//                        .aspectRatio(1f)
-//                        .clip(RoundedCornerShape(8.dp))
-//                )
-//            } else {
+            if (painter != null) {
+                Image(
+                    painter = painter,
+                    contentDescription = "Gallery Photo",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+            } else {
                 Box(
                     modifier = Modifier
                         .padding(4.dp)
@@ -216,7 +263,7 @@ fun PhotoGallery(photoList: List<Int>) {
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-//            }
+            }
         }
     }
 }
