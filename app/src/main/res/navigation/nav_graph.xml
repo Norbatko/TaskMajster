@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_mainPageFragment_to_listOfGameplansFragment"
             app:destination="@id/listOfGameplansFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_playingTaskPageFragment"
+            app:destination="@id/playingTaskPageFragment" />
     </fragment>
 
     <fragment
@@ -28,6 +31,10 @@
         android:id="@+id/listOfGameplansFragment"
         android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
         android:label="ListOfGameplansFragment" />
+    <fragment
+        android:id="@+id/playingTaskPageFragment"
+        android:name="com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragment"
+        android:label="PlayingTaskPageFragment" />
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
