@@ -2,37 +2,61 @@ package com.muni.taskmajster.ui.playing_task_page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.ui.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
 
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlayingTaskPage() {
-    Scaffold(
+fun PlayingTaskPage(
+    taskName: String,
+    taskDescription: String,
+    onArrowBackClicked: () -> Unit
+) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 128.dp,
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        sheetContent = {
+            ScoringBottomSheet()
+        },
         topBar = {
             PlayingTaskTopBar(
-                title = "Task 1",
-                onArrowBackClicked = { println("Back button clicked") }
+                title = taskName,
+                onArrowBackClicked = onArrowBackClicked
             )
         },
-        content = { innerPadding -> PlayingTaskContent(paddingValues = innerPadding) }
-    )
+    ) {
+        innerPadding -> PlayingTaskContent(
+            description = taskDescription
+        )
+    }
 }
 
 @Composable
@@ -75,9 +99,14 @@ fun PlayingTaskTopBar(
 }
 
 @Composable
-fun PlayingTaskContent(paddingValues: PaddingValues) {
-    Column (horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+fun PlayingTaskContent(
+    description: String
+) {
+    Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(20.dp)) {
+        Text(
+            description,
+            style = MaterialTheme.typography.bodyLarge
+        )
         Button(
             onClick = {},
             content = {
@@ -85,15 +114,21 @@ fun PlayingTaskContent(paddingValues: PaddingValues) {
                     imageVector = Icons.Default.PlayArrow,
                     contentDescription = null
                 )
-                Text("Play")
+                Text(
+                    "Play",
+                    style = MaterialTheme.typography.labelLarge)
             },
+            modifier = Modifier.padding(20.dp)
         )
     }
-
 }
 
 @Preview
 @Composable
 fun PlayingTaskPagePreview() {
-    PlayingTaskPage()
+    PlayingTaskPage(
+        taskName = taskName,
+        taskDescription = taskDescription,
+        onArrowBackClicked = {}
+    )
 }
