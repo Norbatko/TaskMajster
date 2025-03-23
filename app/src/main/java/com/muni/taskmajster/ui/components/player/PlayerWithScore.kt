@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.R
 
 @Composable
 fun PlayerWithScore(
@@ -48,7 +50,7 @@ fun ScoreSetter() {
             },
             content = {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    painter = painterResource(R.drawable.ic_remove),
                     contentDescription = null
                 )
             }
@@ -59,7 +61,7 @@ fun ScoreSetter() {
             },
             content = {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    painter = painterResource(R.drawable.ic_add),
                     contentDescription = null
                 )
             }

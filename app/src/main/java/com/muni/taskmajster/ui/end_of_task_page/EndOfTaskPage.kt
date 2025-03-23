@@ -23,8 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.R
 import com.muni.taskmajster.ui.components.player.PlayerWithScore
 import kotlin.random.Random
 
@@ -94,7 +96,7 @@ fun EndOfTaskPageContent(
         ) {
             IconButton(onClick = {}) {
                 Icon(
-                    imageVector = Icons.Default.MailOutline,
+                    painter = painterResource(R.drawable.ic_add_a_photo),
                     contentDescription = null)
             }
             Text(
