@@ -1,4 +1,4 @@
-package com.muni.taskmajster.ui.list_of_tasks
+package com.muni.taskmajster.ui.task_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
-class ListOfTasksFragment: Fragment() {
+class TaskDetailFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                ListOfTasks(
-                    onTaskClick = {
-                        findNavController()
-                            .navigate(ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment())
-                    },
-                    onArrowBackClicked = {
-                        findNavController()
-                            .navigateUp()
+                TaskDetail(
+                    onArrowBackClick = {
+                        findNavController().navigateUp()
                     }
                 )
             }
