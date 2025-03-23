@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.muni.taskmajster.ui.list_of_tasks.ListOfTasksFragmentDirections
 
 class ListOfGameplansFragment: Fragment()  {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -16,7 +18,11 @@ class ListOfGameplansFragment: Fragment()  {
                     onArrowBackClicked = {
                         findNavController()
                             .navigateUp()
-                    }
+                    },
+                    onGameplanClick = {
+                        findNavController()
+                            .navigate(ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplanDetailFragment())
+                    },
                 )
             }
         }
