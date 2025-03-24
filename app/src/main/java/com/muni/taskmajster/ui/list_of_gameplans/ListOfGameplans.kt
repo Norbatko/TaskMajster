@@ -30,7 +30,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ListOfGameplans(
-    onArrowBackClicked: () -> Unit
+    onArrowBackClicked: () -> Unit,
+    onGameplanClick: () -> Unit
 ) {
     print("JSEM TU")
     Scaffold(
@@ -47,7 +48,7 @@ fun ListOfGameplans(
                 .padding(innerPadding)
         ) {
             items(15) { index ->
-                GameplanItem()
+                GameplanItem(onGameplanClick = onGameplanClick)
             }
         }
     }
@@ -93,12 +94,14 @@ fun TopBar(
 }
 
 @Composable
-fun GameplanItem() {
+fun GameplanItem(
+    onGameplanClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
-            .clickable(onClick = {}),
+            .clickable(onClick = onGameplanClick),
     ) {
         Row(
             modifier = Modifier
@@ -150,6 +153,7 @@ fun GameplanItem() {
 @Composable
 fun ListOfGameplansPreview() {
     ListOfGameplans(
-        onArrowBackClicked = {}
+        onArrowBackClicked = {},
+        onGameplanClick = {}
     )
 }
