@@ -35,6 +35,7 @@ import com.muni.taskmajster.ui.playing_task_page.scoring_bottom_sheet.ScoringBot
 fun PlayingTaskPage(
     taskName: String,
     taskDescription: String,
+    onDoneClicked: () -> Unit,
     onArrowBackClicked: () -> Unit
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -49,7 +50,8 @@ fun PlayingTaskPage(
         topBar = {
             PlayingTaskTopBar(
                 title = taskName,
-                onArrowBackClicked = onArrowBackClicked
+                onArrowBackClicked = onArrowBackClicked,
+                onDoneClicked = onDoneClicked
             )
         },
     ) {
@@ -62,6 +64,7 @@ fun PlayingTaskPage(
 @Composable
 fun PlayingTaskTopBar(
     title: String,
+    onDoneClicked: () -> Unit,
     onArrowBackClicked: () -> Unit
 ) {
     Row (
@@ -86,7 +89,7 @@ fun PlayingTaskTopBar(
         )
         Spacer(modifier = Modifier.weight(1f))
         Button(
-            onClick = {},
+            onClick = onDoneClicked,
             content = {
                 Icon(
                     imageVector = Icons.Default.Check,
@@ -129,6 +132,7 @@ fun PlayingTaskPagePreview() {
     PlayingTaskPage(
         taskName = taskName,
         taskDescription = taskDescription,
+        onDoneClicked = {},
         onArrowBackClicked = {}
     )
 }
