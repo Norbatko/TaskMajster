@@ -20,6 +20,11 @@ class PlayingTaskPageFragment: Fragment() {
                     PlayingTaskPage(
                         taskName = taskName,
                         taskDescription = taskDescription,
+                        onDoneClicked = {
+                            findNavController()
+                                .navigate(PlayingTaskPageFragmentDirections
+                                    .actionPlayingTaskPageFragmentToEndOfTaskPageFragment())
+                        },
                         onArrowBackClicked = {
                             findNavController()
                                 .navigateUp()
