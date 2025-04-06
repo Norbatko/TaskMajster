@@ -15,9 +15,6 @@
             android:id="@+id/action_mainPageFragment_to_listOfGameplansFragment"
             app:destination="@id/listOfGameplansFragment" />
         <action
-            android:id="@+id/action_mainPageFragment_to_playingTaskPageFragment"
-            app:destination="@id/playingTaskPageFragment" />
-        <action
             android:id="@+id/action_mainPageFragment_to_addPlayersPageFragment"
             app:destination="@id/addPlayersPageFragment" />
     </fragment>
