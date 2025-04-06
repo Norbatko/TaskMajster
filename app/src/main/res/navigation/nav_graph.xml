@@ -61,6 +61,10 @@
     <fragment
         android:id="@+id/addPlayersPageFragment"
         android:name="com.muni.taskmajster.ui.add_players_page.AddPlayersPageFragment"
-        android:label="AddPlayersPageFragment" />
+        android:label="AddPlayersPageFragment" >
+        <action
+            android:id="@+id/action_addPlayersPageFragment_to_playingTaskPageFragment"
+            app:destination="@id/playingTaskPageFragment" />
+    </fragment>
 
 </navigation>

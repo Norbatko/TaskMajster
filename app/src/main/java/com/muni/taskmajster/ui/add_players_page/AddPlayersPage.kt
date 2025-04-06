@@ -54,7 +54,12 @@ fun AddPlayersPage(
             onAddPlayer = {
                 players.add("" to Random.nextInt())
             },
-            onPlayerRemoved = { index -> players.removeAt(index) }
+            onPlayerRemoved = { index ->
+                if (players.size > 1) {
+                    players.removeAt(index)
+                }
+            },
+            onPlayClicked = onPlayClicked
         )
     }
 }
@@ -94,6 +99,7 @@ fun AddPlayersPageContent(
     onPlayerNameChanged: (Int, String) -> Unit,
     onAddPlayer: () -> Unit,
     onPlayerRemoved: (Int) -> Unit,
+    onPlayClicked: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -115,7 +121,7 @@ fun AddPlayersPageContent(
             }
         )
         Spacer(modifier = Modifier.weight(0.5f))
-        PlayButton(onClick = {})
+        PlayButton(onClick = onPlayClicked)
     }
 }
 

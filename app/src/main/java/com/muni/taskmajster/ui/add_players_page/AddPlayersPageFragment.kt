@@ -16,7 +16,10 @@ class AddPlayersPageFragment: Fragment() {
                     onArrowBackClicked = {
                         findNavController().navigateUp()
                     },
-                    onPlayClicked = {}
+                    onPlayClicked = {
+                        findNavController()
+                            .navigate(AddPlayersPageFragmentDirections.actionAddPlayersPageFragmentToPlayingTaskPageFragment())
+                    }
                 )
             }
         }
