@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.ui.components.common.PlayButton
 import com.muni.taskmajster.ui.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
 
 
@@ -110,19 +111,7 @@ fun PlayingTaskContent(
             description,
             style = MaterialTheme.typography.bodyLarge
         )
-        Button(
-            onClick = {},
-            content = {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = null
-                )
-                Text(
-                    "Play",
-                    style = MaterialTheme.typography.labelLarge)
-            },
-            modifier = Modifier.padding(20.dp)
-        )
+        PlayButton(onClick = {})
     }
 }
 
