@@ -7,19 +7,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlin.random.Random
 
 @Composable
 fun EditablePlayer(
     name: String,
-    onNameChanged: (String) -> Unit
+    onNameChanged: (String) -> Unit,
+    color: Int
 ) {
     Row (
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         PlayerAvatar(
-            color = Random.nextInt(),
+            color = color,
             onClicked = {}
         )
         OutlinedTextField(
