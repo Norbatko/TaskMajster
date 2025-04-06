@@ -24,7 +24,11 @@ class MainPageFragment: Fragment() {
                     },
                     onPlayRandomClicked = {
                         findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToPlayingTaskPageFragment())
+                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment())
+                    },
+                    onPlayGameplanClicked = {
+                        findNavController()
+                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment())
                     }
                 )
             }

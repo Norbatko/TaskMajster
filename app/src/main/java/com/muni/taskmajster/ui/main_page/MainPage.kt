@@ -32,6 +32,7 @@ fun MainPage (
     onTasksClicked: () -> Unit,
     onGameplansClicked: () -> Unit,
     onPlayRandomClicked: () -> Unit,
+    onPlayGameplanClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -60,7 +61,7 @@ fun MainPage (
                 MenuButton(
                     text = "Play gameplan",
                     icon = Icons.Default.PlayArrow,
-                    onClick = { }
+                    onClick = onPlayGameplanClicked
                 )
             }
             Column(
@@ -152,6 +153,7 @@ fun MainPagePreview() {
     MainPage(
         onTasksClicked = { },
         onGameplansClicked = { },
-        onPlayRandomClicked = { }
+        onPlayRandomClicked = { },
+        onPlayGameplanClicked = { }
     )
 }
