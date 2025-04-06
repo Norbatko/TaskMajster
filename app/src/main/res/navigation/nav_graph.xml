@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_mainPageFragment_to_playingTaskPageFragment"
             app:destination="@id/playingTaskPageFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_addPlayersPageFragment"
+            app:destination="@id/addPlayersPageFragment" />
     </fragment>
 
     <fragment
@@ -55,5 +58,9 @@
         android:id="@+id/endOfTaskPageFragment"
         android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
         android:label="EndOfTaskPageFragment" />
+    <fragment
+        android:id="@+id/addPlayersPageFragment"
+        android:name="com.muni.taskmajster.ui.add_players_page.AddPlayersPageFragment"
+        android:label="AddPlayersPageFragment" />
 
 </navigation>

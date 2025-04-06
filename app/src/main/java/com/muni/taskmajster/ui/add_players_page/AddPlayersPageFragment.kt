@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 
 class AddPlayersPageFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-//                AddPlayersPage()
+                AddPlayersPage(
+                    onArrowBackClicked = {
+                        findNavController().navigateUp()
+                    },
+                )
             }
         }
 }
