@@ -19,7 +19,7 @@ import com.muni.taskmajster.ui.components.list_item.TaskItem
 fun ListOfTasks(
     listOfTasks: List<Task>,
     onArrowBackClicked: () -> Unit,
-    onTaskClick: () -> Unit
+    onTaskClick: (Task) -> Unit
 ) {
     Scaffold(
         topBar = {

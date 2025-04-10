@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.muni.taskmajster.repository.TaskMajsterRepository
+import androidx.navigation.fragment.navArgs
 
 class TaskDetailFragment: Fragment() {
-    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+
+    private val args: TaskDetailFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                val tasks = repository.getFakeTasks();
-
                 TaskDetail(
-                    task = tasks.first(),
+                    task = args.task,
                     onArrowBackClick = {
                         findNavController().navigateUp()
                     }

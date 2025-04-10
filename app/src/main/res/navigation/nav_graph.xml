@@ -50,12 +50,18 @@
         android:id="@+id/taskDetailFragment"
         android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
         android:label="TaskDetailFragment" >
+        <argument
+            android:name="task"
+            app:argType="com.muni.taskmajster.data.Task" />
     </fragment>
 
     <fragment
         android:id="@+id/gameplanDetailFragment"
         android:name="com.muni.taskmajster.ui.gameplan_detail.GameplanDetailFragment"
         android:label="GameplanDetailFragment" >
+        <action
+            android:id="@+id/action_gameplanDetailFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
         <argument
             android:name="gameplan"
             app:argType="com.muni.taskmajster.data.Gameplan" />

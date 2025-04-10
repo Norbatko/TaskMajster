@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.muni.taskmajster.repository.TaskMajsterRepository
 
 class ListOfTasksFragment : Fragment() {
-    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+    private val repository = TaskMajsterRepository() // TODO read from real repository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,9 +22,11 @@ class ListOfTasksFragment : Fragment() {
 
             ListOfTasks(
                 listOfTasks = tasks,
-                onTaskClick = { //  selectedTask ->
+                onTaskClick = { task ->
                     findNavController().navigate(
-                        ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment()
+                        ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment(
+                            task = task
+                        )
                     )
                 },
                 onArrowBackClicked = {

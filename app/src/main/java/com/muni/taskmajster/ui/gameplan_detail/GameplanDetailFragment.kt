@@ -19,8 +19,14 @@ class GameplanDetailFragment: Fragment() {
                 GameplanDetail(
                     gameplan = args.gameplan,
                     onArrowBackClick = {
-                        findNavController()
-                            .navigateUp()
+                        findNavController().navigateUp()
+                    },
+                    onTaskClick = { task ->
+                        findNavController().navigate(
+                            GameplanDetailFragmentDirections.actionGameplanDetailFragmentToTaskDetailFragment(
+                                task
+                            )
+                        )
                     }
                 )
             }

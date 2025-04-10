@@ -30,7 +30,8 @@ import com.muni.taskmajster.ui.components.list_item.TaskItem
 @Composable
 fun GameplanDetail(
     gameplan: Gameplan,
-    onArrowBackClick: () -> Unit
+    onArrowBackClick: () -> Unit,
+    onTaskClick: (Task) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -63,7 +64,6 @@ fun GameplanDetail(
 
             HorizontalDivider(thickness = 1.dp, color = Color.Black)
 
-            // only scrollable TaskItem list
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -75,14 +75,14 @@ fun GameplanDetail(
                 ) {
                     itemsIndexed(gameplan.listOfTasks) { _, task ->
                         TaskItem(
-                            onTaskClick = {},
+                            onTaskClick = { onTaskClick(task) }, // <- Clickable
                             task = task
                         )
                     }
                 }
             }
 
-            Column{
+            Column {
                 HorizontalDivider(thickness = 1.dp, color = Color.Black)
                 Row(
                     modifier = Modifier
@@ -97,11 +97,9 @@ fun GameplanDetail(
                     )
                 }
             }
-
         }
     }
 }
-
 
 @Preview
 @Composable
@@ -119,6 +117,7 @@ fun GameplanDetailPreview() {
                     images = emptyList()
                 )
             },),
-        onArrowBackClick = {}
+        onArrowBackClick = {},
+        onTaskClick = {}
     )
 }

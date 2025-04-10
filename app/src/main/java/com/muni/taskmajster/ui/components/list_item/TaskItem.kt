@@ -26,14 +26,14 @@ import com.muni.taskmajster.data.Task
 @Composable
 fun TaskItem(
     task: Task,
-    onTaskClick: () -> Unit,
+    onTaskClick: (Task) -> Unit,
     showAddButton: Boolean = false,
     onAddToListClick: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onTaskClick)
+            .clickable{ onTaskClick(task) }
     ) {
         Row(
             modifier = Modifier
