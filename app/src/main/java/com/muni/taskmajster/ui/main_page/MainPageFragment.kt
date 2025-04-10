@@ -16,7 +16,6 @@ class MainPageFragment: Fragment() {
                     onTasksClicked = {
                         findNavController()
                             .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfTasksFragment())
-                        print("detekuji menu klik")
                     },
                     onGameplansClicked = {
                         findNavController()
@@ -26,10 +25,6 @@ class MainPageFragment: Fragment() {
                         findNavController()
                             .navigate(MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment())
                     },
-                    onPlayGameplanClicked = {
-                        findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment())
-                    }
                 )
             }
         }

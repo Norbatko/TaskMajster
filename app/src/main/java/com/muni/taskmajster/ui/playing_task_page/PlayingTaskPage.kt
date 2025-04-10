@@ -1,41 +1,37 @@
 package com.muni.taskmajster.ui.playing_task_page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.muni.taskmajster.ui.components.common.PlayButton
+import com.muni.taskmajster.data.Game
+import com.muni.taskmajster.data.Gameplan
+import com.muni.taskmajster.data.Player
+import com.muni.taskmajster.data.Task
+import com.muni.taskmajster.ui.components.button.ButtonIcon
+import com.muni.taskmajster.ui.components.button.LargeButton
+import com.muni.taskmajster.ui.components.common.TopBar
+import com.muni.taskmajster.ui.components.common.TopBarButton
 import com.muni.taskmajster.ui.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
-
-
-
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayingTaskPage(
-    taskName: String,
-    taskDescription: String,
+    game: Game,
     onDoneClicked: () -> Unit,
     onArrowBackClicked: () -> Unit
 ) {
@@ -46,59 +42,19 @@ fun PlayingTaskPage(
         sheetPeekHeight = 128.dp,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetContent = {
-            ScoringBottomSheet()
+            ScoringBottomSheet(game = game)
         },
         topBar = {
-            PlayingTaskTopBar(
-                title = taskName,
+            TopBar(
+                title = game.gameplan.listOfTasks[game.currentTask].name,
                 onArrowBackClicked = onArrowBackClicked,
-                onDoneClicked = onDoneClicked
+                sideButtons = listOf(
+                    TopBarButton(onClick = onDoneClicked, icon = Icons.Default.Check, contentDescription = "Done"),
+                )
             )
         },
     ) {
-        innerPadding -> PlayingTaskContent(
-            description = taskDescription
-        )
-    }
-}
-
-@Composable
-fun PlayingTaskTopBar(
-    title: String,
-    onDoneClicked: () -> Unit,
-    onArrowBackClicked: () -> Unit
-) {
-    Row (
-        Modifier
-            .background(color = Color.LightGray)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(
-            onClick = onArrowBackClicked,
-            content = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        )
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Button(
-            onClick = onDoneClicked,
-            content = {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = null
-                )
-                Text("Done")
-            },
-        )
+    PlayingTaskContent(description = game.gameplan.listOfTasks[game.currentTask].description)
     }
 }
 
@@ -106,21 +62,47 @@ fun PlayingTaskTopBar(
 fun PlayingTaskContent(
     description: String
 ) {
-    Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(20.dp)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(20.dp)
+            .fillMaxSize()
+    ) {
         Text(
             description,
             style = MaterialTheme.typography.bodyLarge
         )
-        PlayButton(onClick = {})
+        LargeButton(
+            "Play",
+            ButtonIcon.Vector(Icons.Default.PlayArrow),
+            onClick = {})
     }
 }
+
 
 @Preview
 @Composable
 fun PlayingTaskPagePreview() {
     PlayingTaskPage(
-        taskName = taskName,
-        taskDescription = taskDescription,
+        game = Game(
+            1,
+            0,
+            listOfPlayers = List(8) { index ->
+                Player(
+                    id = index.toLong(),
+                    name = "Player $index",
+                    colour = Random.nextInt(),
+                    taskPoints = (0..5).random(),
+                    totalPoints = 0,
+                )
+            },
+            gameplan = Gameplan(
+                1,
+                "The gameplan",
+                listOfTasks = List(1){
+                    Task(1, "taskName", 20, "taskDescription", emptyList())
+                })
+        ),
         onDoneClicked = {},
         onArrowBackClicked = {}
     )

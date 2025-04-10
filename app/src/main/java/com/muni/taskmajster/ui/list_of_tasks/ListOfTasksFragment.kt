@@ -4,24 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.findNavController
+import com.muni.taskmajster.repository.TaskMajsterRepository
 
-class ListOfTasksFragment: Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        ComposeView(requireContext()).apply {
-            setContent {
-                ListOfTasks(
-                    onTaskClick = {
-                        findNavController()
-                            .navigate(ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment())
-                    },
-                    onArrowBackClicked = {
-                        findNavController()
-                            .navigateUp()
-                    }
-                )
-            }
+class ListOfTasksFragment : Fragment() {
+    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(requireContext()).apply {
+        setContent {
+            val tasks = repository.getFakeTasks()
+
+            ListOfTasks(
+                listOfTasks = tasks,
+                onTaskClick = { //  selectedTask ->
+                    findNavController().navigate(
+                        ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment()
+                    )
+                },
+                onArrowBackClicked = {
+                    findNavController().navigateUp()
+                }
+            )
         }
+    }
 }

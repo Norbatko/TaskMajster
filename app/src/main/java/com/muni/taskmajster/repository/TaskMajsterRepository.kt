@@ -23,12 +23,12 @@ class TaskMajsterRepository {
         val allTasks = getFakeTasks()
 
         return List(10) { index ->
-            val taskSubset = allTasks.shuffled().take((0..10).random())
+            val tasks = allTasks.shuffled().take((0..10).random())
 
             Gameplan(
                 id = index.toLong(),
                 name = "Gameplan $index",
-                listOfTasks = taskSubset
+                listOfTasks = tasks
             )
         }
     }

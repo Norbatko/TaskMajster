@@ -7,18 +7,22 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.muni.taskmajster.repository.TaskMajsterRepository
 
-const val taskName = "Task 1"
 
 class EndOfTaskPageFragment: Fragment() {
+    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
+                val game = repository.getFakeGame()
+
                 EndOfTaskPage(
+                    game = game,
                     onArrowBackClicked = {
                         findNavController().navigateUp()
                     },
-                    taskName = taskName
                 )
             }
         }
