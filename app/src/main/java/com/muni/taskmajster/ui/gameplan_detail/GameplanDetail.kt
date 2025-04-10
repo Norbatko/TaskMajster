@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.data.Game
 import com.muni.taskmajster.data.Gameplan
 import com.muni.taskmajster.data.Task
 import com.muni.taskmajster.ui.components.button.ButtonIcon
@@ -30,16 +31,17 @@ import com.muni.taskmajster.ui.components.list_item.TaskItem
 @Composable
 fun GameplanDetail(
     gameplan: Gameplan,
-    onArrowBackClick: () -> Unit,
-    onTaskClick: (Task) -> Unit
+    onArrowBackClicked: () -> Unit,
+    onTaskClicked: (Task) -> Unit,
+    onPlayClicked: (Game) -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 title = gameplan.name,
-                onArrowBackClicked = onArrowBackClick,
+                onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClick = { }, icon = Icons.Default.Delete, contentDescription = "Delete")
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Delete, contentDescription = "Delete")
                 ),
             )
         },
@@ -58,7 +60,14 @@ fun GameplanDetail(
                 LargeButton(
                     text = "Play Now",
                     icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
-                    onClick = { }
+                    onClicked = { onPlayClicked(
+                        Game(
+                            id = 1, // Todo generate
+                            currentTask = 0,
+                            gameplan = gameplan,
+                            listOfPlayers = emptyList(),
+                            )
+                    )}
                 )
             }
 
@@ -75,7 +84,7 @@ fun GameplanDetail(
                 ) {
                     itemsIndexed(gameplan.listOfTasks) { _, task ->
                         TaskItem(
-                            onTaskClick = { onTaskClick(task) }, // <- Clickable
+                            onTaskClicked = { onTaskClicked(task) },
                             task = task
                         )
                     }
@@ -92,7 +101,7 @@ fun GameplanDetail(
                     LargeButton(
                         "Add new task",
                         ButtonIcon.Vector(Icons.Outlined.AddCircle),
-                        onClick = {},
+                        onClicked = {},
                         true,
                     )
                 }
@@ -117,7 +126,8 @@ fun GameplanDetailPreview() {
                     images = emptyList()
                 )
             },),
-        onArrowBackClick = {},
-        onTaskClick = {}
+        onArrowBackClicked = {},
+        onTaskClicked = {},
+        onPlayClicked = {}
     )
 }

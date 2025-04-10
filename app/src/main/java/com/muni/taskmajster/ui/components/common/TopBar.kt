@@ -17,10 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 
 data class TopBarButton(
-    val onClick: () -> Unit,
+    val onClicked: () -> Unit,
     val icon: ImageVector,
     val contentDescription: String
 )
@@ -56,7 +57,9 @@ fun TopBar(
 
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -64,7 +67,7 @@ fun TopBar(
         Row {
             sideButtons.forEach { button ->
                 TopBarSideButton(
-                    onClick = button.onClick,
+                    onClicked = button.onClicked,
                     icon = button.icon,
                     contentDescription = button.contentDescription
                 )
@@ -75,11 +78,11 @@ fun TopBar(
 
 @Composable
 fun TopBarSideButton(
-    onClick: () -> Unit,
+    onClicked: () -> Unit,
     icon: ImageVector,
     contentDescription: String
 ) {
-    IconButton(onClick = onClick) {
+    IconButton(onClick = onClicked) {
         Icon(
             imageVector = icon,
             contentDescription = contentDescription
@@ -94,7 +97,7 @@ fun TopBarPreview() {
         title  = "TopBar",
         onArrowBackClicked = {},
         sideButtons = listOf(
-            TopBarButton(onClick = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
+            TopBarButton(onClicked = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
         )
     )
 }

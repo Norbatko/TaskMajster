@@ -44,7 +44,7 @@ fun MainPage (
                 MenuButton(
                     text = "Play random",
                     icon = Icons.Default.Refresh,
-                    onClick = onPlayRandomClicked
+                    onClicked = onPlayRandomClicked
                 )
             }
             Column(
@@ -57,12 +57,12 @@ fun MainPage (
                 MenuButton(
                     text = "Tasks",
                     icon = Icons.Default.Menu,
-                    onClick = onTasksClicked
+                    onClicked = onTasksClicked
                 )
                 MenuButton(
                     text = "Gameplans",
                     icon = Icons.AutoMirrored.Filled.List,
-                    onClick = onGameplansClicked
+                    onClicked = onGameplansClicked
                 )
             }
         }

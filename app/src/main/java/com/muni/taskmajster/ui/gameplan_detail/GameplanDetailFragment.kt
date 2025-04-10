@@ -18,16 +18,23 @@ class GameplanDetailFragment: Fragment() {
             setContent {
                 GameplanDetail(
                     gameplan = args.gameplan,
-                    onArrowBackClick = {
+                    onArrowBackClicked = {
                         findNavController().navigateUp()
                     },
-                    onTaskClick = { task ->
+                    onTaskClicked = { task ->
                         findNavController().navigate(
                             GameplanDetailFragmentDirections.actionGameplanDetailFragmentToTaskDetailFragment(
                                 task
                             )
                         )
-                    }
+                    },
+                    onPlayClicked = { game ->
+                        findNavController().navigate(
+                            GameplanDetailFragmentDirections.actionGameplanDetailFragmentToAddPlayersPageFragment(
+                                game
+                            )
+                        )
+                    },
                 )
             }
         }

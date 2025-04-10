@@ -19,7 +19,7 @@ import com.muni.taskmajster.ui.components.list_item.GameplanItem
 fun ListOfGameplans(
     listOfGameplans: List<Gameplan>,
     onArrowBackClicked: () -> Unit,
-    onGameplanClick: (Gameplan) -> Unit
+    onGameplanClicked: (Gameplan) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -27,7 +27,7 @@ fun ListOfGameplans(
                 title  = "List of gameplans",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClick = { }, icon = Icons.Default.Add, contentDescription = "Add"),
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
                 )
             )
         },
@@ -38,7 +38,7 @@ fun ListOfGameplans(
                 .padding(innerPadding)
         ) {
             items(items = listOfGameplans, key = { it.id }) { gameplan ->
-                GameplanItem(gameplan = gameplan, onGameplanClick = onGameplanClick)
+                GameplanItem(gameplan = gameplan, onGameplanClicked = onGameplanClicked)
             }
         }
     }
@@ -56,6 +56,6 @@ fun ListOfGameplansPreview() {
             )
         },
         onArrowBackClicked = {},
-        onGameplanClick = {}
+        onGameplanClicked = {}
     )
 }

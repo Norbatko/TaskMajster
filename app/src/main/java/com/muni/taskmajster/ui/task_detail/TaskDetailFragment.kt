@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 
 class TaskDetailFragment: Fragment() {
@@ -18,9 +18,16 @@ class TaskDetailFragment: Fragment() {
             setContent {
                 TaskDetail(
                     task = args.task,
-                    onArrowBackClick = {
+                    onArrowBackClicked = {
                         findNavController().navigateUp()
-                    }
+                    },
+                    onPlayClicked = { game ->
+                        findNavController().navigate(
+                            TaskDetailFragmentDirections.actionTaskDetailFragmentToAddPlayersPageFragment(
+                                game
+                            )
+                        )
+                    },
                 )
             }
         }

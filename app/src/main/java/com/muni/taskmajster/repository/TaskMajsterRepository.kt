@@ -4,6 +4,7 @@ import com.muni.taskmajster.data.Game
 import com.muni.taskmajster.data.Task
 import com.muni.taskmajster.data.Gameplan
 import com.muni.taskmajster.data.Player
+import kotlin.random.Random
 
 class TaskMajsterRepository {
 
@@ -38,9 +39,9 @@ class TaskMajsterRepository {
             Player(
                 id = index.toLong(),
                 name = "Player $index",
-                colour = index,
-                totalPoints = 0,
-                taskPoints = 0,
+                colour = Random.nextInt(),
+                taskPoints = (0..5).random(),
+                totalPoints = (0..10).random(),
             )
         }
     }

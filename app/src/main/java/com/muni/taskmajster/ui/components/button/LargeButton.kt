@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-// so we can add vector picture or painter
+// we can add vector picture or painter
 sealed class ButtonIcon {
     data class Vector(val imageVector: ImageVector) : ButtonIcon()
     data class PainterIcon(val painter: androidx.compose.ui.graphics.painter.Painter) : ButtonIcon()
@@ -31,14 +31,14 @@ sealed class ButtonIcon {
 fun LargeButton(
     text: String,
     icon: ButtonIcon,
-    onClick: () -> Unit,
+    onClicked: () -> Unit,
     transparent: Boolean = false,
 ) {
     Row(
         modifier = Modifier.padding(vertical = 15.dp)
     ) {
         Button(
-            onClick = onClick,
+            onClick = onClicked,
             modifier = Modifier.height(50.dp),
             colors = if (transparent) {
                 ButtonDefaults.buttonColors(
@@ -85,7 +85,7 @@ fun LargeButtonPreview() {
     LargeButton(
         "Button",
         icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
-        onClick = {},
+        onClicked = {},
         true
     )
 }

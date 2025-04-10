@@ -23,7 +23,7 @@ class ListOfGameplansFragment: Fragment()  {
                         findNavController()
                             .navigateUp()
                     },
-                    onGameplanClick = { gameplan ->
+                    onGameplanClicked = { gameplan ->
                         findNavController()
                             .navigate(
                                 ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplanDetailFragment(

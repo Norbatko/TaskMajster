@@ -5,9 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Player(
-    var id: Long,
+    val id: Long,
     val name: String,
     val colour: Int, // todo may be changed in future acording to colour picker
-    val totalPoints: Int,
-    val taskPoints: Int,
+    var totalPoints: Int,
+    var taskPoints: Int,
 ): Parcelable

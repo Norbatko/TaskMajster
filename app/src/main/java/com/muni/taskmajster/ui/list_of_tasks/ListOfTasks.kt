@@ -19,7 +19,7 @@ import com.muni.taskmajster.ui.components.list_item.TaskItem
 fun ListOfTasks(
     listOfTasks: List<Task>,
     onArrowBackClicked: () -> Unit,
-    onTaskClick: (Task) -> Unit
+    onTaskClicked: (Task) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -27,7 +27,7 @@ fun ListOfTasks(
                 title  = "List of tasks",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClick = { }, icon = Icons.Default.Add, contentDescription = "Add"),
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
                 )
             )
         },
@@ -38,7 +38,7 @@ fun ListOfTasks(
                 .padding(innerPadding)
         ) {
             items(items = listOfTasks, key = { it.id }) { task ->
-                TaskItem(task = task, onTaskClick = onTaskClick)
+                TaskItem(task = task, onTaskClicked = onTaskClicked)
             }
         }
     }
@@ -59,6 +59,6 @@ fun ListOfTasksPreview() {
             )
         },
         onArrowBackClicked = {},
-        onTaskClick = {}
+        onTaskClicked = {}
     )
 }

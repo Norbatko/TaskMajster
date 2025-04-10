@@ -22,16 +22,14 @@ class ListOfTasksFragment : Fragment() {
 
             ListOfTasks(
                 listOfTasks = tasks,
-                onTaskClick = { task ->
+                onArrowBackClicked = { findNavController().navigateUp() },
+                onTaskClicked = { task ->
                     findNavController().navigate(
                         ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment(
                             task = task
                         )
                     )
                 },
-                onArrowBackClicked = {
-                    findNavController().navigateUp()
-                }
             )
         }
     }

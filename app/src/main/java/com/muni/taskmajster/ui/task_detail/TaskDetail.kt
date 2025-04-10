@@ -37,6 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.muni.taskmajster.data.Game
+import com.muni.taskmajster.data.Gameplan
 import com.muni.taskmajster.data.Task
 import com.muni.taskmajster.ui.components.button.ButtonIcon
 import com.muni.taskmajster.ui.components.button.LargeButton
@@ -47,16 +49,18 @@ import java.io.File
 @Composable
 fun TaskDetail(
     task: Task,
-    onArrowBackClick: () -> Unit
+    onArrowBackClicked: () -> Unit,
+// onAddToPlanClicked: () -> Unit, // TODO add to existing gameplan -> viz TaskItem onAddToListClicked attribute (maybe create new page for it?)
+    onPlayClicked: (Game) -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 title = "Task: ${task.name}",
-                onArrowBackClicked = onArrowBackClick,
+                onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClick = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
-                    TopBarButton(onClick = { }, icon = Icons.Default.Delete, contentDescription = "Delete"),
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Delete, contentDescription = "Delete"),
                 )
             )
         },
@@ -78,7 +82,18 @@ fun TaskDetail(
                 LargeButton(
                     text = "Play Now",
                     icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
-                    onClick = { }
+                    onClicked = { onPlayClicked(
+                        Game(
+                            id = 1, // Todo generate
+                            currentTask = 0,
+                            gameplan = Gameplan(
+                                id = 1,  // Todo generate
+                                name = "Task: " + task.name,
+                                listOfTasks = List(1){ task },
+                            ),
+                            listOfPlayers = emptyList(),
+                        )
+                    )}
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
@@ -86,7 +101,7 @@ fun TaskDetail(
                 LargeButton(
                     text = "Add to plan",
                     icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
-                    onClick = { }
+                    onClicked = { }
                 )
             }
             Text(
@@ -203,5 +218,7 @@ fun PhotoGallery(photoList: List<Int>) {
 fun TaskDetailPreview() {
     TaskDetail(
         task = Task(1, "task1", 15, "task description", emptyList()),
-        onArrowBackClick = {})
+        onArrowBackClicked = {},
+        onPlayClicked = {}
+    )
 }

@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 fun MenuButton(
     text: String,
     icon: ImageVector,
-    onClick: () -> Unit
+    onClicked: () -> Unit
 ) {
     Button(
-        onClick = onClick,
+        onClick = onClicked,
         modifier = Modifier
             .fillMaxWidth(0.8f)
             .height(100.dp),
@@ -62,6 +62,6 @@ fun MenuButtonPreview() {
     MenuButton(
         text = "Tasks",
         icon = Icons.Default.Menu,
-        onClick = { }
+        onClicked = { }
     )
 }

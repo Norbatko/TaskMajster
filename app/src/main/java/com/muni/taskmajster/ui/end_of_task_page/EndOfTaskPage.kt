@@ -27,10 +27,14 @@ import com.muni.taskmajster.ui.components.common.TopBar
 import com.muni.taskmajster.ui.components.player.PlayerWithScore
 import kotlin.random.Random
 
+// TODO maybe somewhere display number of remaining tasks?
 @Composable
 fun EndOfTaskPage(
     game: Game,
-    onArrowBackClicked: () -> Unit
+    lastTask: Boolean = false,
+    onArrowBackClicked: () -> Unit,
+    onNextTaskClicked: (Game) -> Unit = {},
+    onFinalizeClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -40,14 +44,17 @@ fun EndOfTaskPage(
             )
         },
     ) { innerPadding ->
-        EndOfTaskPageContent(game, innerPadding)
+        EndOfTaskPageContent(game, lastTask, innerPadding, onFinalizeClicked, onNextTaskClicked)
     }
 }
 
 @Composable
 fun EndOfTaskPageContent(
     game: Game,
-    padding: PaddingValues
+    lastTask: Boolean,
+    padding: PaddingValues,
+    onFinalizeClicked: () -> Unit,
+    onNextTaskClicked: (Game) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -69,18 +76,20 @@ fun EndOfTaskPageContent(
             LargeButton(
                 "Take a photo",
                 ButtonIcon.PainterIcon(painterResource(R.drawable.ic_add_a_photo)),
-                onClick = {},
+                onClicked = {},
                 true
             )
-            LargeButton(
-                "Next task",
-                ButtonIcon.Vector(Icons.Default.PlayArrow),
-                onClick = {}
-            )
+            if (!lastTask) {
+                LargeButton(
+                    "Next task",
+                    ButtonIcon.Vector(Icons.Default.PlayArrow),
+                    onClicked = { onNextTaskClicked(game) }
+                )
+            }
             LargeButton(
                 "Finalize",
                 ButtonIcon.Vector(Icons.Default.Check),
-                onClick = {},
+                onClicked = onFinalizeClicked,
             )
         }
     }
@@ -94,7 +103,10 @@ fun FinalScoreBoard(
     LazyColumn(
         modifier = modifier
     ) {
-        items(items = listOfPlayers, key = { it.id }) { player ->
+        items(
+            items = listOfPlayers.sortedByDescending { it.totalPoints },
+            key = { it.id }
+        ) { player ->
             PlayerWithScore(
                 player = player,
                 showScoreSetter = false
@@ -102,6 +114,7 @@ fun FinalScoreBoard(
         }
     }
 }
+
 
 @Preview
 @Composable
@@ -116,7 +129,7 @@ fun EndOfTaskPagePreview() {
                     name = "Player $index",
                     colour = Random.nextInt(),
                     taskPoints = (0..5).random(),
-                    totalPoints = 0,
+                    totalPoints = (0..10).random(),
                 )
             },
             gameplan = Gameplan(
@@ -126,6 +139,8 @@ fun EndOfTaskPagePreview() {
                     Task(1, "taskName", 20, "taskDescription", emptyList())
                 })
         ),
-        onArrowBackClicked = {}
+        onArrowBackClicked = {},
+        onFinalizeClicked = {},
+        onNextTaskClicked = {}
     )
 }

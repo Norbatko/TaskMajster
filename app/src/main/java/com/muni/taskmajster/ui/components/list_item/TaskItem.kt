@@ -26,14 +26,14 @@ import com.muni.taskmajster.data.Task
 @Composable
 fun TaskItem(
     task: Task,
-    onTaskClick: (Task) -> Unit,
+    onTaskClicked: (Task) -> Unit,
     showAddButton: Boolean = false,
-    onAddToListClick: () -> Unit = {},
+    onAddToListClicked: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{ onTaskClick(task) }
+            .clickable{ onTaskClicked(task) }
     ) {
         Row(
             modifier = Modifier
@@ -70,7 +70,7 @@ fun TaskItem(
                 }
             }
             if (showAddButton) {
-                IconButton(onClick = onAddToListClick) {
+                IconButton(onClick = onAddToListClicked) {
                     Icon(
                         imageVector = Icons.Default.AddCircle,
                         contentDescription = "Add task to list"
@@ -95,6 +95,6 @@ fun TaskItem(
 fun TaskItemPreview() {
     TaskItem(
         task = Task(1, "task1", 15, "task description", emptyList()),
-        onTaskClick = {},
+        onTaskClicked = {},
     )
 }

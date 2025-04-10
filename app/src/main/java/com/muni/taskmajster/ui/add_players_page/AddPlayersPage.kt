@@ -30,7 +30,7 @@ import kotlin.random.Random
 fun AddPlayersPage(
     game: Game,
     onArrowBackClicked: () -> Unit,
-    onPlayClicked: () -> Unit // pass Game attribute?
+    onPlayClicked: (Game) -> Unit
 ) {
     // mutable copy of the player list - TODO need to update te game when pressing play
     val players = remember { mutableStateListOf(*game.listOfPlayers.toTypedArray()) }
@@ -52,7 +52,7 @@ fun AddPlayersPage(
                 LargeButton(
                     text = "Play",
                     icon = ButtonIcon.Vector(Icons.Default.PlayArrow),
-                    onClick = { onPlayClicked() }
+                    onClicked = { onPlayClicked(game) }
                 )
             }
         }
@@ -129,9 +129,9 @@ fun LazyListScope.listOfPlayersItems(
             EditablePlayer(
                 name = players[index].name,
                 color = players[index].colour,
-                onNameChanged = { newName -> onPlayerNameChanged(index, newName) }
+                onNameChanged = { newName -> onPlayerNameChanged(index, newName) },
+                modifier = Modifier.weight(1f)
             )
-            Spacer(modifier = Modifier.weight(1f))
             IconButton(
                 onClick = { onPlayerRemoved(index) },
                 content = {

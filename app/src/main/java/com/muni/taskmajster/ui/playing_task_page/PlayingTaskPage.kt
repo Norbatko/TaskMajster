@@ -32,7 +32,7 @@ import kotlin.random.Random
 @Composable
 fun PlayingTaskPage(
     game: Game,
-    onDoneClicked: () -> Unit,
+    onDoneClicked: (Game) -> Unit,
     onArrowBackClicked: () -> Unit
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -49,7 +49,11 @@ fun PlayingTaskPage(
                 title = game.gameplan.listOfTasks[game.currentTask].name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClick = onDoneClicked, icon = Icons.Default.Check, contentDescription = "Done"),
+                    TopBarButton(
+                        onClicked = { onDoneClicked(game) },
+                        icon = Icons.Default.Check,
+                        contentDescription = "Done"
+                    ),
                 )
             )
         },
@@ -75,7 +79,7 @@ fun PlayingTaskContent(
         LargeButton(
             "Play",
             ButtonIcon.Vector(Icons.Default.PlayArrow),
-            onClick = {})
+            onClicked = {})
     }
 }
 
