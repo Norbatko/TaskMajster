@@ -19,7 +19,7 @@ import com.muni.taskmajster.ui.components.list_item.GameplanItem
 fun ListOfGameplans(
     listOfGameplans: List<Gameplan>,
     onArrowBackClicked: () -> Unit,
-    onGameplanClick: () -> Unit
+    onGameplanClick: (Gameplan) -> Unit
 ) {
     Scaffold(
         topBar = {

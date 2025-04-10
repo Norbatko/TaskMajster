@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import com.muni.taskmajster.repository.TaskMajsterRepository
 
 class ListOfGameplansFragment: Fragment()  {
-    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+    private val repository = TaskMajsterRepository() // TODO read from real repository
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
@@ -23,9 +23,13 @@ class ListOfGameplansFragment: Fragment()  {
                         findNavController()
                             .navigateUp()
                     },
-                    onGameplanClick = {
+                    onGameplanClick = { gameplan ->
                         findNavController()
-                            .navigate(ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplanDetailFragment())
+                            .navigate(
+                                ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplanDetailFragment(
+                                    gameplan = gameplan
+                                )
+                            )
                     },
                 )
             }

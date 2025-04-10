@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.muni.taskmajster.repository.TaskMajsterRepository
+import androidx.navigation.fragment.navArgs
 
 class GameplanDetailFragment: Fragment() {
-    private val repository = TaskMajsterRepository() // TODO probabbly with args?
+
+    private val args: GameplanDetailFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                val gameplans = repository.getFakeGameplans()
-
                 GameplanDetail(
-                    gameplan = gameplans.first(),
+                    gameplan = args.gameplan,
                     onArrowBackClick = {
                         findNavController()
                             .navigateUp()

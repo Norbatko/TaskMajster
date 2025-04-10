@@ -25,13 +25,13 @@ import com.muni.taskmajster.data.Gameplan
 @Composable
 fun GameplanItem(
     gameplan: Gameplan,
-    onGameplanClick: () -> Unit
+    onGameplanClick: (Gameplan) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
-            .clickable(onClick = onGameplanClick),
+            .clickable { onGameplanClick(gameplan) }
     ) {
         Row(
             modifier = Modifier
