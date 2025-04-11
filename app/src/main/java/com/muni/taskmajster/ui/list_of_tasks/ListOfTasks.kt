@@ -1,150 +1,46 @@
 package com.muni.taskmajster.ui.list_of_tasks
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.muni.taskmajster.data.Task
+import com.muni.taskmajster.ui.components.common.TopBar
+import com.muni.taskmajster.ui.components.common.TopBarButton
+import com.muni.taskmajster.ui.components.list_item.TaskItem
 
 @Composable
 fun ListOfTasks(
+    listOfTasks: List<Task>,
     onArrowBackClicked: () -> Unit,
-    onTaskClick: () -> Unit
+    onTaskClicked: (Task) -> Unit
 ) {
-    print("JSEM TU")
     Scaffold(
         topBar = {
             TopBar(
-                title = "List of tasks",
-                onArrowBackClicked = onArrowBackClicked
+                title  = "List of tasks",
+                onArrowBackClicked = onArrowBackClicked,
+                sideButtons = listOf(
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
+                )
             )
         },
     ) { innerPadding ->
-        LazyColumn (
-            modifier = Modifier
-            .fillMaxWidth()
-            .padding(innerPadding)
-        ) {
-            items(15) { index ->
-                TaskItem(onTaskClick = onTaskClick)
-            }
-        }
-    }
-}
-
-@Composable
-fun TopBar(
-    title: String,
-    onArrowBackClicked: () -> Unit
-) {
-    Row (
-        Modifier
-            .background(color = Color.LightGray)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(
-            onClick = onArrowBackClicked,
-            content = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        )
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = {},
-            content = {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            },
-            modifier = Modifier.background(color = Color.Gray),
-        )
-    }
-}
-
-@Composable
-fun TaskItem(
-    onTaskClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp)
-            .clickable(onClick = onTaskClick),
-    ) {
-        Row(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
-            verticalAlignment = Alignment.Top
+                .padding(innerPadding)
         ) {
-            Column {
-                Text(
-                    text = "Task " + "X" + ": " + "Name",
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 24.sp,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.Black
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(top = 8.dp, bottom = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Lock, // TODO here clock
-                        contentDescription = null,
-                        tint = Color.Gray,
-                        modifier = Modifier.padding(end = 4.dp)
-                    )
-                    Text(
-                        text = "XX" + "s",
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
-                }
+            items(items = listOfTasks, key = { it.id }) { task ->
+                TaskItem(task = task, onTaskClicked = onTaskClicked)
             }
         }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, start = 4.dp, end = 4.dp),
-            thickness = 1.dp,
-            color = Color.DarkGray
-        )
     }
 }
 
@@ -153,7 +49,16 @@ fun TaskItem(
 @Composable
 fun ListOfTasksPreview() {
     ListOfTasks(
+        listOfTasks = List(20) { index ->
+            Task(
+                id = index.toLong(),
+                name = "Task $index",
+                time = (10..120).random(),
+                description = "Description for Task $index.",
+                images = emptyList()
+            )
+        },
         onArrowBackClicked = {},
-        onTaskClick = {}
+        onTaskClicked = {}
     )
 }

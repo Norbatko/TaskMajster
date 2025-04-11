@@ -27,6 +27,19 @@
             android:id="@+id/action_listOfTasksFragment_to_taskDetailFragment"
             app:destination="@id/taskDetailFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
+        android:label="TaskDetailFragment" >
+        <action
+            android:id="@+id/action_taskDetailFragment_to_addPlayersPageFragment"
+            app:destination="@id/addPlayersPageFragment" />
+        <argument
+            android:name="task"
+            app:argType="com.muni.taskmajster.data.Task" />
+    </fragment>
+
     <fragment
         android:id="@+id/listOfGameplansFragment"
         android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
@@ -35,26 +48,22 @@
             android:id="@+id/action_listOfGameplansFragment_to_gameplanDetailFragment"
             app:destination="@id/gameplanDetailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/playingTaskPageFragment"
-        android:name="com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragment"
-        android:label="PlayingTaskPageFragment" >
-        <action
-            android:id="@+id/action_playingTaskPageFragment_to_endOfTaskPageFragment"
-            app:destination="@id/endOfTaskPageFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/taskDetailFragment"
-        android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
-        android:label="TaskDetailFragment" />
+
     <fragment
         android:id="@+id/gameplanDetailFragment"
         android:name="com.muni.taskmajster.ui.gameplan_detail.GameplanDetailFragment"
-        android:label="GameplanDetailFragment" />
-    <fragment
-        android:id="@+id/endOfTaskPageFragment"
-        android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
-        android:label="EndOfTaskPageFragment" />
+        android:label="GameplanDetailFragment" >
+        <action
+            android:id="@+id/action_gameplanDetailFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
+        <action
+            android:id="@+id/action_gameplanDetailFragment_to_addPlayersPageFragment"
+            app:destination="@id/addPlayersPageFragment" />
+        <argument
+            android:name="gameplan"
+            app:argType="com.muni.taskmajster.data.Gameplan" />
+    </fragment>
+
     <fragment
         android:id="@+id/addPlayersPageFragment"
         android:name="com.muni.taskmajster.ui.add_players_page.AddPlayersPageFragment"
@@ -62,6 +71,36 @@
         <action
             android:id="@+id/action_addPlayersPageFragment_to_playingTaskPageFragment"
             app:destination="@id/playingTaskPageFragment" />
+        <argument
+            android:name="game"
+            app:argType="com.muni.taskmajster.data.Game" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playingTaskPageFragment"
+        android:name="com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragment"
+        android:label="PlayingTaskPageFragment" >
+        <action
+            android:id="@+id/action_playingTaskPageFragment_to_endOfTaskPageFragment"
+            app:destination="@id/endOfTaskPageFragment" />
+        <argument
+            android:name="game"
+            app:argType="com.muni.taskmajster.data.Game" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/endOfTaskPageFragment"
+        android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
+        android:label="EndOfTaskPageFragment" >
+        <action
+            android:id="@+id/action_endOfTaskPageFragment_to_mainPage"
+            app:destination="@id/mainPageFragment" />
+        <action
+            android:id="@+id/action_endOfTaskPageFragment_to_playingTaskPageFragment"
+            app:destination="@id/playingTaskPageFragment" />
+        <argument
+            android:name="game"
+            app:argType="com.muni.taskmajster.data.Game" />
     </fragment>
 
 </navigation>
