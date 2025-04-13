@@ -25,26 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.muni.taskmajster.ui.components.button.ButtonIcon
 import com.muni.taskmajster.ui.components.button.LargeButton
-
-val colors = listOf(
-    0xFFFFB3BA.toInt(), // Light Pink:   (255, 179, 186)
-    0xFFFFDFBA.toInt(), // Light Orange: (255, 223, 186)
-    0xFFFFFFBA.toInt(), // Light Yellow: (255, 255, 186)
-    0xFFBAFFC9.toInt(), // Light Green:  (186, 255, 201)
-    0xFFBAE1FF.toInt(), // Light Blue:   (186, 225, 255)
-    0xFFDABAFF.toInt(), // Light Purple: (218, 186, 255)
-    0xFFFFCCE5.toInt(), // Pink Blush:   (255, 204, 229)
-    0xFFCCFFE5.toInt(), // Mint:         (204, 255, 229)
-    0xFFCCE5FF.toInt(), // Baby Blue:    (204, 229, 255)
-    0xFFE5CCFF.toInt(), // Lavender:     (229, 204, 255)
-    0xFFFFFFFF.toInt(), // White:        (255, 255, 255)
-    0xFFF0F0F0.toInt()  // Very Light Gray: (240, 240, 240)
-)
+import com.muni.taskmajster.util.PlayerColorProvider
 
 @Composable
 fun Colorpicker(
+    colors: List<Int>,
     onConfirm: (Int) -> Unit,
     onDismiss: () -> Unit,
+    initialPickedColor: Int
 ) {
     Dialog(
         onDismissRequest = onDismiss
@@ -58,7 +46,8 @@ fun Colorpicker(
         ) {
             ColorpickerContent(
                 colors = colors,
-                onConfirm = onConfirm
+                onConfirm = onConfirm,
+                initialPickedColor = initialPickedColor,
             )
         }
     }
@@ -67,9 +56,10 @@ fun Colorpicker(
 @Composable
 fun ColorpickerContent(
     colors: List<Int>,
-    onConfirm: (Int) -> Unit
+    onConfirm: (Int) -> Unit,
+    initialPickedColor: Int
 ) {
-    var pickedColor by remember { mutableIntStateOf(250) }
+    var pickedColor by remember { mutableIntStateOf(initialPickedColor) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,6 +101,8 @@ fun ColorpickerContent(
 fun ColorPickerPreview(){
     Colorpicker(
         onConfirm = {},
-        onDismiss = {}
+        onDismiss = {},
+        colors = PlayerColorProvider.getAll(),
+        initialPickedColor = 255
     )
 }

@@ -29,7 +29,7 @@ import com.muni.taskmajster.ui.components.button.ButtonIcon
 import com.muni.taskmajster.ui.components.button.LargeButton
 import com.muni.taskmajster.ui.components.common.TopBar
 import com.muni.taskmajster.ui.components.player.EditablePlayer
-import kotlin.random.Random
+import com.muni.taskmajster.util.PlayerColorProvider
 
 @Composable
 fun AddPlayersPage(
@@ -109,7 +109,9 @@ fun AddPlayersPageContent(
             },
             onDismiss = {
                 showColorPicker = false
-            }
+            },
+            colors = PlayerColorProvider.getAll(),
+            initialPickedColor = players[clickedPlayerIndex].colour
         )
     }
 
@@ -178,13 +180,7 @@ fun AddPlayersPagePreview() {
             1,
             1,
             listOfPlayers = List(8) { index ->
-                Player(
-                    id = index.toLong(),
-                    name = "Player $index",
-                    colour = Random.nextInt(),
-                    taskPoints = (0..5).random(),
-                    totalPoints = 0,
-                )
+                Player.createNew()
             },
             gameplan = Gameplan(
                 1,
