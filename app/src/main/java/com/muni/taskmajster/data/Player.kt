@@ -1,6 +1,7 @@
 package com.muni.taskmajster.data
 
 import android.os.Parcelable
+import com.muni.taskmajster.util.PlayerColorProvider
 import kotlinx.parcelize.Parcelize
 import kotlin.random.Random
 
@@ -8,7 +9,7 @@ import kotlin.random.Random
 data class Player(
     val id: Long,
     val name: String,
-    val colour: Int, // todo may be changed in future acording to colour picker
+    val colour: Int,
     var totalPoints: Int,
     var taskPoints: Int,
 ): Parcelable {
@@ -17,7 +18,7 @@ data class Player(
             return Player(
                 id = System.currentTimeMillis(),
                 name = "Player X",
-                colour = Random.nextInt(),
+                colour = PlayerColorProvider.nextColor(),
                 totalPoints = 0,
                 taskPoints = 0
             )
