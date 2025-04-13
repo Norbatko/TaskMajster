@@ -13,7 +13,7 @@ import com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragmentArgs
 
 class AddPlayersPageFragment: Fragment() {
 
-    private val args: PlayingTaskPageFragmentArgs by navArgs()
+    private val args: AddPlayersPageFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
@@ -23,11 +23,11 @@ class AddPlayersPageFragment: Fragment() {
                     onArrowBackClicked = {
                         findNavController().navigateUp()
                     },
-                    onPlayClicked = {
-                        findNavController()
-                            .navigate(AddPlayersPageFragmentDirections.actionAddPlayersPageFragmentToPlayingTaskPageFragment(
-                                args.game
-                            ))
+                    onPlayClicked = { updatedGame ->
+                        findNavController().navigate(
+                            AddPlayersPageFragmentDirections
+                                .actionAddPlayersPageFragmentToPlayingTaskPageFragment(updatedGame)
+                        )
                     }
                 )
             }

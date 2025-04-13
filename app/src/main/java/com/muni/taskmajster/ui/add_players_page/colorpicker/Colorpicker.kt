@@ -14,8 +14,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +40,6 @@ val colors = listOf(
     0xFFFFFFFF.toInt(), // White:        (255, 255, 255)
     0xFFF0F0F0.toInt()  // Very Light Gray: (240, 240, 240)
 )
-
 
 @Composable
 fun Colorpicker(
@@ -68,7 +69,7 @@ fun ColorpickerContent(
     colors: List<Int>,
     onConfirm: (Int) -> Unit
 ) {
-    val pickedColor = remember { mutableIntStateOf(250) }
+    var pickedColor by remember { mutableIntStateOf(250) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -89,8 +90,8 @@ fun ColorpickerContent(
                 val color = colors[index]
                 ColorChip(
                     color = color,
-                    onClicked = { pickedColor.intValue = color },
-                    isSelected = color == pickedColor.intValue
+                    onClicked = { pickedColor = color },
+                    isSelected = color == pickedColor
                 )
             }
         }
@@ -100,7 +101,7 @@ fun ColorpickerContent(
         LargeButton(
             text = "OK",
             icon = ButtonIcon.Vector(Icons.Default.Check),
-            onClicked = { onConfirm(pickedColor.intValue) },
+            onClicked = { onConfirm(pickedColor) },
         )
     }
 }

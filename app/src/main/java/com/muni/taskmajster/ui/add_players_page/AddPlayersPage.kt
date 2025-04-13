@@ -8,10 +8,12 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,8 +37,7 @@ fun AddPlayersPage(
     onArrowBackClicked: () -> Unit,
     onPlayClicked: (Game) -> Unit
 ) {
-    // mutable copy of the player list - TODO need to update te game when pressing play
-    val players = remember { mutableStateListOf(*game.listOfPlayers.toTypedArray()) }
+    val players = remember { mutableStateListOf(Player.createNew()) }
 
     Scaffold(
         topBar = {
@@ -55,7 +56,10 @@ fun AddPlayersPage(
                 LargeButton(
                     text = "Play",
                     icon = ButtonIcon.Vector(Icons.Default.PlayArrow),
-                    onClicked = { onPlayClicked(game) }
+                    onClicked = {
+                        val updatedGame = game.copy(listOfPlayers = players.toList())
+                        onPlayClicked(updatedGame)
+                    }
                 )
             }
         }
@@ -79,15 +83,7 @@ fun AddPlayersPage(
                 }
             },
             onAddPlayer = {
-                players.add(
-                    Player(
-                        id = System.currentTimeMillis(),
-                        name = "",
-                        colour = Random.nextInt(),
-                        totalPoints = 0,
-                        taskPoints = 0
-                    )
-                )
+                players.add(Player.createNew())
             }
         )
     }
@@ -102,21 +98,19 @@ fun AddPlayersPageContent(
     onPlayerRemoved: (Int) -> Unit,
     onAddPlayer: () -> Unit,
 ) {
-    var showColorPicker = remember { mutableStateOf(false) }
-    var clickedPlayerIndex = remember { mutableIntStateOf(-1) }
+    var showColorPicker by remember { mutableStateOf(false) }
+    var clickedPlayerIndex by remember { mutableIntStateOf(-1) }
 
-    when {
-        showColorPicker.value -> {
-            Colorpicker(
-                onConfirm = { newColor ->
-                    onPlayerAvatarColorChanged(clickedPlayerIndex.intValue, newColor)
-                    showColorPicker.value = false
-                },
-                onDismiss = {
-                    showColorPicker.value = false
-                }
-            )
-        }
+    if (showColorPicker) {
+        Colorpicker(
+            onConfirm = { newColor ->
+                onPlayerAvatarColorChanged(clickedPlayerIndex, newColor)
+                showColorPicker = false
+            },
+            onDismiss = {
+                showColorPicker = false
+            }
+        )
     }
 
     LazyColumn(
@@ -128,8 +122,8 @@ fun AddPlayersPageContent(
             onPlayerNameChanged = onPlayerNameChanged,
             onPlayerRemoved = onPlayerRemoved,
             onPlayerAvatarClicked = { index ->
-                clickedPlayerIndex.intValue = index
-                showColorPicker.value = true
+                clickedPlayerIndex = index
+                showColorPicker = true
             }
         )
         item {
