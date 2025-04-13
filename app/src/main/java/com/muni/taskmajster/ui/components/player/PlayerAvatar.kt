@@ -1,6 +1,7 @@
 package com.muni.taskmajster.ui.components.player
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -21,6 +22,7 @@ fun PlayerAvatar(
             .size(40.dp)
             .clip(CircleShape)
             .background(Color(color))
+            .border(2.dp, Color.DarkGray, CircleShape)
             .let { if (onClicked != null) it.clickable { onClicked() } else it }
     )
 }
