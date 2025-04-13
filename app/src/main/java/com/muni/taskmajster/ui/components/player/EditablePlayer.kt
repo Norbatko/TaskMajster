@@ -15,6 +15,7 @@ import kotlin.random.Random
 fun EditablePlayer(
     name: String,
     onNameChanged: (String) -> Unit,
+    onAvatarClicked: () -> Unit,
     color: Int,
     modifier: Modifier = Modifier
 ) {
@@ -24,7 +25,7 @@ fun EditablePlayer(
     ) {
         PlayerAvatar(
             color = color,
-            onClicked = {}
+            onClicked = onAvatarClicked
         )
         OutlinedTextField(
             modifier = Modifier
@@ -46,5 +47,6 @@ fun EditablePlayerPreview() {
         name = "PLAYER",
         color = Random.nextInt(),
         onNameChanged = {},
+        onAvatarClicked = {}
     )
 }

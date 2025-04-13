@@ -8,7 +8,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +22,7 @@ import com.muni.taskmajster.data.Game
 import com.muni.taskmajster.data.Gameplan
 import com.muni.taskmajster.data.Player
 import com.muni.taskmajster.data.Task
+import com.muni.taskmajster.ui.add_players_page.colorpicker.Colorpicker
 import com.muni.taskmajster.ui.components.button.ButtonIcon
 import com.muni.taskmajster.ui.components.button.LargeButton
 import com.muni.taskmajster.ui.components.common.TopBar
@@ -66,6 +69,10 @@ fun AddPlayersPage(
                 val player = players[index]
                 players[index] = player.copy(name = newName)
             },
+            onPlayerAvatarColorChanged = { index, newColor ->
+                val player = players[index]
+                players[index] = player.copy(colour = newColor)
+            },
             onPlayerRemoved = { index ->
                 if (players.size > 1) {
                     players.removeAt(index)
@@ -91,9 +98,27 @@ fun AddPlayersPageContent(
     modifier: Modifier = Modifier,
     players: List<Player>,
     onPlayerNameChanged: (Int, String) -> Unit,
+    onPlayerAvatarColorChanged: (Int, Int) -> Unit,
     onPlayerRemoved: (Int) -> Unit,
     onAddPlayer: () -> Unit,
 ) {
+    var showColorPicker = remember { mutableStateOf(false) }
+    var clickedPlayerIndex = remember { mutableIntStateOf(-1) }
+
+    when {
+        showColorPicker.value -> {
+            Colorpicker(
+                onConfirm = { newColor ->
+                    onPlayerAvatarColorChanged(clickedPlayerIndex.intValue, newColor)
+                    showColorPicker.value = false
+                },
+                onDismiss = {
+                    showColorPicker.value = false
+                }
+            )
+        }
+    }
+
     LazyColumn(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -101,7 +126,11 @@ fun AddPlayersPageContent(
         listOfPlayersItems(
             players = players,
             onPlayerNameChanged = onPlayerNameChanged,
-            onPlayerRemoved = onPlayerRemoved
+            onPlayerRemoved = onPlayerRemoved,
+            onPlayerAvatarClicked = { index ->
+                clickedPlayerIndex.intValue = index
+                showColorPicker.value = true
+            }
         )
         item {
             IconButton(onClick = onAddPlayer) {
@@ -118,6 +147,7 @@ fun LazyListScope.listOfPlayersItems(
     players: List<Player>,
     onPlayerNameChanged: (Int, String) -> Unit,
     onPlayerRemoved: (Int) -> Unit,
+    onPlayerAvatarClicked: (Int) -> Unit,
 ) {
     items(players.size) { index ->
         Row(
@@ -130,6 +160,7 @@ fun LazyListScope.listOfPlayersItems(
                 name = players[index].name,
                 color = players[index].colour,
                 onNameChanged = { newName -> onPlayerNameChanged(index, newName) },
+                onAvatarClicked = { onPlayerAvatarClicked(index) } ,
                 modifier = Modifier.weight(1f)
             )
             IconButton(
