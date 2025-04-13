@@ -1,4 +1,4 @@
-package com.muni.taskmajster.ui.components.player
+package com.muni.taskmajster.ui.add_players_page.colorpicker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,16 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PlayerAvatar(
+fun ColorChip(
     color: Int,
-    onClicked: (() -> Unit)? = null
+    onClicked: () -> Unit,
+    isSelected: Boolean
 ) {
     Box(
         modifier = Modifier
             .size(40.dp)
             .clip(CircleShape)
             .background(Color(color))
-            .border(2.dp, Color.DarkGray, CircleShape)
-            .let { if (onClicked != null) it.clickable { onClicked() } else it }
+            .border(4.dp, if (isSelected) Color.DarkGray else Color.White, CircleShape)
+            .clickable { onClicked() }
     )
 }
