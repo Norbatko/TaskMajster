@@ -9,6 +9,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,6 +28,8 @@ fun PlayerWithScore(
     player: Player,
     showScoreSetter: Boolean
 ) {
+    var taskScore by remember { mutableIntStateOf(0) }
+
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -41,9 +47,13 @@ fun PlayerWithScore(
 
         Spacer(modifier = Modifier.weight(0.5f))
 
+        //TODO: redo, does not make sense, needs defined logic and correct arguments passed
         if (showScoreSetter) { // score for task
-            Text(player.taskPoints.toString(), style = MaterialTheme.typography.titleLarge)
-            ScoreSetter()
+            Text(taskScore.toString(), style = MaterialTheme.typography.titleLarge)
+            ScoreSetter(
+                onPointRemoved = { taskScore-- },
+                onPointAdded = { taskScore++ }
+            )
         } else { // score for game
             Text(player.totalPoints.toString(), style = MaterialTheme.typography.titleLarge)
         }
@@ -51,13 +61,16 @@ fun PlayerWithScore(
 }
 
 @Composable
-fun ScoreSetter() {
+fun ScoreSetter(
+    onPointAdded: () -> Unit,
+    onPointRemoved: () -> Unit
+) {
     Row (
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = {},
+            onClick = onPointRemoved,
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_remove),
@@ -66,7 +79,7 @@ fun ScoreSetter() {
             }
         )
         IconButton(
-            onClick = {},
+            onClick = onPointAdded,
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),

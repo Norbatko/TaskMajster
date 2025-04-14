@@ -3,7 +3,6 @@ package com.muni.taskmajster.data
 import android.os.Parcelable
 import com.muni.taskmajster.util.PlayerColorProvider
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
 
 @Parcelize
 data class Player(
@@ -11,6 +10,7 @@ data class Player(
     val name: String,
     val colour: Int,
     var totalPoints: Int,
+    // TODO: decide if taskPoints is even necessary -> may be handled purely by task state in PlayingTaskScreen
     var taskPoints: Int,
 ): Parcelable {
     companion object {
