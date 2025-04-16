@@ -82,6 +82,6 @@ fun GameplanItem(
 @Composable
 fun GameplanItemPreview() {
     GameplanItem(
-        gameplan = Gameplan(1, "THE gameplan", emptyList()),
+        gameplan = Gameplan("1", "THE gameplan", emptyList()),
         onGameplanClicked = {})
 }

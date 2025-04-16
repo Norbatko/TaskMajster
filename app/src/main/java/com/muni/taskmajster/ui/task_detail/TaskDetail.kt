@@ -87,7 +87,7 @@ fun TaskDetail(
                             id = 1, // Todo generate
                             currentTask = 0,
                             gameplan = Gameplan(
-                                id = 1,  // Todo generate
+                                id = "1",  // Todo generate
                                 name = "Task: " + task.name,
                                 listOfTasks = List(1){ task },
                             ),
@@ -126,13 +126,13 @@ fun TaskDetail(
                 fontSize = 25.sp,
                 modifier = Modifier.padding(20.dp))
 
-            PhotoGrid(task.images)
+            PhotoGrid(task.imagePaths)
         }
     }
 }
 
 @Composable
-fun PhotoGrid(photoList: List<Long>) {
+fun PhotoGrid(photoList: List<String>) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -217,7 +217,7 @@ fun PhotoGallery(photoList: List<Int>) {
 @Composable
 fun TaskDetailPreview() {
     TaskDetail(
-        task = Task(1, "task1", 15, "task description", emptyList()),
+        task = Task("1", "task1", 15, "task description", emptyList()),
         onArrowBackClicked = {},
         onPlayClicked = {}
     )

@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Player(
-    val id: String,
+    val id: Long,
     val name: String,
     val colour: Int,
     var totalPoints: Int,
@@ -15,7 +15,7 @@ data class Player(
     companion object {
         fun createNew(): Player {
             return Player(
-                id = System.currentTimeMillis().toString(),
+                id = System.currentTimeMillis(),
                 name = "Player X",
                 colour = PlayerColorProvider.nextColor(),
                 totalPoints = 0,

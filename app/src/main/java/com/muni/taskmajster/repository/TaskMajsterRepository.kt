@@ -11,11 +11,11 @@ class TaskMajsterRepository {
     fun getFakeTasks(): List<Task> {
         return List(50) { index ->
             Task(
-                id = index.toLong(),
+                id = index.toString(),
                 name = "Task $index",
                 time = (10..120).random(),
                 description = "Description for Task $index.",
-                images = emptyList()
+                imagePaths = emptyList()
             )
         }
     }
@@ -27,7 +27,7 @@ class TaskMajsterRepository {
             val tasks = allTasks.shuffled().take((0..10).random())
 
             Gameplan(
-                id = index.toLong(),
+                id = index.toString(),
                 name = "Gameplan $index",
                 listOfTasks = tasks
             )

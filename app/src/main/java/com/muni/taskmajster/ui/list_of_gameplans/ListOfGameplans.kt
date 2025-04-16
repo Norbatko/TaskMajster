@@ -50,7 +50,7 @@ fun ListOfGameplansPreview() {
     ListOfGameplans(
         listOfGameplans = List(20) { index ->
             Gameplan(
-                id = index.toLong(),
+                id = index.toString(),
                 name = "Gameplan $index",
                 listOfTasks = emptyList(),
             )

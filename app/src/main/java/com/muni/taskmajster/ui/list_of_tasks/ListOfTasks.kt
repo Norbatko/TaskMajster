@@ -51,11 +51,11 @@ fun ListOfTasksPreview() {
     ListOfTasks(
         listOfTasks = List(20) { index ->
             Task(
-                id = index.toLong(),
+                id = index.toString(),
                 name = "Task $index",
                 time = (10..120).random(),
                 description = "Description for Task $index.",
-                images = emptyList()
+                imagePaths = emptyList()
             )
         },
         onArrowBackClicked = {},
