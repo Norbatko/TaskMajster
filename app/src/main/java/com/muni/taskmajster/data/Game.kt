@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Game(
-    val id: Long,
+    val id: String,
     var currentTask: Int,
     val listOfPlayers: List<Player>,
     val gameplan: Gameplan // play random gets list of all tasks randomized

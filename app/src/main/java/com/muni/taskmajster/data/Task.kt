@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Task(
-    val id: Long,
+    val id: String,
     val name: String,
     val time: Int,
     val description: String,

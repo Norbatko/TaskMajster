@@ -3,11 +3,10 @@ package com.muni.taskmajster.data
 import android.os.Parcelable
 import com.muni.taskmajster.util.PlayerColorProvider
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
 
 @Parcelize
 data class Player(
-    val id: Long,
+    val id: String,
     val name: String,
     val colour: Int,
     var totalPoints: Int,
@@ -16,7 +15,7 @@ data class Player(
     companion object {
         fun createNew(): Player {
             return Player(
-                id = System.currentTimeMillis(),
+                id = System.currentTimeMillis().toString(),
                 name = "Player X",
                 colour = PlayerColorProvider.nextColor(),
                 totalPoints = 0,
