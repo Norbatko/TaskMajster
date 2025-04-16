@@ -9,5 +9,5 @@ data class Task(
     val name: String,
     val time: Int,
     val description: String,
-    val images: List<Long>
+    val imagePaths: List<String>
 ): Parcelable
