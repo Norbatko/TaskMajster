@@ -46,7 +46,7 @@ fun ScoringBottomSheetPreview() {
                 totalPoints = 0,
             )},
             gameplan = Gameplan(
-                1,
+                "1",
                 "The gameplan",
                 listOfTasks = emptyList())
             )

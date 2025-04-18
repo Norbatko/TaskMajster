@@ -3,7 +3,6 @@ package com.muni.taskmajster.data
 import android.os.Parcelable
 import com.muni.taskmajster.util.PlayerColorProvider
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
 
 @Parcelize
 data class Player(

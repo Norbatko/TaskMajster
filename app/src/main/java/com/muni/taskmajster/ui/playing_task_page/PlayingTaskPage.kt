@@ -101,10 +101,10 @@ fun PlayingTaskPagePreview() {
                 )
             },
             gameplan = Gameplan(
-                1,
+                "1",
                 "The gameplan",
                 listOfTasks = List(1){
-                    Task(1, "taskName", 20, "taskDescription", emptyList())
+                    Task("1", "taskName", 20, "taskDescription", emptyList())
                 })
         ),
         onDoneClicked = {},

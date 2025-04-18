@@ -34,7 +34,7 @@ class MainPageFragment: Fragment() {
                                     id = 1,
                                     currentTask = 0,
                                     gameplan = Gameplan(
-                                        id = 1,
+                                        id = "1",
                                         name = "All tasks shuffled",
                                         listOfTasks = repository.getFakeTasks().shuffled(),
                                     ),

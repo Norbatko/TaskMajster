@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Gameplan(
-    val id: Long,
+    val id: String,
     val name: String,
     var listOfTasks: List<Task>
 ): Parcelable

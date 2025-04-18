@@ -115,15 +115,15 @@ fun GameplanDetail(
 fun GameplanDetailPreview() {
     GameplanDetail (
         gameplan = Gameplan(
-            1,
+            "1",
             "The gameplan",
             listOfTasks = List(10) { index ->
                 Task(
-                    id = index.toLong(),
+                    id = index.toString(),
                     name = "Task $index",
                     time = (10..120).random(),
                     description = "Description for Task $index.",
-                    images = emptyList()
+                    imagePaths = emptyList()
                 )
             },),
         onArrowBackClicked = {},

@@ -94,7 +94,7 @@ fun TaskItem(
 @Composable
 fun TaskItemPreview() {
     TaskItem(
-        task = Task(1, "task1", 15, "task description", emptyList()),
+        task = Task("1", "task1", 15, "task description", emptyList()),
         onTaskClicked = {},
     )
 }
