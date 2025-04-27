@@ -37,7 +37,7 @@
             app:destination="@id/addPlayersPageFragment" />
         <argument
             android:name="task"
-            app:argType="com.muni.taskmajster.data.Task" />
+            app:argType="com.muni.taskmajster.model.data.Task" />
     </fragment>
 
     <fragment
@@ -61,7 +61,7 @@
             app:destination="@id/addPlayersPageFragment" />
         <argument
             android:name="gameplan"
-            app:argType="com.muni.taskmajster.data.Gameplan" />
+            app:argType="com.muni.taskmajster.model.data.Gameplan" />
     </fragment>
 
     <fragment
@@ -73,7 +73,7 @@
             app:destination="@id/playingTaskPageFragment" />
         <argument
             android:name="game"
-            app:argType="com.muni.taskmajster.data.Game" />
+            app:argType="com.muni.taskmajster.model.data.Game" />
     </fragment>
 
     <fragment
@@ -85,7 +85,7 @@
             app:destination="@id/endOfTaskPageFragment" />
         <argument
             android:name="game"
-            app:argType="com.muni.taskmajster.data.Game" />
+            app:argType="com.muni.taskmajster.model.data.Game" />
     </fragment>
 
     <fragment
@@ -100,7 +100,7 @@
             app:destination="@id/playingTaskPageFragment" />
         <argument
             android:name="game"
-            app:argType="com.muni.taskmajster.data.Game" />
+            app:argType="com.muni.taskmajster.model.data.Game" />
     </fragment>
 
 </navigation>
