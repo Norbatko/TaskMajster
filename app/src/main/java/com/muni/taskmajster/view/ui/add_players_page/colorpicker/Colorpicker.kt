@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.muni.taskmajster.ui.components.button.ButtonIcon
-import com.muni.taskmajster.ui.components.button.LargeButton
-import com.muni.taskmajster.util.PlayerColorProvider
+import com.muni.taskmajster.view.ui.components.button.ButtonIcon
+import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.util.PlayerColorProvider
 
 @Composable
 fun Colorpicker(
