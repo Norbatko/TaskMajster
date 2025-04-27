@@ -1,7 +1,7 @@
 package com.muni.taskmajster.model.data
 
 import android.os.Parcelable
-import com.muni.taskmajster.util.PlayerColorProvider
+import com.muni.taskmajster.view.util.PlayerColorProvider
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
