@@ -25,6 +25,7 @@ monitor = "1.7.2"
 junitKtx = "1.2.1"
 junitJunit = "4.12"
 testng = "6.9.6"
+firebaseFirestore = "25.1.4"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
@@ -55,6 +56,7 @@ androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "m
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
