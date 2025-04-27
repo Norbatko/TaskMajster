@@ -31,6 +31,7 @@ import com.muni.taskmajster.view.ui.components.list_item.TaskItem
 @Composable
 fun GameplanDetail(
     gameplan: Gameplan,
+    listOfGameplanTasks: List<Task>,
     onArrowBackClicked: () -> Unit,
     onTaskClicked: (Task) -> Unit,
     onPlayClicked: (Game) -> Unit,
@@ -82,7 +83,7 @@ fun GameplanDetail(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    itemsIndexed(gameplan.listOfTasks) { _, task ->
+                    itemsIndexed(listOfGameplanTasks) { _, task ->
                         TaskItem(
                             onTaskClicked = { onTaskClicked(task) },
                             task = task
@@ -117,15 +118,18 @@ fun GameplanDetailPreview() {
         gameplan = Gameplan(
             "1",
             "The gameplan",
-            listOfTasks = List(10) { index ->
-                Task(
-                    id = index.toString(),
-                    name = "Task $index",
-                    time = (10..120).random(),
-                    description = "Description for Task $index.",
-                    imagePaths = emptyList()
-                )
+            listOfTaskIds = List(10) { index ->
+                "$index"
             },),
+        listOfGameplanTasks = List(10) { index ->
+            Task(
+                id = index.toString(),
+                name = "Task $index",
+                time = (10..120).random(),
+                description = "Description for Task $index.",
+                imagePaths = emptyList()
+            )
+        } ,
         onArrowBackClicked = {},
         onTaskClicked = {},
         onPlayClicked = {}

@@ -31,6 +31,7 @@ import kotlin.random.Random
 @Composable
 fun EndOfTaskPage(
     game: Game,
+    listOfGameplanTasks: List<Task>,
     lastTask: Boolean = false,
     onArrowBackClicked: () -> Unit,
     onNextTaskClicked: (Game) -> Unit = {},
@@ -39,7 +40,7 @@ fun EndOfTaskPage(
     Scaffold(
         topBar = {
             TopBar(
-                title = game.gameplan.listOfTasks[game.currentTask].name,
+                title = listOfGameplanTasks[game.currentTask].name,
                 onArrowBackClicked = onArrowBackClicked
             )
         },
@@ -135,10 +136,13 @@ fun EndOfTaskPagePreview() {
             gameplan = Gameplan(
                 "1",
                 "The gameplan",
-                listOfTasks = List(1){
-                    Task("1", "taskName", 20, "taskDescription", emptyList())
+                listOfTaskIds = List(1){
+                    "1"
                 })
         ),
+        listOfGameplanTasks = List(1) {
+            Task("1", "taskName", 20, "taskDescription", emptyList())
+        },
         onArrowBackClicked = {},
         onFinalizeClicked = {},
         onNextTaskClicked = {}
