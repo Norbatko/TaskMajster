@@ -45,7 +45,7 @@ class MainPageFragment : Fragment() {
             gameplan = Gameplan(
                 id = generateGameplanId(),
                 name = "Random Shuffle Session",
-                listOfTasks = shuffledTasks
+                listOfTaskIds = shuffledTasks.map { it.id }
             ),
             listOfPlayers = emptyList()
         )
