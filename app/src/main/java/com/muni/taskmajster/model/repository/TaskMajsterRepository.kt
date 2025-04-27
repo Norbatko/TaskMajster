@@ -29,7 +29,7 @@ class TaskMajsterRepository {
             Gameplan(
                 id = index.toString(),
                 name = "Gameplan $index",
-                listOfTasks = tasks
+                listOfTaskIds = List(1) {"1"}
             )
         }
     }
