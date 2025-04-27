@@ -31,6 +31,24 @@ class GameplanRepository {
             }
     }
 
+    // Fetch desired Gameplan
+    fun fetchGameplanById(id: String, onResult: (Gameplan?) -> Unit) {
+        collection.document(id)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Convert document to Gameplan and set its id
+                    val gameplan = document.toObject(Gameplan::class.java)?.copy(id = document.id)
+                    onResult(gameplan)
+                } else {
+                    onResult(null)
+                }
+            }
+            .addOnFailureListener {
+                onResult(null)
+            }
+    }
+
     // Update a Gameplan
     fun updateGameplan(gameplan: Gameplan, onResult: (Boolean) -> Unit) {
         collection.document(gameplan.id).set(gameplan)
