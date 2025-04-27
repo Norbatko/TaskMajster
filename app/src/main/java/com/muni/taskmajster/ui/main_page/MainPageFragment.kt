@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.muni.taskmajster.data.Game
 import com.muni.taskmajster.data.Gameplan
+import com.muni.taskmajster.data.Task
 import com.muni.taskmajster.repository.TaskMajsterRepository
+import com.muni.taskmajster.repository.TaskRepository
 
-class MainPageFragment: Fragment() {
-    private val repository = TaskMajsterRepository()
+class MainPageFragment : Fragment() {
+    private val repository = TaskRepository()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
@@ -27,21 +29,36 @@ class MainPageFragment: Fragment() {
                             .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfGameplansFragment())
                     },
                     onPlayRandomClicked = {
-                        findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment(
-                                // TODO on click create new game in the real repository with all existing tasks shuffled
-                                Game(
-                                    id = 1,
-                                    currentTask = 0,
-                                    gameplan = Gameplan(
-                                        id = "1",
-                                        name = "All tasks shuffled",
-                                        listOfTasks = repository.getFakeTasks().shuffled(),
-                                    ),
-                                    listOfPlayers = emptyList())
-                            ))
+                        repository.fetchTasks { tasks ->
+                            val game = createShuffledGame(tasks)
+                            navigateToAddPlayers(game)
+                        }
                     },
                 )
             }
         }
+
+    private fun createShuffledGame(tasks: List<Task>): Game {
+        val shuffledTasks = tasks.shuffled()
+        return Game(
+            id = generateUniqueId(),
+            currentTask = 0,
+            gameplan = Gameplan(
+                id = generateGameplanId(),
+                name = "Random Shuffle Session",
+                listOfTasks = shuffledTasks
+            ),
+            listOfPlayers = emptyList()
+        )
+    }
+
+    private fun navigateToAddPlayers(game: Game) {
+        findNavController().navigate(
+            MainPageFragmentDirections.actionMainPageFragmentToAddPlayersPageFragment(game)
+        )
+    }
+
+    private fun generateUniqueId() = System.currentTimeMillis()  // Replace with proper ID generation
+    private fun generateGameplanId() = "gameplan_${System.currentTimeMillis()}"
 }
+
