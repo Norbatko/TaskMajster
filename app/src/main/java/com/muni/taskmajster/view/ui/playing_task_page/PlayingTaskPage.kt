@@ -32,6 +32,7 @@ import kotlin.random.Random
 @Composable
 fun PlayingTaskPage(
     game: Game,
+    listOfGameplanTasks: List<Task>,
     onDoneClicked: (Game) -> Unit,
     onArrowBackClicked: () -> Unit
 ) {
@@ -46,7 +47,7 @@ fun PlayingTaskPage(
         },
         topBar = {
             TopBar(
-                title = game.gameplan.listOfTasks[game.currentTask].name,
+                title = listOfGameplanTasks[game.currentTask].name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(
@@ -58,7 +59,7 @@ fun PlayingTaskPage(
             )
         },
     ) {
-    PlayingTaskContent(description = game.gameplan.listOfTasks[game.currentTask].description)
+    PlayingTaskContent(description = listOfGameplanTasks[game.currentTask].description)
     }
 }
 
@@ -103,10 +104,13 @@ fun PlayingTaskPagePreview() {
             gameplan = Gameplan(
                 "1",
                 "The gameplan",
-                listOfTasks = List(1){
-                    Task("1", "taskName", 20, "taskDescription", emptyList())
-                })
+                listOfTaskIds = List(1){
+                    "1"
+                }),
         ),
+        listOfGameplanTasks = List(1){
+            Task("1", "taskName", 20, "taskDescription", emptyList())
+        },
         onDoneClicked = {},
         onArrowBackClicked = {}
     )
