@@ -60,7 +60,7 @@ fun GameplanItem(
                         modifier = Modifier.padding(end = 4.dp)
                     )
                     Text(
-                        text = gameplan.listOfTasks.size.toString(),
+                        text = gameplan.listOfTaskIds.size.toString(),
                         color = Color.Gray,
                         fontSize = 14.sp
                     )

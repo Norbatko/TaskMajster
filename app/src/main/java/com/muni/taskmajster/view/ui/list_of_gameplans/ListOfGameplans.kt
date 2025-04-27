@@ -52,7 +52,7 @@ fun ListOfGameplansPreview() {
             Gameplan(
                 id = index.toString(),
                 name = "Gameplan $index",
-                listOfTasks = emptyList(),
+                listOfTaskIds = emptyList(),
             )
         },
         onArrowBackClicked = {},

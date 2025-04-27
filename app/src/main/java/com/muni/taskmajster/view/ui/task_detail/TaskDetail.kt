@@ -89,7 +89,7 @@ fun TaskDetail(
                             gameplan = Gameplan(
                                 id = "1",  // Todo generate
                                 name = "Task: " + task.name,
-                                listOfTasks = List(1){ task },
+                                listOfTaskIds = List(1){ "1" },
                             ),
                             listOfPlayers = emptyList(),
                         )
