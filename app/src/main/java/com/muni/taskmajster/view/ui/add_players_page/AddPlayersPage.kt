@@ -185,8 +185,8 @@ fun AddPlayersPagePreview() {
             gameplan = Gameplan(
                 "1",
                 "The gameplan",
-                listOfTasks = List(1){
-                    Task("1", "taskName", 20, "taskDescription", emptyList())
+                listOfTaskIds = List(1){
+                    "1"
                 })
         ),
         onArrowBackClicked = {},
