@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainPageFragment"
-        android:name="com.muni.taskmajster.ui.main_page.MainPageFragment"
+        android:name="com.muni.taskmajster.view.ui.main_page.MainPageFragment"
         android:label="MainPageFragment" >
         <action
             android:id="@+id/action_mainPageFragment_to_listOfTasksFragment"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/listOfTasksFragment"
-        android:name="com.muni.taskmajster.ui.list_of_tasks.ListOfTasksFragment"
+        android:name="com.muni.taskmajster.view.ui.list_of_tasks.ListOfTasksFragment"
         android:label="ListOfTasksFragment" >
         <action
             android:id="@+id/action_listOfTasksFragment_to_taskDetailFragment"
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/taskDetailFragment"
-        android:name="com.muni.taskmajster.ui.task_detail.TaskDetailFragment"
+        android:name="com.muni.taskmajster.view.ui.task_detail.TaskDetailFragment"
         android:label="TaskDetailFragment" >
         <action
             android:id="@+id/action_taskDetailFragment_to_addPlayersPageFragment"
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/listOfGameplansFragment"
-        android:name="com.muni.taskmajster.ui.list_of_gameplans.ListOfGameplansFragment"
+        android:name="com.muni.taskmajster.view.ui.list_of_gameplans.ListOfGameplansFragment"
         android:label="ListOfGameplansFragment" >
         <action
             android:id="@+id/action_listOfGameplansFragment_to_gameplanDetailFragment"
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/gameplanDetailFragment"
-        android:name="com.muni.taskmajster.ui.gameplan_detail.GameplanDetailFragment"
+        android:name="com.muni.taskmajster.view.ui.gameplan_detail.GameplanDetailFragment"
         android:label="GameplanDetailFragment" >
         <action
             android:id="@+id/action_gameplanDetailFragment_to_taskDetailFragment"
@@ -66,7 +66,7 @@
 
     <fragment
         android:id="@+id/addPlayersPageFragment"
-        android:name="com.muni.taskmajster.ui.add_players_page.AddPlayersPageFragment"
+        android:name="com.muni.taskmajster.view.ui.add_players_page.AddPlayersPageFragment"
         android:label="AddPlayersPageFragment" >
         <action
             android:id="@+id/action_addPlayersPageFragment_to_playingTaskPageFragment"
@@ -78,7 +78,7 @@
 
     <fragment
         android:id="@+id/playingTaskPageFragment"
-        android:name="com.muni.taskmajster.ui.playing_task_page.PlayingTaskPageFragment"
+        android:name="com.muni.taskmajster.view.ui.playing_task_page.PlayingTaskPageFragment"
         android:label="PlayingTaskPageFragment" >
         <action
             android:id="@+id/action_playingTaskPageFragment_to_endOfTaskPageFragment"
@@ -90,7 +90,7 @@
 
     <fragment
         android:id="@+id/endOfTaskPageFragment"
-        android:name="com.muni.taskmajster.ui.end_of_task_page.EndOfTaskPageFragment"
+        android:name="com.muni.taskmajster.view.ui.end_of_task_page.EndOfTaskPageFragment"
         android:label="EndOfTaskPageFragment" >
         <action
             android:id="@+id/action_endOfTaskPageFragment_to_mainPage"
