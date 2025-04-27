@@ -21,10 +21,10 @@ import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Player
 import com.muni.taskmajster.model.data.Task
-import com.muni.taskmajster.ui.components.button.ButtonIcon
-import com.muni.taskmajster.ui.components.button.LargeButton
-import com.muni.taskmajster.ui.components.common.TopBar
-import com.muni.taskmajster.ui.components.player.PlayerWithScore
+import com.muni.taskmajster.view.ui.components.button.ButtonIcon
+import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.ui.components.common.TopBar
+import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
 import kotlin.random.Random
 
 // TODO maybe somewhere display number of remaining tasks?

@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.muni.taskmajster.model.data.Task
-import com.muni.taskmajster.ui.components.common.TopBar
-import com.muni.taskmajster.ui.components.common.TopBarButton
-import com.muni.taskmajster.ui.components.list_item.TaskItem
+import com.muni.taskmajster.view.ui.components.common.TopBar
+import com.muni.taskmajster.view.ui.components.common.TopBarButton
+import com.muni.taskmajster.view.ui.components.list_item.TaskItem
 
 @Composable
 fun ListOfTasks(
