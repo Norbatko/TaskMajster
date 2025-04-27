@@ -6,21 +6,41 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
+
+import android.util.Log
 
 class EndOfTaskPageFragment: Fragment() {
 
     private val args: EndOfTaskPageFragmentArgs by navArgs()
+    private val viewModel: EndOfTaskPageViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadTasksByIds(args.game.gameplan.listOfTaskIds)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             val nextTask = args.game.currentTask + 1
-            val isLastTask = nextTask >= args.game.gameplan.listOfTasks.size
+            val isLastTask = nextTask >= args.game.gameplan.listOfTaskIds.size
 
             setContent {
+                val tasks by viewModel.tasks.observeAsState(emptyList())
+                val loading by viewModel.loading.observeAsState(false)
+
+                if (loading) {
+                    Log.d("LOADING", "End of Task page loading tasks")
+                }
+
                 EndOfTaskPage(
                     game = args.game,
+                    listOfGameplanTasks = tasks,
                     lastTask = isLastTask,
                     onArrowBackClicked = {
                         findNavController()
