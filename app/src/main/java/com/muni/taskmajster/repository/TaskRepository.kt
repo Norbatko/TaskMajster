@@ -1,5 +1,6 @@
 package com.muni.taskmajster.repository
 
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.muni.taskmajster.data.Task
@@ -29,6 +30,42 @@ class TaskRepository {
                 }
                 onResult(tasks)
             }
+    }
+
+    // Fetch Tasks by a list of IDs
+    fun fetchTasksByIds(
+        ids: List<String>,
+        onResult: (List<Task>) -> Unit
+    ) {
+        if (ids.isEmpty()) {
+            onResult(emptyList())
+            return
+        }
+        val batchSize = 10
+        val tasks = mutableListOf<Task>()
+        val batches = ids.chunked(batchSize)
+        var completedBatches = 0
+
+        for (batch in batches) {
+            collection.whereIn(FieldPath.documentId(), batch)
+                .get()
+                .addOnSuccessListener { result ->
+                    val batchTasks = result.documents.mapNotNull { doc ->
+                        doc.toObject(Task::class.java)?.copy(id = doc.id)
+                    }
+                    tasks.addAll(batchTasks)
+                    completedBatches++
+                    if (completedBatches == batches.size) {
+                        onResult(tasks)
+                    }
+                }
+                .addOnFailureListener {
+                    completedBatches++
+                    if (completedBatches == batches.size) {
+                        onResult(tasks)
+                    }
+                }
+        }
     }
 
     // Update a Task
