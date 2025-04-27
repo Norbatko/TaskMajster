@@ -1,10 +1,11 @@
 package com.muni.taskmajster.repository
 
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.muni.taskmajster.data.Task
 
 class TaskRepository {
-    private val db = FirebaseFirestore.getInstance()
+    private val db = Firebase.firestore
     private val collection = db.collection("tasks")
 
     // Add a new Task

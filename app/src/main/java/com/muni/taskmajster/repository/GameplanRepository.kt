@@ -1,39 +1,37 @@
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+package com.muni.taskmajster.repository
+
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.muni.taskmajster.data.Gameplan
 
 class GameplanRepository {
-    private val db = FirebaseFirestore.getInstance()
+    private val db = Firebase.firestore
     private val collection = db.collection("gameplans")
 
     // Add a new Gameplan
     fun addGameplan(gameplan: Gameplan, onResult: (Boolean) -> Unit) {
-        // Add without the ID first
-        collection.add(gameplan.copy(id = "")) // id is empty for new docs
-            .addOnSuccessListener { documentRef ->
-                // Now update the Gameplan with the generated ID
-                documentRef.update("id", documentRef.id)
+        collection.add(gameplan.copy(id = "")) // Add without id
+            .addOnSuccessListener { docRef ->
+                // Update the Gameplan with the generated ID
+                docRef.update("id", docRef.id)
                     .addOnSuccessListener { onResult(true) }
                     .addOnFailureListener { onResult(false) }
             }
             .addOnFailureListener { onResult(false) }
     }
 
-
     // Fetch all Gameplans
     fun fetchGameplans(onResult: (List<Gameplan>) -> Unit) {
         collection.get()
             .addOnSuccessListener { result ->
                 val gameplans = result.documents.mapNotNull { doc ->
-                    val gp = doc.toObject(Gameplan::class.java)
-                    gp?.copy(id = doc.id) // Set the id from Firestore
+                    doc.toObject(Gameplan::class.java)?.copy(id = doc.id)
                 }
                 onResult(gameplans)
             }
     }
 
-
-    // Update Gameplan's name or listOfTasks
+    // Update a Gameplan
     fun updateGameplan(gameplan: Gameplan, onResult: (Boolean) -> Unit) {
         collection.document(gameplan.id).set(gameplan)
             .addOnSuccessListener { onResult(true) }
