@@ -35,10 +35,6 @@ class PlayingTaskPageFragment: Fragment() {
                 val tasks by viewModel.tasks.observeAsState(emptyList())
                 val loadingTasks by viewModel.loadingTasks.observeAsState(false)
 
-                if (loadingTasks) {
-                    Log.d("LOADING", "Playing task page loading tasks")
-                }
-
                 when {
                     loadingTasks -> {
                         Box(
@@ -48,9 +44,7 @@ class PlayingTaskPageFragment: Fragment() {
                             CircularProgressIndicator()
                         }
                     }
-
                     else -> {
-
                         PlayingTaskPage(
                             game = args.game,
                             listOfGameplanTasks = tasks,

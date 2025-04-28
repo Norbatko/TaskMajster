@@ -5,8 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,30 +35,39 @@ class GameplanDetailFragment: Fragment() {
                 val tasks by viewModel.tasks.observeAsState(emptyList())
                 val loading by viewModel.loading.observeAsState(false)
 
-                if (loading) {
-                    Log.d("LOADING", "Game Detail loading tasks")
+                when {
+                    loading -> {
+                        Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = androidx.compose.ui.Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+                    else -> {
+                        GameplanDetail(
+                            gameplan = args.gameplan,
+                            listOfGameplanTasks = tasks,
+                            onArrowBackClicked = {
+                                findNavController().navigateUp()
+                            },
+                            onTaskClicked = { task ->
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections.actionGameplanDetailFragmentToTaskDetailFragment(
+                                        task
+                                    )
+                                )
+                            },
+                            onPlayClicked = { game ->
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections.actionGameplanDetailFragmentToAddPlayersPageFragment(
+                                        game
+                                    )
+                                )
+                            },
+                        )
+                    }
                 }
-                GameplanDetail(
-                    gameplan = args.gameplan,
-                    listOfGameplanTasks = tasks,
-                    onArrowBackClicked = {
-                        findNavController().navigateUp()
-                    },
-                    onTaskClicked = { task ->
-                        findNavController().navigate(
-                            GameplanDetailFragmentDirections.actionGameplanDetailFragmentToTaskDetailFragment(
-                                task
-                            )
-                        )
-                    },
-                    onPlayClicked = { game ->
-                        findNavController().navigate(
-                            GameplanDetailFragmentDirections.actionGameplanDetailFragmentToAddPlayersPageFragment(
-                                game
-                            )
-                        )
-                    },
-                )
             }
         }
 }

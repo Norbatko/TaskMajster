@@ -45,7 +45,6 @@ class ListOfTasksFragment : Fragment() {
                     }
                 }
                 else -> {
-                    // Show list
                     ListOfTasks(
                         listOfTasks = tasks,
                         onArrowBackClicked = { findNavController().navigateUp() },
