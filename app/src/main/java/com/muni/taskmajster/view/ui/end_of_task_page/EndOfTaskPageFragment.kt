@@ -14,6 +14,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 
 import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Modifier
 
 class EndOfTaskPageFragment: Fragment() {
 
@@ -34,29 +38,41 @@ class EndOfTaskPageFragment: Fragment() {
                 val tasks by viewModel.tasks.observeAsState(emptyList())
                 val loading by viewModel.loading.observeAsState(false)
 
-                if (loading) {
-                    Log.d("LOADING", "End of Task page loading tasks")
-                }
-
-                EndOfTaskPage(
-                    game = args.game,
-                    listOfGameplanTasks = tasks,
-                    lastTask = isLastTask,
-                    onArrowBackClicked = {
-                        findNavController()
-                            .navigate(EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToMainPage())
-                    },
-                    onNextTaskClicked = if (isLastTask) ({}) else { game ->
-                        val updatedGame = game.copy(currentTask = nextTask)
-                        findNavController().navigate(
-                            EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToPlayingTaskPageFragment(updatedGame)
-                        )
-                    },
-                    onFinalizeClicked = { // TODO now back to menu, maybe some 3 winner screen? or completely remove and leave just arrow back?
-                        findNavController()
-                            .navigate(EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToMainPage())
+                when {
+                    loading -> {
+                        Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = androidx.compose.ui.Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
-                )
+
+                    else -> {
+
+                        EndOfTaskPage(
+                            game = args.game,
+                            listOfGameplanTasks = tasks,
+                            lastTask = isLastTask,
+                            onArrowBackClicked = {
+                                findNavController()
+                                    .navigate(EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToMainPage())
+                            },
+                            onNextTaskClicked = if (isLastTask) ({}) else { game ->
+                                val updatedGame = game.copy(currentTask = nextTask)
+                                findNavController().navigate(
+                                    EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToPlayingTaskPageFragment(
+                                        updatedGame
+                                    )
+                                )
+                            },
+                            onFinalizeClicked = { // TODO now back to menu, maybe some 3 winner screen? or completely remove and leave just arrow back?
+                                findNavController()
+                                    .navigate(EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToMainPage())
+                            }
+                        )
+                    }
+                }
             }
         }
 }
