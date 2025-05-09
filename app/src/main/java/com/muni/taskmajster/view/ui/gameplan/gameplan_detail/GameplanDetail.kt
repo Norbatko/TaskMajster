@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.gameplan_detail
+package com.muni.taskmajster.view.ui.gameplan.gameplan_detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -63,7 +63,7 @@ fun GameplanDetail(
                     icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
                     onClicked = { onPlayClicked(
                         Game(
-                            id = 1, // Todo generate
+                            id = System.currentTimeMillis(),
                             currentTask = 0,
                             gameplan = gameplan,
                             listOfPlayers = emptyList(),

@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.list_of_tasks
+package com.muni.taskmajster.view.ui.gameplan.list_of_gameplans
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,57 +10,52 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
-import com.muni.taskmajster.view.ui.components.list_item.TaskItem
+import com.muni.taskmajster.view.ui.components.list_item.GameplanItem
 
 @Composable
-fun ListOfTasks(
-    listOfTasks: List<Task>,
+fun ListOfGameplans(
+    listOfGameplans: List<Gameplan>,
     onArrowBackClicked: () -> Unit,
-    onTaskClicked: (Task) -> Unit,
-    onAddTaskClicked: () -> Unit,
+    onGameplanClicked: (Gameplan) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopBar(
-                title  = "List of tasks",
+                title  = "List of gameplans",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClicked = onAddTaskClicked, icon = Icons.Default.Add, contentDescription = "Add"),
+                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
                 )
             )
         },
     ) { innerPadding ->
-        LazyColumn(
+        LazyColumn (
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(innerPadding)
         ) {
-            items(items = listOfTasks, key = { it.id }) { task ->
-                TaskItem(task = task, onTaskClicked = onTaskClicked)
+            items(items = listOfGameplans, key = { it.id }) { gameplan ->
+                GameplanItem(gameplan = gameplan, onGameplanClicked = onGameplanClicked)
             }
         }
     }
 }
 
-
 @Preview
 @Composable
-fun ListOfTasksPreview() {
-    ListOfTasks(
-        listOfTasks = List(20) { index ->
-            Task(
+fun ListOfGameplansPreview() {
+    ListOfGameplans(
+        listOfGameplans = List(20) { index ->
+            Gameplan(
                 id = index.toString(),
-                name = "Task $index",
-                time = (10..120).random(),
-                description = "Description for Task $index.",
-                imagePaths = emptyList()
+                name = "Gameplan $index",
+                listOfTaskIds = emptyList(),
             )
         },
         onArrowBackClicked = {},
-        onTaskClicked = {},
-        onAddTaskClicked = {}
+        onGameplanClicked = {}
     )
 }

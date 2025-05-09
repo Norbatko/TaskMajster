@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.task_form
+package com.muni.taskmajster.view.ui.task.task_form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.getValue
@@ -30,8 +30,8 @@ import com.muni.taskmajster.view.ui.components.button.LargeButton
 @Composable
 fun TaskForm(
     initialTask: Task? = null,
-    onSave: (Task) -> Unit,
-    onCancel: () -> Unit,
+    onSaveClicked: (Task) -> Unit,
+    onCancelClicked: () -> Unit,
     isEditMode: Boolean = false
 ) {
     var name by remember { mutableStateOf(initialTask?.name ?: "") }
@@ -49,7 +49,7 @@ fun TaskForm(
         topBar = {
             TopBar(
                 title = if (isEditMode) "Edit Task" else "Create Task",
-                onArrowBackClicked = onCancel,
+                onArrowBackClicked = onCancelClicked,
             )
         }
     ) { innerPadding ->
@@ -135,7 +135,7 @@ fun TaskForm(
                                 time = time.toInt(),
                                 imagePaths = emptyList()
                             )
-                            onSave(task)
+                            onSaveClicked(task)
                         }
                     },
                     transparent = false,
@@ -150,7 +150,7 @@ fun TaskForm(
 @Composable
 fun TaskFormPreview() {
     TaskForm(
-        onCancel = {},
-        onSave = {},
+        onCancelClicked = {},
+        onSaveClicked = {},
     )
 }

@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.add_players_page.colorpicker
+package com.muni.taskmajster.view.ui.game.add_players_page.colorpicker
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

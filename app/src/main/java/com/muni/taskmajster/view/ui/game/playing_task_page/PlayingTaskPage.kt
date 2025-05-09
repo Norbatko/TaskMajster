@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.playing_task_page
+package com.muni.taskmajster.view.ui.game.playing_task_page
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +25,7 @@ import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
-import com.muni.taskmajster.view.ui.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
+import com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
 import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)

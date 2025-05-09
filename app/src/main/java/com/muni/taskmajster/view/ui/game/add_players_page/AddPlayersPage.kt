@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.add_players_page
+package com.muni.taskmajster.view.ui.game.add_players_page
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,8 +23,7 @@ import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Player
-import com.muni.taskmajster.model.data.Task
-import com.muni.taskmajster.view.ui.add_players_page.colorpicker.Colorpicker
+import com.muni.taskmajster.view.ui.game.add_players_page.colorpicker.Colorpicker
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar

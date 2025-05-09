@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.task_detail
+package com.muni.taskmajster.view.ui.task.task_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,6 +52,8 @@ fun TaskDetail(
     onArrowBackClicked: () -> Unit,
 // onAddToPlanClicked: () -> Unit, // TODO add to existing gameplan -> viz TaskItem onAddToListClicked attribute (maybe create new page for it?)
     onPlayClicked: (Game) -> Unit,
+    onEditClicked: () -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -59,8 +61,16 @@ fun TaskDetail(
                 title = "Task: ${task.name}",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClicked = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
-                    TopBarButton(onClicked = { }, icon = Icons.Default.Delete, contentDescription = "Delete"),
+                    TopBarButton(
+                        onClicked = onEditClicked,
+                        icon = Icons.Default.Edit,
+                        contentDescription = "Edit"
+                    ),
+                    TopBarButton(
+                        onClicked = onDeleteClicked,
+                        icon = Icons.Default.Delete,
+                        contentDescription = "Delete"
+                    )
                 )
             )
         },
@@ -84,10 +94,10 @@ fun TaskDetail(
                     icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
                     onClicked = { onPlayClicked(
                         Game(
-                            id = 1, // Todo generate
+                            id = System.currentTimeMillis(),
                             currentTask = 0,
                             gameplan = Gameplan(
-                                id = "1",  // Todo generate
+                                id = System.currentTimeMillis().toString() + 1,
                                 name = "Task: " + task.name,
                                 listOfTaskIds = List(1){ "1" },
                             ),
@@ -219,6 +229,8 @@ fun TaskDetailPreview() {
     TaskDetail(
         task = Task("1", "task1", 15, "task description", emptyList()),
         onArrowBackClicked = {},
-        onPlayClicked = {}
+        onPlayClicked = {},
+        onEditClicked= {},
+        onDeleteClicked= {}
     )
 }

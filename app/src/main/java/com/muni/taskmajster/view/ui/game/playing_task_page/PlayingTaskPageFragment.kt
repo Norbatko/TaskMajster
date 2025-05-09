@@ -1,7 +1,6 @@
-package com.muni.taskmajster.view.ui.playing_task_page
+package com.muni.taskmajster.view.ui.game.playing_task_page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -39,7 +39,7 @@ class PlayingTaskPageFragment: Fragment() {
                     loadingTasks -> {
                         Box(
                             Modifier.fillMaxSize(),
-                            contentAlignment = androidx.compose.ui.Alignment.Center
+                            contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator()
                         }

@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.end_of_task_page
+package com.muni.taskmajster.view.ui.game.end_of_task_page
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +16,7 @@ import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 class EndOfTaskPageFragment: Fragment() {
@@ -41,7 +42,7 @@ class EndOfTaskPageFragment: Fragment() {
                     loading -> {
                         Box(
                             Modifier.fillMaxSize(),
-                            contentAlignment = androidx.compose.ui.Alignment.Center
+                            contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator()
                         }

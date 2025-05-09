@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.add_players_page
+package com.muni.taskmajster.view.ui.game.add_players_page
 
 import android.os.Bundle
 import android.view.LayoutInflater
