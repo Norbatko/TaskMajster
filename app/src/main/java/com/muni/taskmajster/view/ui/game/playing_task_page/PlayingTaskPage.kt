@@ -1,12 +1,18 @@
 package com.muni.taskmajster.view.ui.game.playing_task_page
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +33,12 @@ import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
 import kotlin.random.Random
+import androidx.compose.runtime.*
+import kotlinx.coroutines.delay
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+
+val bottomSheetPeekHeight = 128.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +52,7 @@ fun PlayingTaskPage(
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 128.dp,
+        sheetPeekHeight = bottomSheetPeekHeight,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetContent = {
             ScoringBottomSheet(game = game)
@@ -59,31 +71,92 @@ fun PlayingTaskPage(
             )
         },
     ) {
-    PlayingTaskContent(description = listOfGameplanTasks[game.currentTask].description)
+    PlayingTaskContent(
+        description = listOfGameplanTasks[game.currentTask].description,
+        taskTime = listOfGameplanTasks[game.currentTask].time)
     }
 }
 
 @Composable
 fun PlayingTaskContent(
-    description: String
+    description: String,
+    taskTime: Int,
 ) {
+    var timeLeft by remember { mutableIntStateOf(taskTime) }
+    var isTimerRunning by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = isTimerRunning) {
+        if (isTimerRunning) {
+            while (timeLeft > 0) {
+                delay(1000L)
+                timeLeft--
+            }
+            if (timeLeft == 0) {
+                isTimerRunning = false
+                showDialog = true
+            }
+        }
+    }
+
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(20.dp)
             .fillMaxSize()
+            .padding(20.dp)
     ) {
+        Row (
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            LargeButton(
+                text = if (isTimerRunning) "Restart" else "Play",
+                icon = if (isTimerRunning)
+                    ButtonIcon.Vector(Icons.Default.PlayArrow)
+                else ButtonIcon.Vector(Icons.Default.Refresh),
+                onClicked = {
+                    timeLeft = taskTime
+                    isTimerRunning = true
+                },
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
-            description,
-            style = MaterialTheme.typography.bodyLarge
+            text = "Time Left: $timeLeft s",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        LargeButton(
-            "Play",
-            ButtonIcon.Vector(Icons.Default.PlayArrow),
-            onClicked = {})
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Scrollable description (prevents cut off by bottom sheet)
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = bottomSheetPeekHeight)
+        ) {
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+
+    // TODO move elsewhere and use also for delte confirm
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Time is up!") },
+            text = { Text("The timer has finished.") },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
     }
 }
-
 
 @Preview
 @Composable
@@ -109,7 +182,13 @@ fun PlayingTaskPagePreview() {
                 }),
         ),
         listOfGameplanTasks = List(1){
-            Task("1", "taskName", 20, "taskDescription", emptyList())
+            Task("1",
+                "taskName",
+                10,
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam rhoncus consectetur ligula nec pretium. Suspendisse quis nulla quam. Duis a commodo dui. Ut molestie erat vitae rutrum maximus. Suspendisse potenti. Cras pellentesque enim sed augue porta laoreet. Curabitur eget augue quis lorem fringilla elementum in sit amet tellus. Cras sagittis pulvinar tellus blandit ullamcorper. Fusce ornare ultricies dapibus. Vestibulum blandit nec augue eget feugiat. Aliquam erat volutpat. Sed quis justo facilisis, interdum tellus vitae, ornare leo.\n" +
+                "\n" +
+                "Vivamus accumsan faucibus nibh, sed placerat felis consectetur vel. Aliquam id diam dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent id turpis quis sem volutpat pharetra. Nullam a lectus eget mauris dignissim tincidunt. Praesent tellus tellus, aliquet vitae accumsan non, tempus sed lectus. Fusce sed tortor vel quam suscipit lobortis at ac nisl. Quisque facilisis risus quis hendrerit pulvinar. Maecenas euismod, erat et rhoncus pharetra, enim arcu consequat magna, at aliquet ligula nisl id est. Sed suscipit lorem nulla, quis accumsan diam facilisis eu. Curabitur ornare, nisi in viverra venenatis, nunc velit pharetra lorem, non sagittis enim quam at eros. Maecenas vitae pharetra diam. Aenean et hendrerit libero. Donec sodales mauris id elit ultricies, quis venenatis sapien pharetra. Curabitur sapien urna, viverra porttitor consequat ac, tristique in sapien. Pellentesque gravida erat id leo aliquet vestibulum.",
+                emptyList())
         },
         onDoneClicked = {},
         onArrowBackClicked = {}
