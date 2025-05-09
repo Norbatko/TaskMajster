@@ -54,6 +54,11 @@ class ListOfTasksFragment : Fragment() {
                                     task = task
                                 )
                             )
+                        },
+                        onAddTaskClicked = {
+                            findNavController().navigate(
+                                ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskFormFragment(null)
+                            )
                         }
                     )
                 }

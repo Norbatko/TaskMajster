@@ -10,24 +10,25 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.muni.taskmajster.model.repository.TaskRepository
 
-class TaskFormFragment : Fragment() {
+class
+TaskFormFragment : Fragment() {
 
-    //private val args: TaskFormFragmentArgs by navArgs() // optional: pass task for edit
+    private val args: TaskFormFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            //val isEdit = args.task != null
+            val isEdit = args.task != null
             TaskForm(
-                //initialTask = args.task,
+                initialTask = args.task,
                 onSave = { task ->
                     val repository = TaskRepository()
-                    if (/*isEdit*/ false) {
+                    if (isEdit) { // update
                         repository.updateTask(task) {
                             findNavController().navigateUp()
                         }
-                    } else {
+                    } else { // create
                         repository.addTask(task) {
                             findNavController().navigateUp()
                         }
@@ -36,7 +37,7 @@ class TaskFormFragment : Fragment() {
                 onCancel = {
                     findNavController().navigateUp()
                 },
-                isEditMode = /*isEdit*/ false
+                isEditMode = isEdit
             )
         }
     }

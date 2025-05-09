@@ -19,7 +19,8 @@ import com.muni.taskmajster.view.ui.components.list_item.TaskItem
 fun ListOfTasks(
     listOfTasks: List<Task>,
     onArrowBackClicked: () -> Unit,
-    onTaskClicked: (Task) -> Unit
+    onTaskClicked: (Task) -> Unit,
+    onAddTaskClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -27,7 +28,7 @@ fun ListOfTasks(
                 title  = "List of tasks",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
+                    TopBarButton(onClicked = onAddTaskClicked, icon = Icons.Default.Add, contentDescription = "Add"),
                 )
             )
         },
@@ -59,6 +60,7 @@ fun ListOfTasksPreview() {
             )
         },
         onArrowBackClicked = {},
-        onTaskClicked = {}
+        onTaskClicked = {},
+        onAddTaskClicked = {}
     )
 }
