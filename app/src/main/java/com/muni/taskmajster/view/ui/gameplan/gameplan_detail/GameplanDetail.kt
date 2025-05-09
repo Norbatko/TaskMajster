@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +36,8 @@ fun GameplanDetail(
     onArrowBackClicked: () -> Unit,
     onTaskClicked: (Task) -> Unit,
     onPlayClicked: (Game) -> Unit,
+    onEditClicked: () -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -42,8 +45,17 @@ fun GameplanDetail(
                 title = gameplan.name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClicked = { }, icon = Icons.Default.Delete, contentDescription = "Delete")
-                ),
+                    TopBarButton(
+                        onClicked = onEditClicked,
+                        icon = Icons.Default.Edit,
+                        contentDescription = "Edit"
+                    ),
+                    TopBarButton(
+                        onClicked = onDeleteClicked,
+                        icon = Icons.Default.Delete,
+                        contentDescription = "Delete"
+                    )
+                )
             )
         },
     ) { innerPadding ->
@@ -132,6 +144,8 @@ fun GameplanDetailPreview() {
         } ,
         onArrowBackClicked = {},
         onTaskClicked = {},
-        onPlayClicked = {}
+        onPlayClicked = {},
+        onEditClicked = {},
+        onDeleteClicked = {}
     )
 }

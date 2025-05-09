@@ -20,7 +20,7 @@ class TaskFormFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
-        taskViewModel = ViewModelProvider(requireActivity())[TaskViewModel::class.java]
+        taskViewModel = ViewModelProvider(requireActivity())[TaskViewModel::class]
 
         setContent {
             val isEdit = args.task != null

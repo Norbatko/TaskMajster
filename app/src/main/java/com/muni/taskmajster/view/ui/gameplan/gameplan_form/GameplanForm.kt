@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.task.task_form
+package com.muni.taskmajster.view.ui.gameplan.gameplan_form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.getValue
@@ -7,15 +7,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -28,27 +25,22 @@ import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 
 @Composable
-fun TaskForm(
-    initialTask: Task? = null,
-    onSaveClicked: (Task) -> Unit,
+fun GameplanForm(
+    initialGameplan: Gameplan? = null,
+    onSaveClicked: (Gameplan) -> Unit,
     onCancelClicked: () -> Unit,
     isEditMode: Boolean = false
 ) {
-    var name by remember { mutableStateOf(initialTask?.name ?: "") }
-    var description by remember { mutableStateOf(initialTask?.description ?: "") }
-    var time by remember { mutableStateOf(initialTask?.time?.toString() ?: "60") }
+    var name by remember { mutableStateOf(initialGameplan?.name ?: "") }
 
     val isNameValid = name.isNotBlank()
-    val isDescriptionValid = description.isNotBlank()
-    val isTimeValid = time.toIntOrNull() != null
 
     var nameTouched by remember { mutableStateOf(false) }
-    var descriptionTouched by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopBar(
-                title = if (isEditMode) "Edit Task" else "Create Task",
+                title = if (isEditMode) "Edit Gameplan" else "Create Gameplan",
                 onArrowBackClicked = onCancelClicked,
             )
         }
@@ -66,51 +58,12 @@ fun TaskForm(
                     name = it
                     if (!nameTouched) nameTouched = true
                 },
-                label = { Text("Task Name") },
+                label = { Text("Gameplan Name") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = nameTouched && !isNameValid,
                 supportingText = {
                     if (nameTouched && !isNameValid) {
                         Text("Name cannot be empty", color = MaterialTheme.colorScheme.error)
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            OutlinedTextField(
-                value = description,
-                onValueChange = {
-                    description = it
-                    if (!descriptionTouched) descriptionTouched = true
-                },
-                label = { Text("Description") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp),
-                isError = descriptionTouched && !isDescriptionValid,
-                supportingText = {
-                    if (descriptionTouched && !isDescriptionValid) {
-                        Text("Description cannot be empty", color = MaterialTheme.colorScheme.error)
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            OutlinedTextField(
-                value = time,
-                singleLine = true,
-                onValueChange = { time = it },
-                label = { Text("Time (seconds)") },
-                modifier = Modifier.fillMaxWidth(),
-                isError = !isTimeValid,
-                supportingText = {
-                    if (!isTimeValid) {
-                        Text(
-                            text = "Please enter a valid full number",
-                            color = MaterialTheme.colorScheme.error
-                        )
                     }
                 }
             )
@@ -123,21 +76,19 @@ fun TaskForm(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 LargeButton(
-                    text = if (isEditMode) "Update Task" else "Create Task",
+                    text = if (isEditMode) "Update Gameplan" else "Create Gameplan",
                     onClicked = {
-                        if (isNameValid && isDescriptionValid && isTimeValid) {
-                            val task = Task(
-                                id = initialTask?.id ?: "",
+                        if (isNameValid) {
+                            val task = Gameplan(
+                                id = initialGameplan?.id ?: "",
                                 name = name,
-                                description = description,
-                                time = time.toInt(),
-                                imagePaths = emptyList()
+                                listOfTaskIds = emptyList(),
                             )
                             onSaveClicked(task)
                         }
                     },
                     transparent = false,
-                    enabled = isNameValid && isDescriptionValid && isTimeValid
+                    enabled = isNameValid
                 )
             }
         }
@@ -146,8 +97,8 @@ fun TaskForm(
 
 @Preview
 @Composable
-fun TaskFormPreview() {
-    TaskForm(
+fun GameplanFormPreview() {
+    GameplanForm(
         onCancelClicked = {},
         onSaveClicked = {},
     )

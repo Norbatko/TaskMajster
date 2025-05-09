@@ -54,6 +54,11 @@ class ListOfGameplansFragment : Fragment() {
                                     .actionListOfGameplansFragmentToGameplanDetailFragment(gameplan)
                             )
                         },
+                        onAddGameplanClicked = {
+                            findNavController().navigate(
+                                ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplansFormFragment(null)
+                            )
+                        }
                     )
                 }
             }

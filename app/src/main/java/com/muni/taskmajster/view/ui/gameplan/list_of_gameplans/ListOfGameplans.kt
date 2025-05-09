@@ -19,7 +19,8 @@ import com.muni.taskmajster.view.ui.components.list_item.GameplanItem
 fun ListOfGameplans(
     listOfGameplans: List<Gameplan>,
     onArrowBackClicked: () -> Unit,
-    onGameplanClicked: (Gameplan) -> Unit
+    onGameplanClicked: (Gameplan) -> Unit,
+    onAddGameplanClicked: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -27,7 +28,7 @@ fun ListOfGameplans(
                 title  = "List of gameplans",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
-                    TopBarButton(onClicked = { }, icon = Icons.Default.Add, contentDescription = "Add"),
+                    TopBarButton(onClicked = onAddGameplanClicked, icon = Icons.Default.Add, contentDescription = "Add"),
                 )
             )
         },
@@ -56,6 +57,7 @@ fun ListOfGameplansPreview() {
             )
         },
         onArrowBackClicked = {},
-        onGameplanClicked = {}
+        onGameplanClicked = {},
+        onAddGameplanClicked = {}
     )
 }

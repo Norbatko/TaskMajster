@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_listOfGameplansFragment_to_gameplanDetailFragment"
             app:destination="@id/gameplanDetailFragment" />
+        <action
+            android:id="@+id/action_listOfGameplansFragment_to_gameplansFormFragment"
+            app:destination="@id/gameplanFormFragment" />
     </fragment>
 
     <fragment
@@ -68,6 +71,9 @@
         <action
             android:id="@+id/action_gameplanDetailFragment_to_addPlayersPageFragment"
             app:destination="@id/addPlayersPageFragment" />
+        <action
+            android:id="@+id/action_gameplanDetailFragment_to_gameplanFormFragment"
+            app:destination="@id/gameplanFormFragment" />
         <argument
             android:name="gameplan"
             app:argType="com.muni.taskmajster.model.data.Gameplan" />
@@ -122,6 +128,19 @@
         <argument
             android:name="task"
             app:argType="com.muni.taskmajster.model.data.Task"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameplanFormFragment"
+        android:name="com.muni.taskmajster.view.ui.gameplan.gameplan_form.GameplanFormFragment"
+        android:label="GameplanFormFragment" >
+        <action
+            android:id="@+id/action_gameplanFormFragment_to_gameplanDetailFragment"
+            app:destination="@id/gameplanDetailFragment" />
+        <argument
+            android:name="gameplan"
+            app:argType="com.muni.taskmajster.model.data.Gameplan"
             app:nullable="true" />
     </fragment>
 
