@@ -31,6 +31,7 @@ import com.muni.taskmajster.util.CameraCaptureUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
+import com.muni.taskmajster.view.ui.components.player.PlayerInLeaderboard
 import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import kotlin.random.Random
@@ -132,10 +133,7 @@ fun FinalScoreBoard(
             items = listOfPlayers.sortedByDescending { it.totalPoints },
             key = { it.id }
         ) { player ->
-            PlayerWithScore(
-                player = player,
-                showScoreSetter = false
-            )
+            PlayerInLeaderboard(player)
         }
     }
 }

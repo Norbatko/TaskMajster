@@ -22,7 +22,8 @@ import kotlin.random.Random
 @Composable
 fun PlayerWithScore(
     player: Player,
-    showScoreSetter: Boolean
+    score: Int,
+    onScoreChanged: (Int) -> Unit,
 ) {
     Row(
         modifier = Modifier.padding(16.dp),
@@ -41,23 +42,25 @@ fun PlayerWithScore(
 
         Spacer(modifier = Modifier.weight(0.5f))
 
-        if (showScoreSetter) { // score for task
-            Text(player.taskPoints.toString(), style = MaterialTheme.typography.titleLarge)
-            ScoreSetter()
-        } else { // score for game
-            Text(player.totalPoints.toString(), style = MaterialTheme.typography.titleLarge)
-        }
+        Text(score.toString(), style = MaterialTheme.typography.titleLarge)
+        ScoreSetter(
+            onPointRemoved = { onScoreChanged(-1) },
+            onPointAdded = { onScoreChanged(+1) }
+        )
     }
 }
 
 @Composable
-fun ScoreSetter() {
+fun ScoreSetter(
+    onPointAdded: () -> Unit,
+    onPointRemoved: () -> Unit
+) {
     Row (
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = {},
+            onClick = onPointRemoved,
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_remove),
@@ -66,7 +69,7 @@ fun ScoreSetter() {
             }
         )
         IconButton(
-            onClick = {},
+            onClick = onPointAdded,
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
@@ -82,6 +85,8 @@ fun ScoreSetter() {
 fun PlayerWithScorePreview() {
     PlayerWithScore(
         player = Player(1, "Player", Random.nextInt(), 2, 5),
-        showScoreSetter = true
+//        showScoreSetter = true,
+        score = 10,
+        onScoreChanged = {}
     )
 }

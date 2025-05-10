@@ -49,13 +49,23 @@ fun PlayingTaskPage(
     onArrowBackClicked: () -> Unit
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
+    val players = remember { mutableStateListOf<Player>().apply { addAll(game.listOfPlayers) } }
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = bottomSheetPeekHeight,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetContent = {
-            ScoringBottomSheet(game = game)
+            ScoringBottomSheet(
+                listOfPlayers = players,
+                onScoreChanged = { id, delta ->
+                    val index = players.indexOfFirst { it.id == id }
+                    if (index != -1) {
+                        val player = players[index]
+                        players[index] = player.copy(taskPoints = player.taskPoints + delta)
+                    }
+                }
+            )
         },
         topBar = {
             TopBar(
@@ -63,7 +73,16 @@ fun PlayingTaskPage(
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(
-                        onClicked = { onDoneClicked(game) },
+                        onClicked = {
+                            val updatedPlayers = players.map { player ->
+                                player.copy(
+                                    totalPoints = player.totalPoints + player.taskPoints,
+                                    taskPoints = 0
+                                )
+                            }
+                            val updatedGame = game.copy(listOfPlayers = updatedPlayers)
+                            onDoneClicked(updatedGame)
+                        },
                         icon = Icons.Default.Check,
                         contentDescription = "Done"
                     ),
