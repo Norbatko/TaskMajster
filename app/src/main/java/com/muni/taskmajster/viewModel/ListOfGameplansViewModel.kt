@@ -22,4 +22,14 @@ class ListOfGameplansViewModel (
             _loading.postValue(false)
         }
     }
+
+    fun updateGameplan(updatedGameplan: Gameplan, onResult: (Boolean) -> Unit) {
+        gameplanRepository.updateGameplan(updatedGameplan) { success ->
+            if (success) { // refresh
+                loadGameplans()
+            }
+            onResult(success)
+        }
+    }
+
 }
