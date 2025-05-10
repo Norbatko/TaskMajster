@@ -15,6 +15,10 @@ import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +31,7 @@ import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
+import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 import com.muni.taskmajster.view.ui.components.list_item.TaskItem
 
 @Composable
@@ -39,10 +44,23 @@ fun GameplanDetail(
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        CustomAlertDialog(
+            title = "Delete gameplan",
+            description = "Do you really want to delete gameplan " + gameplan.name + "?",
+            confirmText = "Delete",
+            onConfirmClicked = onDeleteClicked,
+            onDismiss = { showDeleteDialog = false },
+            showCancel = true
+        )
+    }
+
     Scaffold(
         topBar = {
             TopBar(
-                title = gameplan.name,
+                title = "Gameplan: ${gameplan.name}",
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(
@@ -51,7 +69,7 @@ fun GameplanDetail(
                         contentDescription = "Edit"
                     ),
                     TopBarButton(
-                        onClicked = onDeleteClicked,
+                        onClicked = { showDeleteDialog = true },
                         icon = Icons.Default.Delete,
                         contentDescription = "Delete"
                     )

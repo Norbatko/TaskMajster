@@ -27,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +48,7 @@ import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
+import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 import java.io.File
 
 @Composable
@@ -55,6 +60,19 @@ fun TaskDetail(
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        CustomAlertDialog(
+            title = "Delete task",
+            description = "Do you really want to delete task " + task.name + "?",
+            confirmText = "Delete",
+            onConfirmClicked = onDeleteClicked,
+            onDismiss = { showDeleteDialog = false },
+            showCancel = true
+        )
+    }
+
     Scaffold(
         topBar = {
             TopBar(
@@ -67,7 +85,7 @@ fun TaskDetail(
                         contentDescription = "Edit"
                     ),
                     TopBarButton(
-                        onClicked = onDeleteClicked,
+                        onClicked = { showDeleteDialog = true },
                         icon = Icons.Default.Delete,
                         contentDescription = "Delete"
                     )
