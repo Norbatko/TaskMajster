@@ -3,7 +3,10 @@ package com.muni.taskmajster.view.ui.components.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
@@ -19,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.padding
 
 data class TopBarButton(
     val onClicked: () -> Unit,
@@ -29,11 +33,12 @@ data class TopBarButton(
 @Composable
 fun TopBar(
     title: String,
-    onArrowBackClicked: (() -> Unit)? = null, // null means no back button
+    onArrowBackClicked: (() -> Unit)? = null, // null = no back button
     sideButtons: List<TopBarButton> = emptyList()
 ) {
     Row(
         Modifier
+            .padding(WindowInsets.statusBars.asPaddingValues())
             .background(color = Color.LightGray)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically

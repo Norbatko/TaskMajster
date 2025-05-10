@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.list_of_tasks
+package com.muni.taskmajster.view.ui.task.list_of_tasks
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -40,7 +41,7 @@ class ListOfTasksFragment : Fragment() {
 
             when {
                 loading -> {
-                    Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
                     }
                 }
@@ -53,6 +54,11 @@ class ListOfTasksFragment : Fragment() {
                                 ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment(
                                     task = task
                                 )
+                            )
+                        },
+                        onAddTaskClicked = {
+                            findNavController().navigate(
+                                ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskFormFragment(null)
                             )
                         }
                     )

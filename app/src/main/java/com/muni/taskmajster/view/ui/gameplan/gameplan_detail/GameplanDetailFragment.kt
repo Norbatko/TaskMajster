@@ -1,7 +1,6 @@
-package com.muni.taskmajster.view.ui.gameplan_detail
+package com.muni.taskmajster.view.ui.gameplan.gameplan_detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,43 +9,51 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.muni.taskmajster.viewModel.GameplanDetailViewModel
+import com.muni.taskmajster.viewModel.GameplanViewModel
 import kotlin.getValue
 
 class GameplanDetailFragment: Fragment() {
 
     private val args: GameplanDetailFragmentArgs by navArgs()
-    private val viewModel: GameplanDetailViewModel by viewModels()
+    private val gameplanDetailViewModel: GameplanDetailViewModel by viewModels()
+    private lateinit var gameplanViewModel: GameplanViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadTasksByIds(args.gameplan.listOfTaskIds)
+        gameplanDetailViewModel.loadTasksByIds(args.gameplan.listOfTaskIds)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
+            gameplanViewModel = ViewModelProvider(requireActivity())[GameplanViewModel::class.java]
+            gameplanViewModel.setGameplan(args.gameplan)
+
             setContent {
-                val tasks by viewModel.tasks.observeAsState(emptyList())
-                val loading by viewModel.loading.observeAsState(false)
+                val gameplan = gameplanViewModel.gameplan.observeAsState(args.gameplan).value
+                val tasks by gameplanDetailViewModel.tasks.observeAsState(emptyList())
+                val loading by gameplanDetailViewModel.loading.observeAsState(false)
 
                 when {
                     loading -> {
                         Box(
                             Modifier.fillMaxSize(),
-                            contentAlignment = androidx.compose.ui.Alignment.Center
+                            contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator()
                         }
                     }
                     else -> {
                         GameplanDetail(
-                            gameplan = args.gameplan,
+                            gameplan = gameplan,
                             listOfGameplanTasks = tasks,
                             onArrowBackClicked = {
                                 findNavController().navigateUp()
@@ -65,6 +72,16 @@ class GameplanDetailFragment: Fragment() {
                                     )
                                 )
                             },
+                            onEditClicked = {
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections.actionGameplanDetailFragmentToGameplanFormFragment(gameplan)
+                                )
+                            },
+                            onDeleteClicked = {
+                                gameplanViewModel.deleteGameplan(gameplan.id) {
+                                    findNavController().navigateUp()
+                                }
+                            }
                         )
                     }
                 }

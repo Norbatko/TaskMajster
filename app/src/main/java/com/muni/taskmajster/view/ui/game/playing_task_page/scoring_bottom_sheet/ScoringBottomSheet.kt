@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.playing_task_page.scoring_bottom_sheet
+package com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn

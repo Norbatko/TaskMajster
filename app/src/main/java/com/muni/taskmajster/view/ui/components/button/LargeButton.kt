@@ -30,9 +30,10 @@ sealed class ButtonIcon {
 @Composable
 fun LargeButton(
     text: String,
-    icon: ButtonIcon,
+    icon: ButtonIcon? = null,
     onClicked: () -> Unit,
     transparent: Boolean = false,
+    enabled: Boolean = true,
 ) {
     Row(
         modifier = Modifier.padding(vertical = 15.dp)
@@ -51,7 +52,8 @@ fun LargeButton(
                     contentColor = Color.White
                 )
             },
-            shape = MaterialTheme.shapes.medium
+            shape = MaterialTheme.shapes.medium,
+            enabled = enabled
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -68,8 +70,13 @@ fun LargeButton(
                         contentDescription = null,
                         tint = if (transparent) Color.Black else Color.White
                     )
+                    null -> {}
                 }
-                Spacer(Modifier.width(10.dp))
+
+                if (icon != null) {
+                    Spacer(Modifier.width(10.dp))
+                }
+
                 Text(
                     text = text,
                     color = if (transparent) Color.Black else Color.White
