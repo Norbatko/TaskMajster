@@ -1,9 +1,9 @@
 package com.muni.taskmajster.view.ui.components.player
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +20,7 @@ import com.muni.taskmajster.model.data.Player
 import kotlin.random.Random
 
 @Composable
-fun PlayerWithScore(
+fun PlayerWithScoreSetter(
     player: Player,
     score: Int,
     onScoreChanged: (Int) -> Unit,
@@ -30,37 +30,27 @@ fun PlayerWithScore(
         verticalAlignment = Alignment.CenterVertically
     ) {
         PlayerAvatar(player.colour)
-        Text(
-            text = player.name,
+        Column (
             modifier = Modifier
-                .padding(start = 6.dp)
-                .widthIn(max = 150.dp)
-                .weight(1f),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+                .padding(start = 6.dp),
+        ){
+            Text(
+                text = player.name,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = "Total: " + player.totalPoints.toString(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
 
         Spacer(modifier = Modifier.weight(0.5f))
 
-        Text(score.toString(), style = MaterialTheme.typography.titleLarge)
-        ScoreSetter(
-            onPointRemoved = { onScoreChanged(-1) },
-            onPointAdded = { onScoreChanged(+1) }
-        )
-    }
-}
-
-@Composable
-fun ScoreSetter(
-    onPointAdded: () -> Unit,
-    onPointRemoved: () -> Unit
-) {
-    Row (
-        modifier = Modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         IconButton(
-            onClick = onPointRemoved,
+            onClick = { onScoreChanged(-1) },
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_remove),
@@ -68,8 +58,11 @@ fun ScoreSetter(
                 )
             }
         )
+
+        Text(score.toString(), style = MaterialTheme.typography.titleLarge)
+
         IconButton(
-            onClick = onPointAdded,
+            onClick = { onScoreChanged(+1) },
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
@@ -77,15 +70,15 @@ fun ScoreSetter(
                 )
             }
         )
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PlayerWithScorePreview() {
-    PlayerWithScore(
-        player = Player(1, "Player", Random.nextInt(), 2, 5),
-//        showScoreSetter = true,
+    PlayerWithScoreSetter(
+        player = Player(1, "Player ABC", Random.nextInt(), 2, 5),
         score = 10,
         onScoreChanged = {}
     )

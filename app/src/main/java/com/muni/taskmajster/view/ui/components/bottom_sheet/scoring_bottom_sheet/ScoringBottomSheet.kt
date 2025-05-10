@@ -1,14 +1,16 @@
-package com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet
+package com.muni.taskmajster.view.ui.components.bottom_sheet.scoring_bottom_sheet
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.model.data.Player
-import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
+import com.muni.taskmajster.view.ui.components.player.PlayerWithScoreSetter
 import kotlin.random.Random
 
 
@@ -20,8 +22,15 @@ fun ScoringBottomSheet(
     LazyColumn(
         modifier = Modifier.padding(16.dp)
     ) {
+        item {
+            Text(
+                text = "Scores",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
         items(items = listOfPlayers, key = { it.id }) { player ->
-            PlayerWithScore(
+            PlayerWithScoreSetter(
                 player = player,
                 score = player.taskPoints,
                 onScoreChanged = { delta -> onScoreChanged(player.id, delta) }

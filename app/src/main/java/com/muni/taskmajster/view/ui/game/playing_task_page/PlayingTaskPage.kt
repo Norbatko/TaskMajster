@@ -34,7 +34,7 @@ import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
-import com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
+import com.muni.taskmajster.view.ui.components.bottom_sheet.scoring_bottom_sheet.ScoringBottomSheet
 import kotlin.random.Random
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
