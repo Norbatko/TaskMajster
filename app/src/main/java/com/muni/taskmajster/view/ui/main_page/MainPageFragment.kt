@@ -11,6 +11,7 @@ import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.model.repository.TaskRepository
+import com.muni.taskmajster.view.ui.theme.AppTheme
 
 class MainPageFragment : Fragment() {
     private val repository = TaskRepository()
@@ -18,22 +19,25 @@ class MainPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                MainPage(
-                    onTasksClicked = {
-                        findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfTasksFragment())
-                    },
-                    onGameplansClicked = {
-                        findNavController()
-                            .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfGameplansFragment())
-                    },
-                    onPlayRandomClicked = {
-                        repository.fetchTasks { tasks ->
-                            val game = createShuffledGame(tasks)
-                            navigateToAddPlayers(game)
-                        }
-                    },
-                )
+                AppTheme {
+                    MainPage(
+                        onTasksClicked = {
+                            findNavController()
+                                .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfTasksFragment())
+                        },
+                        onGameplansClicked = {
+                            findNavController()
+                                .navigate(MainPageFragmentDirections.actionMainPageFragmentToListOfGameplansFragment())
+                        },
+                        onPlayRandomClicked = {
+                            repository.fetchTasks { tasks ->
+                                val game = createShuffledGame(tasks)
+                                navigateToAddPlayers(game)
+                            }
+                        },
+                    )
+                }
+
             }
         }
 

@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.muni.taskmajster.model.repository.GameplanRepository
 import com.muni.taskmajster.view.ui.gameplan.gameplan_form.GameplanFormFragmentArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.GameplanViewModel
 import kotlin.getValue
 
@@ -25,26 +26,29 @@ class GameplanFormFragment : Fragment() {
         gameplanViewModel = ViewModelProvider(requireActivity())[GameplanViewModel::class]
 
         setContent {
-            val isEdit = args.gameplan != null
-            GameplanForm(
-                initialGameplan = args.gameplan,
-                onSaveClicked = { gameplan ->
-                    if (isEdit) {
-                        gameplanViewModel.updateGameplan(gameplan)
-                        findNavController().navigateUp()
-                    } else {
-                        val repository = GameplanRepository()
-                        repository.addGameplan(gameplan) {
-                            gameplanViewModel.setGameplan(gameplan)
+            AppTheme {
+                val isEdit = args.gameplan != null
+                GameplanForm(
+                    initialGameplan = args.gameplan,
+                    onSaveClicked = { gameplan ->
+                        if (isEdit) {
+                            gameplanViewModel.updateGameplan(gameplan)
                             findNavController().navigateUp()
+                        } else {
+                            val repository = GameplanRepository()
+                            repository.addGameplan(gameplan) {
+                                gameplanViewModel.setGameplan(gameplan)
+                                findNavController().navigateUp()
+                            }
                         }
-                    }
-                },
-                onCancelClicked = {
-                    findNavController().navigateUp()
-                },
-                isEditMode = isEdit
-            )
+                    },
+                    onCancelClicked = {
+                        findNavController().navigateUp()
+                    },
+                    isEditMode = isEdit
+                )
+            }
+
         }
     }
 }

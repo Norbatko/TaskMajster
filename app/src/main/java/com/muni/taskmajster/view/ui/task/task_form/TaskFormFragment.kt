@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.muni.taskmajster.model.repository.TaskRepository
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.TaskViewModel
 
 class TaskFormFragment : Fragment() {
@@ -23,26 +24,29 @@ class TaskFormFragment : Fragment() {
         taskViewModel = ViewModelProvider(requireActivity())[TaskViewModel::class]
 
         setContent {
-            val isEdit = args.task != null
-            TaskForm(
-                initialTask = args.task,
-                onSaveClicked = { task ->
-                    if (isEdit) {
-                        taskViewModel.updateTask(task)
-                        findNavController().navigateUp()
-                    } else {
-                        val repository = TaskRepository()
-                        repository.addTask(task) {
-                            taskViewModel.setTask(task)
+            AppTheme {
+                val isEdit = args.task != null
+                TaskForm(
+                    initialTask = args.task,
+                    onSaveClicked = { task ->
+                        if (isEdit) {
+                            taskViewModel.updateTask(task)
                             findNavController().navigateUp()
+                        } else {
+                            val repository = TaskRepository()
+                            repository.addTask(task) {
+                                taskViewModel.setTask(task)
+                                findNavController().navigateUp()
+                            }
                         }
-                    }
-                },
-                onCancelClicked = {
-                    findNavController().navigateUp()
-                },
-                isEditMode = isEdit
-            )
+                    },
+                    onCancelClicked = {
+                        findNavController().navigateUp()
+                    },
+                    isEditMode = isEdit
+                )
+            }
+
         }
     }
 }

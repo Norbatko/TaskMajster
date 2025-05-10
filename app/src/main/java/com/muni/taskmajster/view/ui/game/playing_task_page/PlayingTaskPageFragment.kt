@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.PlayingTaskViewModel
 import kotlin.getValue
 
@@ -32,38 +33,41 @@ class PlayingTaskPageFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                val tasks by viewModel.tasks.observeAsState(emptyList())
-                val loadingTasks by viewModel.loadingTasks.observeAsState(false)
+                AppTheme {
+                    val tasks by viewModel.tasks.observeAsState(emptyList())
+                    val loadingTasks by viewModel.loadingTasks.observeAsState(false)
 
-                when {
-                    loadingTasks -> {
-                        Box(
-                            Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
+                    when {
+                        loadingTasks -> {
+                            Box(
+                                Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                        else -> {
+                            PlayingTaskPage(
+                                game = args.game,
+                                listOfGameplanTasks = tasks,
+                                onDoneClicked = { updatedGame ->
+                                    findNavController()
+                                        .navigate(
+                                            PlayingTaskPageFragmentDirections
+                                                .actionPlayingTaskPageFragmentToEndOfTaskPageFragment(
+                                                    updatedGame
+                                                )
+                                        )
+                                },
+                                onArrowBackClicked = {
+                                    findNavController()
+                                        .navigateUp()
+                                },
+                            )
                         }
                     }
-                    else -> {
-                        PlayingTaskPage(
-                            game = args.game,
-                            listOfGameplanTasks = tasks,
-                            onDoneClicked = { updatedGame ->
-                                findNavController()
-                                    .navigate(
-                                        PlayingTaskPageFragmentDirections
-                                            .actionPlayingTaskPageFragmentToEndOfTaskPageFragment(
-                                                updatedGame
-                                            )
-                                    )
-                            },
-                            onArrowBackClicked = {
-                                findNavController()
-                                    .navigateUp()
-                            },
-                        )
-                    }
                 }
+
             }
         }
 }

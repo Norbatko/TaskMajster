@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 
 class AddPlayersPageFragment: Fragment() {
 
@@ -16,18 +17,21 @@ class AddPlayersPageFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(requireContext()).apply {
             setContent {
-                AddPlayersPage(
-                    game = args.game,
-                    onArrowBackClicked = {
-                        findNavController().navigateUp()
-                    },
-                    onPlayClicked = { updatedGame ->
-                        findNavController().navigate(
-                            AddPlayersPageFragmentDirections
-                                .actionAddPlayersPageFragmentToPlayingTaskPageFragment(updatedGame)
-                        )
-                    }
-                )
+                AppTheme {
+                    AddPlayersPage(
+                        game = args.game,
+                        onArrowBackClicked = {
+                            findNavController().navigateUp()
+                        },
+                        onPlayClicked = { updatedGame ->
+                            findNavController().navigate(
+                                AddPlayersPageFragmentDirections
+                                    .actionAddPlayersPageFragmentToPlayingTaskPageFragment(updatedGame)
+                            )
+                        }
+                    )
+                }
+
             }
         }
 }

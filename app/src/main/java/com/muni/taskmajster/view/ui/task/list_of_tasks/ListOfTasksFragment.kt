@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.ListOfTasksViewModel
 import kotlin.getValue
 
@@ -36,51 +37,53 @@ class ListOfTasksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            val tasks by viewModel.tasks.observeAsState(emptyList())
-            val loading by viewModel.loading.observeAsState(false)
+            AppTheme {
+                val tasks by viewModel.tasks.observeAsState(emptyList())
+                val loading by viewModel.loading.observeAsState(false)
 
-            val currentGameplan = rememberSaveable { mutableStateOf(args.gameplan) }
+                val currentGameplan = rememberSaveable { mutableStateOf(args.gameplan) }
 
-            if (loading) {
-                Log.d("LOADING", "List of gameplans page loading gameplans")
-            }
-
-            when {
-                loading -> {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
+                if (loading) {
+                    Log.d("LOADING", "List of gameplans page loading gameplans")
                 }
-                else -> {
-                    ListOfTasks(
-                        listOfTasks = tasks,
-                        onArrowBackClicked = { findNavController().navigateUp() },
-                        onTaskClicked = { task ->
-                            findNavController().navigate(
-                                ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment(
-                                    task = task
-                                )
-                            )
-                        },
-                        onAddTaskClicked = {
-                            findNavController().navigate(
-                                ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskFormFragment(null)
-                            )
-                        },
 
-                        addTaskToGameplan = args.gameplan != null,
-                        gameplan = currentGameplan.value,
-                        onAddTaskToGameplanClicked = { clickedGameplan, task ->
-                            val updatedGameplan = clickedGameplan.copy(
-                                listOfTaskIds = clickedGameplan.listOfTaskIds + task.id
-                            )
-                            viewModel.updateGameplan(updatedGameplan) { success ->
-                                if (success) {
-                                    currentGameplan.value = updatedGameplan
+                when {
+                    loading -> {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator()
+                        }
+                    }
+                    else -> {
+                        ListOfTasks(
+                            listOfTasks = tasks,
+                            onArrowBackClicked = { findNavController().navigateUp() },
+                            onTaskClicked = { task ->
+                                findNavController().navigate(
+                                    ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskDetailFragment(
+                                        task = task
+                                    )
+                                )
+                            },
+                            onAddTaskClicked = {
+                                findNavController().navigate(
+                                    ListOfTasksFragmentDirections.actionListOfTasksFragmentToTaskFormFragment(null)
+                                )
+                            },
+
+                            addTaskToGameplan = args.gameplan != null,
+                            gameplan = currentGameplan.value,
+                            onAddTaskToGameplanClicked = { clickedGameplan, task ->
+                                val updatedGameplan = clickedGameplan.copy(
+                                    listOfTaskIds = clickedGameplan.listOfTaskIds + task.id
+                                )
+                                viewModel.updateGameplan(updatedGameplan) { success ->
+                                    if (success) {
+                                        currentGameplan.value = updatedGameplan
+                                    }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
