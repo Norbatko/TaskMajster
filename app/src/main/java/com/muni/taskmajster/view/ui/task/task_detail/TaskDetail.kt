@@ -1,9 +1,12 @@
 package com.muni.taskmajster.view.ui.task.task_detail
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
@@ -163,33 +167,62 @@ fun TaskDetail(
 
 @Composable
 fun PhotoGrid(photoList: List<String>) {
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val imageUris = GalleryRetrieveUtil.getImagesByNameFromTaskMajsterFolder(context = LocalContext.current, targetFilenames = photoList)
+
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val rows = imageUris.chunked(3)
-        for (row in rows) {
+        rows.forEach { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                for (uri in row) {
+                row.forEach { uri ->
                     Box(
                         modifier = Modifier
                             .padding(4.dp)
-                            .size(120.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Gray),
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
+                            .clickable { selectedImageUri = uri },
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
                             model = uri,
-                            contentDescription = "Stored Image",
-                            modifier = Modifier.size(100.dp)
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
+            }
+        }
+    }
+
+    // Fullscreen image preview dialog
+    selectedImageUri?.let { uri ->
+        Dialog(onDismissRequest = { selectedImageUri = null }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { selectedImageUri = null },  // Close dialog when clicked outside
+                contentAlignment = Alignment.Center
+            ) {
+                AsyncImage(
+                    model = uri,
+                    contentDescription = "Full Image",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                )
             }
         }
     }
