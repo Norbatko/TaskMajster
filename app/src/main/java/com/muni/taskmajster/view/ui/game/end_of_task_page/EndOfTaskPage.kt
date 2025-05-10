@@ -105,7 +105,7 @@ fun EndOfTaskPageContent(
                         photoUri.value = result.uri
                         cameraLauncher.launch(result.uri)
                         var task = listOfGameplanTasks[game.currentTask]
-                        val updatedTask = task.copy(imagePaths = task.imagePaths + result.fileName)
+                        val updatedTask = task.copy(imagePaths = task.imagePaths + result.filename)
                         viewModel.updateTask(updatedTask)
                     }
                 },
