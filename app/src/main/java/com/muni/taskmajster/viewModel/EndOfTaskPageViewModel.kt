@@ -22,4 +22,13 @@ class EndOfTaskPageViewModel (
             _loading.postValue(false)
         }
     }
+
+    private val _taskUpdateResult = MutableLiveData<Boolean>()
+    val taskUpdateResult: LiveData<Boolean> = _taskUpdateResult
+
+    fun updateTask(task: Task) {
+        taskRepository.updateTask(task) {
+                success -> _taskUpdateResult.postValue(success)
+        }
+    }
 }

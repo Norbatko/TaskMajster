@@ -32,14 +32,15 @@ import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.player.PlayerInLeaderboard
-import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
 import androidx.activity.compose.rememberLauncherForActivityResult
+import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 import kotlin.random.Random
 
 // TODO maybe somewhere display number of remaining tasks?
 @Composable
 fun EndOfTaskPage(
     game: Game,
+    viewModel: EndOfTaskPageViewModel,
     listOfGameplanTasks: List<Task>,
     lastTask: Boolean = false,
     onArrowBackClicked: () -> Unit,
@@ -54,13 +55,15 @@ fun EndOfTaskPage(
             )
         },
     ) { innerPadding ->
-        EndOfTaskPageContent(game, lastTask, innerPadding, onFinalizeClicked, onNextTaskClicked)
+        EndOfTaskPageContent(game, viewModel, listOfGameplanTasks, lastTask, innerPadding, onFinalizeClicked, onNextTaskClicked)
     }
 }
 
 @Composable
 fun EndOfTaskPageContent(
     game: Game,
+    viewModel: EndOfTaskPageViewModel,
+    listOfGameplanTasks: List<Task>,
     lastTask: Boolean,
     padding: PaddingValues,
     onFinalizeClicked: () -> Unit,
@@ -97,10 +100,13 @@ fun EndOfTaskPageContent(
                 "Take a photo",
                 ButtonIcon.PainterIcon(painterResource(R.drawable.ic_add_a_photo)),
                 onClicked = {
-                    val uri = CameraCaptureUtil.createImageUri(context)
-                    if (uri != null) {
-                        photoUri.value = uri
-                        cameraLauncher.launch(uri)
+                    val result = CameraCaptureUtil.createImageUri(context)
+                    if (result.uri != null) {
+                        photoUri.value = result.uri
+                        cameraLauncher.launch(result.uri)
+                        var task = listOfGameplanTasks[game.currentTask]
+                        val updatedTask = task.copy(imagePaths = task.imagePaths + result.fileName)
+                        viewModel.updateTask(updatedTask)
                     }
                 },
                 true
@@ -162,6 +168,7 @@ fun EndOfTaskPagePreview() {
                     "1"
                 })
         ),
+        viewModel = EndOfTaskPageViewModel(),
         listOfGameplanTasks = List(1) {
             Task("1", "taskName", 20, "taskDescription", emptyList())
         },
