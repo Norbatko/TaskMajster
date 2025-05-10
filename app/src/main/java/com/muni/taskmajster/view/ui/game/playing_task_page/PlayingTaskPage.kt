@@ -1,5 +1,8 @@
 package com.muni.taskmajster.view.ui.game.playing_task_page
 
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +37,8 @@ import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet.ScoringBottomSheet
 import kotlin.random.Random
 import androidx.compose.runtime.*
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 
@@ -104,6 +109,9 @@ fun PlayingTaskContent(
     var isTimerRunning by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+    var ringtone by remember { mutableStateOf<Ringtone?>(null) }
+
     LaunchedEffect(key1 = isTimerRunning) {
         if (isTimerRunning) {
             while (timeLeft > 0) {
@@ -113,6 +121,10 @@ fun PlayingTaskContent(
             if (timeLeft == 0) {
                 isTimerRunning = false
                 showDialog = true
+
+                val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                ringtone = RingtoneManager.getRingtone(context, notification)
+                ringtone?.play()
             }
         }
     }
@@ -166,8 +178,16 @@ fun PlayingTaskContent(
             title = "Time is up!",
             description = "The timer has finished.",
             confirmText = "OK",
-            onConfirmClicked = { showDialog = false },
-            onDismiss = { showDialog = false },
+            onConfirmClicked = {
+                showDialog = false
+                ringtone?.stop()
+                ringtone = null
+                               },
+            onDismiss = {
+                showDialog = false
+                ringtone?.stop()
+                ringtone = null
+                        },
             showCancel = false
         )
     }
