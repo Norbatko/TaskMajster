@@ -110,8 +110,8 @@ fun PlayingTaskContent(
             LargeButton(
                 text = if (isTimerRunning) "Restart" else "Play",
                 icon = if (isTimerRunning)
-                    ButtonIcon.Vector(Icons.Default.PlayArrow)
-                else ButtonIcon.Vector(Icons.Default.Refresh),
+                    ButtonIcon.Vector(Icons.Default.Refresh)
+                else ButtonIcon.Vector(Icons.Default.PlayArrow),
                 onClicked = {
                     timeLeft = taskTime
                     isTimerRunning = true
