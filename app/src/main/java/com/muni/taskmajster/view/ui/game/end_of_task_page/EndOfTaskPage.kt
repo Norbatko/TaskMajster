@@ -1,5 +1,8 @@
 package com.muni.taskmajster.view.ui.game.end_of_task_page
 
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +14,11 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,10 +27,12 @@ import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Player
 import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.util.CameraCaptureUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
+import androidx.activity.compose.rememberLauncherForActivityResult
 import kotlin.random.Random
 
 // TODO maybe somewhere display number of remaining tasks?
@@ -57,6 +65,16 @@ fun EndOfTaskPageContent(
     onFinalizeClicked: () -> Unit,
     onNextTaskClicked: (Game) -> Unit
 ) {
+    val context = LocalContext.current
+    val photoUri = remember { mutableStateOf<Uri?>(null) }
+
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            Toast.makeText(context, "Photo saved to gallery", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Camera cancelled", Toast.LENGTH_SHORT).show()
+        }
+    }
     Column(
         modifier = Modifier
             .padding(padding)
@@ -77,7 +95,13 @@ fun EndOfTaskPageContent(
             LargeButton(
                 "Take a photo",
                 ButtonIcon.PainterIcon(painterResource(R.drawable.ic_add_a_photo)),
-                onClicked = {},
+                onClicked = {
+                    val uri = CameraCaptureUtil.createImageUri(context)
+                    if (uri != null) {
+                        photoUri.value = uri
+                        cameraLauncher.launch(uri)
+                    }
+                },
                 true
             )
             if (!lastTask) {
