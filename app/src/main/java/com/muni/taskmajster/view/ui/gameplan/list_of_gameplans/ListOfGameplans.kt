@@ -22,6 +22,7 @@ fun ListOfGameplans(
     onArrowBackClicked: () -> Unit,
     onGameplanClicked: (Gameplan) -> Unit,
     onAddGameplanClicked: () -> Unit,
+    // Attributes for adding task to gameplan
     addTaskToGameplan: Boolean = false,
     task: Task? = null,
     onAddTaskToGameplanClicked: (Gameplan) -> Unit = {}
@@ -51,7 +52,7 @@ fun ListOfGameplans(
                 if (addTaskToGameplan) {
                     GameplanItem(
                         gameplan = gameplan,
-                        addToGameplan = !gameplan.listOfTaskIds.contains(task?.id), // only if gameplan doesnt already have the task
+                        addToGameplan = !gameplan.listOfTaskIds.contains(task?.id), // only if gameplan doesn't already have the task
                         onAddToGameplan = { onAddTaskToGameplanClicked(gameplan) }
                     )
                 } else {

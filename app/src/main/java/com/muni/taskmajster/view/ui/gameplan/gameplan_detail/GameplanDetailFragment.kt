@@ -81,6 +81,11 @@ class GameplanDetailFragment: Fragment() {
                                 gameplanViewModel.deleteGameplan(gameplan.id) {
                                     findNavController().navigateUp()
                                 }
+                            },
+                            onAddNewTaskClicked = {
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections.actionGameplanDetailFragmentToListOfTasksFragment(gameplan)
+                                )
                             }
                         )
                     }

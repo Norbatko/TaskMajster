@@ -63,6 +63,7 @@ class ListOfGameplansFragment : Fragment() {
                                     .actionListOfGameplansFragmentToGameplansFormFragment(null)
                             )
                         },
+
                         addTaskToGameplan = args.task != null,
                         task = args.task,
                         onAddTaskToGameplanClicked = { gameplan ->

@@ -27,6 +27,7 @@ import com.muni.taskmajster.model.data.Gameplan
 fun GameplanItem(
     gameplan: Gameplan,
     onGameplanClicked: (Gameplan) -> Unit = {},
+
     addToGameplan: Boolean = false,
     onAddToGameplan: () -> Unit = {},
 ) {
@@ -49,7 +50,7 @@ fun GameplanItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = gameplan.name,
+                    text = "Gameplan: " + gameplan.name,
                     fontWeight = FontWeight.Medium,
                     fontSize = 24.sp,
                     maxLines = 2,

@@ -42,7 +42,8 @@ fun GameplanDetail(
     onTaskClicked: (Task) -> Unit,
     onPlayClicked: (Game) -> Unit,
     onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteClicked: () -> Unit,
+    onAddNewTaskClicked: () -> Unit
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -132,7 +133,7 @@ fun GameplanDetail(
                     LargeButton(
                         "Add new task",
                         ButtonIcon.Vector(Icons.Outlined.AddCircle),
-                        onClicked = {},
+                        onClicked = { onAddNewTaskClicked() },
                         true,
                     )
                 }
@@ -164,6 +165,7 @@ fun GameplanDetailPreview() {
         onTaskClicked = {},
         onPlayClicked = {},
         onEditClicked = {},
-        onDeleteClicked = {}
+        onDeleteClicked = {},
+        onAddNewTaskClicked = {}
     )
 }

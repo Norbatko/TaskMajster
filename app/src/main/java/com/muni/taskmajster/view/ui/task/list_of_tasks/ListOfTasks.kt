@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
@@ -21,15 +22,20 @@ fun ListOfTasks(
     onArrowBackClicked: () -> Unit,
     onTaskClicked: (Task) -> Unit,
     onAddTaskClicked: () -> Unit,
+    // Attributes for adding task to gameplan
+    addTaskToGameplan: Boolean = false,
+    gameplan: Gameplan? = null,
+    onAddTaskToGameplanClicked: (Gameplan, Task) -> Unit = { _, _ -> }
 ) {
     Scaffold(
         topBar = {
             TopBar(
                 title  = "List of tasks",
                 onArrowBackClicked = onArrowBackClicked,
-                sideButtons = listOf(
+                sideButtons= if (!addTaskToGameplan) {
+                    listOf(
                     TopBarButton(onClicked = onAddTaskClicked, icon = Icons.Default.Add, contentDescription = "Add"),
-                )
+                )} else { emptyList() },
             )
         },
     ) { innerPadding ->
@@ -39,7 +45,17 @@ fun ListOfTasks(
                 .padding(innerPadding)
         ) {
             items(items = listOfTasks, key = { it.id }) { task ->
-                TaskItem(task = task, onTaskClicked = onTaskClicked)
+                if (addTaskToGameplan) {
+                    gameplan?.listOfTaskIds?.contains(task.id)?.let {
+                        TaskItem(
+                            task = task,
+                            addToGameplan = !it, // only if gameplan doesn't already have the task
+                            onAddToGameplan = { onAddTaskToGameplanClicked(gameplan, task) }
+                        )
+                    }
+                } else {
+                    TaskItem(task = task, onTaskClicked = onTaskClicked)
+                }
             }
         }
     }
