@@ -52,6 +52,7 @@ class EndOfTaskPageFragment: Fragment() {
 
                         EndOfTaskPage(
                             game = args.game,
+                            viewModel = viewModel,
                             listOfGameplanTasks = tasks,
                             lastTask = isLastTask,
                             onArrowBackClicked = {

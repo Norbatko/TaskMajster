@@ -55,7 +55,7 @@ import java.io.File
 fun TaskDetail(
     task: Task,
     onArrowBackClicked: () -> Unit,
-// onAddToPlanClicked: () -> Unit, // TODO add to existing gameplan -> viz TaskItem onAddToListClicked attribute (maybe create new page for it?)
+    onAddToGameplanClicked: () -> Unit,
     onPlayClicked: (Game) -> Unit,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit
@@ -129,7 +129,7 @@ fun TaskDetail(
                 LargeButton(
                     text = "Add to plan",
                     icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
-                    onClicked = { }
+                    onClicked = { onAddToGameplanClicked() }
                 )
             }
             Text(
@@ -247,8 +247,9 @@ fun TaskDetailPreview() {
     TaskDetail(
         task = Task("1", "task1", 15, "task description", emptyList()),
         onArrowBackClicked = {},
+        onAddToGameplanClicked = {},
         onPlayClicked = {},
-        onEditClicked= {},
-        onDeleteClicked= {}
+        onEditClicked = {},
+        onDeleteClicked = {},
     )
 }

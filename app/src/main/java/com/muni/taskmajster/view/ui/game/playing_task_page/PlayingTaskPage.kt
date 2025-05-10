@@ -188,6 +188,8 @@ fun PlayingTaskContent(
                 ringtone?.stop()
                 ringtone = null
                         },
+            onConfirmClicked = { showDialog = false },
+            onDismiss = { showDialog = false },
             showCancel = false
         )
     }

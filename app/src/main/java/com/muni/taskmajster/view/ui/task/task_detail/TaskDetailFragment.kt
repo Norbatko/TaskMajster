@@ -30,6 +30,12 @@ class TaskDetailFragment: Fragment() {
                     onArrowBackClicked = {
                         findNavController().navigateUp()
                     },
+                    onAddToGameplanClicked = {
+                        findNavController().navigate(
+                            TaskDetailFragmentDirections
+                                .actionTaskDetailFragmentToListOfGameplansFragment(task)
+                        )
+                    },
                     onPlayClicked = { game ->
                         findNavController().navigate(
                             TaskDetailFragmentDirections.actionTaskDetailFragmentToAddPlayersPageFragment(game)
