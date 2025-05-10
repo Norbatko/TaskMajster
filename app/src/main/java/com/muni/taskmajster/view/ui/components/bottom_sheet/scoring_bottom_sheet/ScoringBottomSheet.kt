@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet
+package com.muni.taskmajster.view.ui.components.bottom_sheet.scoring_bottom_sheet
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.model.data.Player
-import com.muni.taskmajster.view.ui.components.player.PlayerWithScore
+import com.muni.taskmajster.view.ui.components.player.PlayerWithScoreSetter
 import kotlin.random.Random
 
 
@@ -30,7 +30,7 @@ fun ScoringBottomSheet(
             )
         }
         items(items = listOfPlayers, key = { it.id }) { player ->
-            PlayerWithScore(
+            PlayerWithScoreSetter(
                 player = player,
                 score = player.taskPoints,
                 onScoreChanged = { delta -> onScoreChanged(player.id, delta) }

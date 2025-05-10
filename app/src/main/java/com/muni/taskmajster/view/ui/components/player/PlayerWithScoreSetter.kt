@@ -20,7 +20,7 @@ import com.muni.taskmajster.model.data.Player
 import kotlin.random.Random
 
 @Composable
-fun PlayerWithScore(
+fun PlayerWithScoreSetter(
     player: Player,
     score: Int,
     onScoreChanged: (Int) -> Unit,
@@ -77,7 +77,7 @@ fun PlayerWithScore(
 @Preview(showBackground = true)
 @Composable
 fun PlayerWithScorePreview() {
-    PlayerWithScore(
+    PlayerWithScoreSetter(
         player = Player(1, "Player ABC", Random.nextInt(), 2, 5),
         score = 10,
         onScoreChanged = {}
