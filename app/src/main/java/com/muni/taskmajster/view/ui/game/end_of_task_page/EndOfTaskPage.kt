@@ -1,4 +1,4 @@
-package com.muni.taskmajster.view.ui.end_of_task_page
+package com.muni.taskmajster.view.ui.game.end_of_task_page
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
