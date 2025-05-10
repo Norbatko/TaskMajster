@@ -2,16 +2,16 @@ package com.muni.taskmajster.util
 
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.provider.MediaStore
+import com.muni.taskmajster.model.data.ImageUriResult
 
 object GalleryRetrieveUtil {
 
     fun getImagesByNameFromTaskMajsterFolder(
         context: Context,
         targetFilenames: List<String>
-    ): List<Uri> {
-        val imageUris = mutableListOf<Uri>()
+    ): List<ImageUriResult> {
+        val imageUriList = mutableListOf<ImageUriResult>()
 
         val projection = arrayOf(
             MediaStore.Images.Media._ID,
@@ -40,11 +40,11 @@ object GalleryRetrieveUtil {
                 if (targetFilenames.contains(name)) {
                     val id = cursor.getLong(idColumn)
                     val contentUri = ContentUris.withAppendedId(queryUri, id)
-                    imageUris.add(contentUri)
+                    imageUriList.add(ImageUriResult(contentUri, name))
                 }
             }
         }
 
-        return imageUris
+        return imageUriList
     }
 }
