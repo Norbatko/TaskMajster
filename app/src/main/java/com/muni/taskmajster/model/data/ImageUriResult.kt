@@ -4,5 +4,5 @@ import android.net.Uri
 
 data class ImageUriResult(
     val uri: Uri?,
-    val fileName: String
+    val filename: String
 )
