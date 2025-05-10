@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,6 +41,7 @@ import coil3.compose.AsyncImage
 import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.util.GalleryRetrieveUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
@@ -143,37 +145,31 @@ fun TaskDetail(
 
 @Composable
 fun PhotoGrid(photoList: List<String>) {
+    val imageUris = GalleryRetrieveUtil.getImagesByNameFromTaskMajsterFolder(context = LocalContext.current, targetFilenames = photoList)
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val file = File("/storage/emulated/0/Pictures/IMG_20250322_193456.jpg")
-
-        val rows = photoList.chunked(3)
+        val rows = imageUris.chunked(3)
         for (row in rows) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                for (photoResId in row) {
+                for (uri in row) {
                     Box(
                         modifier = Modifier
                             .padding(4.dp)
-                            .size(120.dp)  // Ensure a fixed size
+                            .size(120.dp)
                             .clip(RoundedCornerShape(8.dp))
                             .background(Color.Gray),
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
-                            model = file,
+                            model = uri,
                             contentDescription = "Stored Image",
                             modifier = Modifier.size(100.dp)
                         )
-//                        Text(
-//                            text = "Photo $photoResId",
-//                            color = Color.White,
-//                            style = MaterialTheme.typography.bodySmall
-//                        )
                     }
                 }
             }
