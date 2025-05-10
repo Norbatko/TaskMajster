@@ -35,8 +35,7 @@ import com.muni.taskmajster.view.ui.game.playing_task_page.scoring_bottom_sheet.
 import kotlin.random.Random
 import androidx.compose.runtime.*
 import kotlinx.coroutines.delay
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
+import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 
 val bottomSheetPeekHeight = 128.dp
 
@@ -162,17 +161,14 @@ fun PlayingTaskContent(
         }
     }
 
-    // TODO move elsewhere and use also for delte confirm
     if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text("Time is up!") },
-            text = { Text("The timer has finished.") },
-            confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("OK")
-                }
-            }
+        CustomAlertDialog(
+            title = "Time is up!",
+            description = "The timer has finished.",
+            confirmText = "OK",
+            onConfirmClicked = { showDialog = false },
+            onDismiss = { showDialog = false },
+            showCancel = false
         )
     }
 }
@@ -203,7 +199,7 @@ fun PlayingTaskPagePreview() {
         listOfGameplanTasks = List(1){
             Task("1",
                 "taskName",
-                10,
+                5,
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam rhoncus consectetur ligula nec pretium. Suspendisse quis nulla quam. Duis a commodo dui. Ut molestie erat vitae rutrum maximus. Suspendisse potenti. Cras pellentesque enim sed augue porta laoreet. Curabitur eget augue quis lorem fringilla elementum in sit amet tellus. Cras sagittis pulvinar tellus blandit ullamcorper. Fusce ornare ultricies dapibus. Vestibulum blandit nec augue eget feugiat. Aliquam erat volutpat. Sed quis justo facilisis, interdum tellus vitae, ornare leo.\n" +
                 "\n" +
                 "Vivamus accumsan faucibus nibh, sed placerat felis consectetur vel. Aliquam id diam dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent id turpis quis sem volutpat pharetra. Nullam a lectus eget mauris dignissim tincidunt. Praesent tellus tellus, aliquet vitae accumsan non, tempus sed lectus. Fusce sed tortor vel quam suscipit lobortis at ac nisl. Quisque facilisis risus quis hendrerit pulvinar. Maecenas euismod, erat et rhoncus pharetra, enim arcu consequat magna, at aliquet ligula nisl id est. Sed suscipit lorem nulla, quis accumsan diam facilisis eu. Curabitur ornare, nisi in viverra venenatis, nunc velit pharetra lorem, non sagittis enim quam at eros. Maecenas vitae pharetra diam. Aenean et hendrerit libero. Donec sodales mauris id elit ultricies, quis venenatis sapien pharetra. Curabitur sapien urna, viverra porttitor consequat ac, tristique in sapien. Pellentesque gravida erat id leo aliquet vestibulum.",
