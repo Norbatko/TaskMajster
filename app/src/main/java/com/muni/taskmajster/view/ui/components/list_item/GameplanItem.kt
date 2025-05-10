@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,25 +23,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.model.data.Gameplan
 
-
 @Composable
 fun GameplanItem(
     gameplan: Gameplan,
-    onGameplanClicked: (Gameplan) -> Unit
+    onGameplanClicked: (Gameplan) -> Unit = {},
+    addToGameplan: Boolean = false,
+    onAddToGameplan: () -> Unit = {},
 ) {
+    val clickableModifier = if (!addToGameplan || onGameplanClicked == {}) {
+        Modifier.clickable { onGameplanClicked(gameplan) }
+    } else Modifier
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
-            .clickable { onGameplanClicked(gameplan) }
+            .then(clickableModifier)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
-            verticalAlignment = Alignment.Top
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = gameplan.name,
                     fontWeight = FontWeight.Medium,
@@ -50,8 +58,7 @@ fun GameplanItem(
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(top = 8.dp, bottom = 8.dp)
+                    modifier = Modifier.padding(vertical = 8.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Menu,
@@ -63,6 +70,17 @@ fun GameplanItem(
                         text = gameplan.listOfTaskIds.size.toString(),
                         color = Color.Gray,
                         fontSize = 14.sp
+                    )
+                }
+            }
+
+            if (addToGameplan) {
+                IconButton(
+                    onClick = { onAddToGameplan() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AddCircle,
+                        contentDescription = "Add to gameplan"
                     )
                 }
             }
@@ -83,5 +101,7 @@ fun GameplanItem(
 fun GameplanItemPreview() {
     GameplanItem(
         gameplan = Gameplan("1", "THE gameplan", emptyList()),
-        onGameplanClicked = {})
+        onGameplanClicked = {},
+        addToGameplan = true
+    )
 }

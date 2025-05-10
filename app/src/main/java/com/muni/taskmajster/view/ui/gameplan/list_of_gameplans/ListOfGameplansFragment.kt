@@ -16,10 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.muni.taskmajster.viewModel.ListOfGameplansViewModel
+import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.model.data.Task
 import kotlin.getValue
 
 class ListOfGameplansFragment : Fragment() {
     private val viewModel: ListOfGameplansViewModel by viewModels()
+    private val args: ListOfGameplansFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,8 +59,24 @@ class ListOfGameplansFragment : Fragment() {
                         },
                         onAddGameplanClicked = {
                             findNavController().navigate(
-                                ListOfGameplansFragmentDirections.actionListOfGameplansFragmentToGameplansFormFragment(null)
+                                ListOfGameplansFragmentDirections
+                                    .actionListOfGameplansFragmentToGameplansFormFragment(null)
                             )
+                        },
+                        addTaskToGameplan = args.task != null,
+                        task = args.task,
+                        onAddTaskToGameplanClicked = { gameplan ->
+                            val task: Task? = args.task
+                            if (task != null) {
+                                val updatedGameplan = gameplan.copy(
+                                    listOfTaskIds = gameplan.listOfTaskIds + task.id
+                                )
+                                viewModel.updateGameplan(updatedGameplan) { success ->
+                                    if (success) {
+                                        findNavController().navigateUp()
+                                    }
+                                }
+                            }
                         }
                     )
                 }

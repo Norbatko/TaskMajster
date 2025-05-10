@@ -39,8 +39,8 @@
             android:id="@+id/action_taskDetailFragment_to_addPlayersPageFragment"
             app:destination="@id/addPlayersPageFragment" />
         <action
-            android:id="@+id/action_taskFormFragment_to_listOfTasksFragment"
-            app:destination="@id/taskFormFragment" />
+            android:id="@+id/action_taskDetailFragment_to_listOfGameplansFragment"
+            app:destination="@id/listOfGameplansFragment" />
         <action
             android:id="@+id/action_taskDetailFragment_to_taskFormFragment"
             app:destination="@id/taskFormFragment" />
@@ -59,6 +59,11 @@
         <action
             android:id="@+id/action_listOfGameplansFragment_to_gameplansFormFragment"
             app:destination="@id/gameplanFormFragment" />
+        <argument
+            android:name="task"
+            app:argType="com.muni.taskmajster.model.data.Task"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment
