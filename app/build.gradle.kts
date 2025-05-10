@@ -93,4 +93,7 @@ dependencies {
     // LiveData
     implementation("androidx.compose.runtime:runtime-livedata:1.8.0")
 
+    // Activity-compose
+    implementation("androidx.activity:activity-compose:1.7.2")
+
 }
