@@ -9,10 +9,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,10 +22,9 @@ import kotlin.random.Random
 @Composable
 fun PlayerWithScore(
     player: Player,
-    showScoreSetter: Boolean
+    score: Int,
+    onScoreChanged: (Int) -> Unit,
 ) {
-    var taskScore by remember { mutableIntStateOf(0) }
-
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -47,16 +42,11 @@ fun PlayerWithScore(
 
         Spacer(modifier = Modifier.weight(0.5f))
 
-        //TODO: redo, does not make sense, needs defined logic and correct arguments passed
-        if (showScoreSetter) { // score for task
-            Text(taskScore.toString(), style = MaterialTheme.typography.titleLarge)
-            ScoreSetter(
-                onPointRemoved = { taskScore-- },
-                onPointAdded = { taskScore++ }
-            )
-        } else { // score for game
-            Text(player.totalPoints.toString(), style = MaterialTheme.typography.titleLarge)
-        }
+        Text(score.toString(), style = MaterialTheme.typography.titleLarge)
+        ScoreSetter(
+            onPointRemoved = { onScoreChanged(-1) },
+            onPointAdded = { onScoreChanged(+1) }
+        )
     }
 }
 
@@ -95,6 +85,8 @@ fun ScoreSetter(
 fun PlayerWithScorePreview() {
     PlayerWithScore(
         player = Player(1, "Player", Random.nextInt(), 2, 5),
-        showScoreSetter = true
+//        showScoreSetter = true,
+        score = 10,
+        onScoreChanged = {}
     )
 }

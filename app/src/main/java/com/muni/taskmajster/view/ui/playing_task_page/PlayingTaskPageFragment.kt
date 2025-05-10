@@ -54,12 +54,12 @@ class PlayingTaskPageFragment: Fragment() {
                         PlayingTaskPage(
                             game = args.game,
                             listOfGameplanTasks = tasks,
-                            onDoneClicked = {
+                            onDoneClicked = { updatedGame ->
                                 findNavController()
                                     .navigate(
                                         PlayingTaskPageFragmentDirections
                                             .actionPlayingTaskPageFragmentToEndOfTaskPageFragment(
-                                                args.game
+                                                updatedGame
                                             )
                                     )
                             },
