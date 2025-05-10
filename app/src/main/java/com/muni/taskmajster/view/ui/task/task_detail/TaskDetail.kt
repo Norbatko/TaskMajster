@@ -1,7 +1,5 @@
 package com.muni.taskmajster.view.ui.task.task_detail
 
-import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,13 +8,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -40,7 +35,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +42,7 @@ import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
+import com.muni.taskmajster.model.data.ImageUriResult
 import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.util.GalleryRetrieveUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
@@ -55,7 +50,8 @@ import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
-import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun TaskDetail(
@@ -167,8 +163,8 @@ fun TaskDetail(
 
 @Composable
 fun PhotoGrid(photoList: List<String>) {
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val imageUris = GalleryRetrieveUtil.getImagesByNameFromTaskMajsterFolder(context = LocalContext.current, targetFilenames = photoList)
+    var selectedImage by remember { mutableStateOf<ImageUriResult?>(null) }
+    val imageUriList = GalleryRetrieveUtil.getImagesByNameFromTaskMajsterFolder(context = LocalContext.current, targetFilenames = photoList)
 
     Column(
         modifier = Modifier
@@ -176,13 +172,13 @@ fun PhotoGrid(photoList: List<String>) {
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val rows = imageUris.chunked(3)
+        val rows = imageUriList.chunked(3)
         rows.forEach { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                row.forEach { uri ->
+                row.forEach { uriResult ->
                     Box(
                         modifier = Modifier
                             .padding(4.dp)
@@ -190,11 +186,11 @@ fun PhotoGrid(photoList: List<String>) {
                             .clip(RoundedCornerShape(12.dp))
                             .background(MaterialTheme.colorScheme.surfaceVariant)
                             .border(2.dp, Color.Gray, RoundedCornerShape(12.dp))
-                            .clickable { selectedImageUri = uri },
+                            .clickable { selectedImage = uriResult },
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
-                            model = uri,
+                            model = uriResult.uri,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
@@ -206,25 +202,58 @@ fun PhotoGrid(photoList: List<String>) {
     }
 
     // Fullscreen image preview dialog
-    selectedImageUri?.let { uri ->
-        Dialog(onDismissRequest = { selectedImageUri = null }) {
+    selectedImage?.let { uriResult ->
+        Dialog(onDismissRequest = { selectedImage = null }) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable { selectedImageUri = null },  // Close dialog when clicked outside
+                    .clickable { selectedImage = null },  // Close dialog when clicked outside
                 contentAlignment = Alignment.Center
             ) {
-                AsyncImage(
-                    model = uri,
-                    contentDescription = "Full Image",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                )
+                val date = extractDateFromFilename(uriResult.filename)
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AsyncImage(
+                        model = uriResult.uri,
+                        contentDescription = "Full Image",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                    )
+
+                    Text(
+                        text = date,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(8.dp))
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
             }
         }
+    }
+}
+
+fun extractDateFromFilename(filename: String): String {
+    return try {
+        // Regex to match the pattern IMG_yyyyMMdd_HHmmss.jpg
+        val pattern = Regex("IMG_(\\d{8}_\\d{6})\\.jpg")
+        val matchResult = pattern.find(filename)
+        matchResult?.groupValues?.get(1)?.let { dateStr ->
+            val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
+            val date = dateFormat.parse(dateStr)
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(date)
+            formattedDate
+        } ?: "Unknown Date"
+    } catch (_: Exception) {
+        "Unknown Date"
     }
 }
 
