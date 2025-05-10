@@ -228,48 +228,6 @@ fun PhotoGrid(photoList: List<String>) {
     }
 }
 
-// TODO What is this?
-@Composable
-fun PhotoGallery(photoList: List<Int>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(photoList.size) { photoResId ->
-            val painter = runCatching {
-                painterResource(id = photoResId)
-            }.getOrNull()
-
-            if (painter != null) {
-                Image(
-                    painter = painter,
-                    contentDescription = "Gallery Photo",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Gray),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Image Not Found",
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-            }
-        }
-    }
-}
-
 @Preview
 @Composable
 fun TaskDetailPreview() {
