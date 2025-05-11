@@ -22,6 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.model.data.Gameplan
+import com.muni.taskmajster.view.ui.components.common.CustomContainer
+import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 
 @Composable
 fun GameplanItem(
@@ -35,10 +37,12 @@ fun GameplanItem(
         Modifier.clickable { onGameplanClicked(gameplan) }
     } else Modifier
 
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .then(clickableModifier)
+
     ) {
         Row(
             modifier = Modifier
@@ -54,8 +58,7 @@ fun GameplanItem(
                     fontWeight = FontWeight.Medium,
                     fontSize = 24.sp,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.Black
+                    overflow = TextOverflow.Ellipsis
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -87,14 +90,9 @@ fun GameplanItem(
             }
         }
 
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, start = 4.dp, end = 4.dp),
-            thickness = 1.dp,
-            color = Color.DarkGray
-        )
+        CustomHorizontalDivider()
     }
+
 }
 
 @Preview

@@ -8,14 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 
 @Composable
 fun TaskItem(
@@ -49,7 +49,7 @@ fun TaskItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp),
+                .padding(vertical = 16.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
@@ -60,8 +60,7 @@ fun TaskItem(
                     fontWeight = FontWeight.Medium,
                     fontSize = 24.sp,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.Black
+                    overflow = TextOverflow.Ellipsis
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -70,12 +69,12 @@ fun TaskItem(
                     Icon(
                         imageVector = Icons.Default.Lock, // TODO: Change to Clock
                         contentDescription = null,
-                        tint = Color.Gray,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(end = 4.dp)
                     )
                     Text(
                         text = "${task.time}s",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 14.sp
                     )
                 }
@@ -98,15 +97,9 @@ fun TaskItem(
                 }
             }
         }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, start = 4.dp, end = 4.dp),
-            thickness = 1.dp,
-            color = Color.DarkGray
-        )
+        CustomHorizontalDivider()
     }
+
 }
 
 
