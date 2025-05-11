@@ -53,7 +53,7 @@ fun TaskItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Task: " + task.name,
+                    text = task.name,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis

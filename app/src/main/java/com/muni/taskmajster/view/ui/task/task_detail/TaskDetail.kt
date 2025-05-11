@@ -82,7 +82,7 @@ fun TaskDetail(
     Scaffold(
         topBar = {
             TopBar(
-                title = "Task: ${task.name}",
+                title = task.name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(
