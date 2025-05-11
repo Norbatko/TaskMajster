@@ -126,7 +126,7 @@ fun EndOfTaskPageContent(
                 )
             }
             LargeButton(
-                "Finalize",
+                "End game",
                 ButtonIcon.Vector(Icons.Default.Check),
                 onClicked = onFinalizeClicked,
             )
