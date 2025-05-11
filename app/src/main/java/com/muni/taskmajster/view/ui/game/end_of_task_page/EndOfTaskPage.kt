@@ -37,7 +37,6 @@ import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 import kotlin.random.Random
 
-// TODO maybe somewhere display number of remaining tasks?
 @Composable
 fun EndOfTaskPage(
     game: Game,
@@ -151,7 +150,6 @@ fun FinalScoreBoard(
         }
     }
 }
-
 
 @Preview
 @Composable

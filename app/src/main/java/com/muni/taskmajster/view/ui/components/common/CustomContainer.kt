@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.muni.taskmajster.view.ui.components.common.customBorder
 
 @Composable
 fun CustomContainer(

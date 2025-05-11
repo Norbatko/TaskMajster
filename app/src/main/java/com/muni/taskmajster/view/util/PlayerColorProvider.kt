@@ -24,9 +24,5 @@ object PlayerColorProvider {
         return color
     }
 
-    fun reset() {
-        currentIndex = 0
-    }
-
     fun getAll(): List<Int> = colors
 }

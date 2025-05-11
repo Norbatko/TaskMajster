@@ -39,7 +39,6 @@ fun EditablePlayer(
     }
 }
 
-
 @Preview
 @Composable
 fun EditablePlayerPreview() {

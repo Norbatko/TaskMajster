@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.view.ui.components.button.MenuButton
 import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
-import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.customBorder
 
 @Composable
@@ -111,7 +110,6 @@ fun TitleContainer(text: String) {
         )
     }
 }
-
 
 @Preview
 @Composable

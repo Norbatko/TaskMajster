@@ -69,7 +69,7 @@ class EndOfTaskPageFragment: Fragment() {
                                         )
                                     )
                                 },
-                                onFinalizeClicked = { // TODO now back to menu, maybe some 3 winner screen? or completely remove and leave just arrow back?
+                                onFinalizeClicked = {
                                     findNavController()
                                         .navigate(EndOfTaskPageFragmentDirections.actionEndOfTaskPageFragmentToMainPage())
                                 }

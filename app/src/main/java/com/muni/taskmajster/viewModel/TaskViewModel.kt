@@ -23,7 +23,6 @@ class TaskViewModel : ViewModel() {
             if (success) {
                 _task.value = task
             }
-            // TODO error popup?
         }
     }
 

@@ -52,7 +52,7 @@ fun ScoringBottomSheetPreview() {
                 totalPoints = 0,
             )
         },
-        onScoreChanged = {x, y -> Unit},
+        onScoreChanged = {x, y -> },
     )
 }
 
