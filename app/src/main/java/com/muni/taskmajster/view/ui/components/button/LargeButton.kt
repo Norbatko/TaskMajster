@@ -45,7 +45,7 @@ fun LargeButton(
         Button (
             onClick = onClicked,
             modifier = Modifier
-                .height(50.dp),
+                .height(70.dp),
             colors = if (transparent) {
                 ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
