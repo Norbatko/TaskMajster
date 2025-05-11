@@ -5,32 +5,55 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.repository.GameplanRepository
+import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.model.repository.TaskRepository
 
-class GameplanViewModel : ViewModel() {
+class GameplanViewModel(
+    private val taskRepository: TaskRepository = TaskRepository(),
+    private val gameplanRepository: GameplanRepository = GameplanRepository()
+) : ViewModel() {
+
     private val _gameplan = MutableLiveData<Gameplan>()
     val gameplan: LiveData<Gameplan> get() = _gameplan
 
-    private val _gameplans = MutableLiveData<List<Gameplan>>()
-    val gameplans: LiveData<List<Gameplan>> get() = _gameplans
+    private val _tasks = MutableLiveData<List<Task>>()
+    val tasks: LiveData<List<Task>> = _tasks
+
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
 
     fun setGameplan(gameplan: Gameplan) {
         _gameplan.value = gameplan
+        loadTasksByIds(gameplan.listOfTaskIds)
     }
 
     fun updateGameplan(gameplan: Gameplan) {
-        val repository = GameplanRepository()
-        repository.updateGameplan(gameplan) { success ->
+        gameplanRepository.updateGameplan(gameplan) { success ->
             if (success) {
-                _gameplan.value = gameplan
+                _gameplan.postValue(gameplan)
+                loadTasksByIds(gameplan.listOfTaskIds)
             }
-            // TODO error popup?
+        }
+    }
+
+    fun refreshGameplan(gameplanId: String) {
+        gameplanRepository.fetchGameplanById(gameplanId) { updatedGameplan ->
+            updatedGameplan?.let {
+                _gameplan.postValue(it)
+                loadTasksByIds(it.listOfTaskIds)
+            }
+        }
+    }
+
+    fun loadTasksByIds(ids: List<String>) {
+        _loading.value = true
+        taskRepository.fetchTasksByIds(ids) { fetchedTasks ->
+            _tasks.postValue(fetchedTasks)
+            _loading.postValue(false)
         }
     }
 
     fun deleteGameplan(gameplanId: String, onResult: (Boolean) -> Unit) {
-        val repository = GameplanRepository()
-        repository.deleteGameplan(gameplanId) { success ->
-            onResult(success)
-        }
+        gameplanRepository.deleteGameplan(gameplanId, onResult)
     }
 }
