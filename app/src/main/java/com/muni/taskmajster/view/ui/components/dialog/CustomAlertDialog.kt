@@ -1,6 +1,8 @@
 package com.muni.taskmajster.view.ui.components.dialog
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -20,10 +22,12 @@ fun CustomAlertDialog(
         title = { Text(title) },
         text = { Text(description) },
         confirmButton = {
-            TextButton(onClick = {
-                onDismiss()
-                onConfirmClicked()
-            }) {
+            Button(
+                onClick = {
+                    onDismiss()
+                    onConfirmClicked()
+                },
+            ) {
                 Text(confirmText)
             }
         },
