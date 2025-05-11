@@ -78,7 +78,30 @@ class TaskRepository {
     // Delete a Task
     fun deleteTask(taskId: String, onResult: (Boolean) -> Unit) {
         collection.document(taskId).delete()
-            .addOnSuccessListener { onResult(true) }
-            .addOnFailureListener { onResult(false) }
+            .addOnSuccessListener {
+                // after deleting the task -> update all gameplans (remove deleted id from list)
+                val gameplanRepo = GameplanRepository()
+                gameplanRepo.fetchGameplans { gameplans ->
+                    val affectedGameplans = gameplans.filter { it.listOfTaskIds.contains(taskId) }
+                    if (affectedGameplans.isEmpty()) {
+                        onResult(true)
+                        return@fetchGameplans
+                    }
+
+                    var completed = 0
+                    for (gameplan in affectedGameplans) {
+                        val updated = gameplan.copy(listOfTaskIds = gameplan.listOfTaskIds.filter { it != taskId })
+                        gameplanRepo.updateGameplan(updated) {
+                            completed++
+                            if (completed == affectedGameplans.size) {
+                                onResult(true)
+                            }
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener {
+                onResult(false)
+            }
     }
 }
