@@ -32,7 +32,6 @@ import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 import com.muni.taskmajster.view.ui.components.list_item.TaskItem
-import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 
 @Composable
 fun GameplanDetail(
@@ -64,7 +63,7 @@ fun GameplanDetail(
     Scaffold(
         topBar = {
             TopBar(
-                title = "Gameplan: ${gameplan.name}",
+                title = gameplan.name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(

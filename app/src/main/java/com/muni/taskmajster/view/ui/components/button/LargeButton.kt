@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.muni.taskmajster.view.ui.theme.util.customBorder
+import com.muni.taskmajster.view.ui.components.common.customBorder
 
 // we can add vector picture or painter
 sealed class ButtonIcon {
@@ -45,7 +45,7 @@ fun LargeButton(
         Button (
             onClick = onClicked,
             modifier = Modifier
-                .height(50.dp),
+                .height(70.dp),
             colors = if (transparent) {
                 ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,

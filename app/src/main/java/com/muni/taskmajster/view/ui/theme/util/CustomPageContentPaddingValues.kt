@@ -6,10 +6,11 @@ import androidx.compose.ui.unit.dp
 fun customPageContentPaddingValues (
     innerPadding: PaddingValues
 ): PaddingValues {
+    val padding = 20
     return PaddingValues(
-        start = 20.dp,
-        top = innerPadding.calculateTopPadding(),
-        end = 20.dp,
-        bottom = innerPadding.calculateBottomPadding()
+        start = padding.dp,
+        top = innerPadding.calculateTopPadding() + padding.dp,
+        end = padding.dp,
+        bottom = innerPadding.calculateBottomPadding() + padding.dp
     )
 }

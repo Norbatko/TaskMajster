@@ -40,7 +40,7 @@ fun Colorpicker(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(360.dp)
+                .height(400.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {

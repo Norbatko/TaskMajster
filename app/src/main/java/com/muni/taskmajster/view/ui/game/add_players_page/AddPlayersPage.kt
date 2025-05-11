@@ -158,7 +158,9 @@ fun LazyListScope.listOfPlayersItems(
                 color = players[index].colour,
                 onNameChanged = { newName -> onPlayerNameChanged(index, newName) },
                 onAvatarClicked = { onPlayerAvatarClicked(index) } ,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 12.dp)
             )
             IconButton(
                 onClick = { onPlayerRemoved(index) },

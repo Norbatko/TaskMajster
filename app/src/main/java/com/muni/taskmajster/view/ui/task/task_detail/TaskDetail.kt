@@ -2,9 +2,9 @@ package com.muni.taskmajster.view.ui.task.task_detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,11 +35,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
+import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Game
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.ImageUriResult
@@ -79,7 +82,7 @@ fun TaskDetail(
     Scaffold(
         topBar = {
             TopBar(
-                title = "Task: ${task.name}",
+                title = task.name,
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons = listOf(
                     TopBarButton(
@@ -142,29 +145,38 @@ fun TaskDetail(
                 CustomContainer {
                     Text(
                         text = task.description,
-                        Modifier.padding(
-                            horizontal = 20.dp,
-                            vertical = 10.dp
-                        )
                     )
                 }
 
                 Spacer(modifier = Modifier.size(32.dp))
 
                 CustomContainer {
-                    Text(
-                        text = "Time to complete: ${task.time} seconds",
-                        modifier = Modifier.padding(10.dp)
-                    )
+                    Row (
+                        verticalAlignment =  Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.id_clock_outline),
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 4.dp)
+                        )
+                        Text(
+                            text = "Time to complete: ${task.time} seconds",
+                        )
+                    }
+
                 }
 
-                Text(
-                    text = "Photos from previous games",
-                    fontSize = 25.sp,
-                    modifier = Modifier.padding(top = 20.dp)
-                )
+                Spacer(modifier = Modifier.size(40.dp))
 
-                PhotoGrid(task.imagePaths)
+                CustomContainer {
+                    Column {
+                        Text(
+                            text = "Photos from previous games",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                        PhotoGrid(task.imagePaths)
+                    }
+                }
             }
         }
     }

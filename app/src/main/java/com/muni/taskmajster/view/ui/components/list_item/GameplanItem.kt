@@ -49,7 +49,7 @@ fun GameplanItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Gameplan: " + gameplan.name,
+                    text = gameplan.name,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
