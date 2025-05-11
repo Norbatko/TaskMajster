@@ -2,6 +2,7 @@ package com.muni.taskmajster.view.ui.gameplan.gameplan_detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 import com.muni.taskmajster.view.ui.components.list_item.TaskItem
+import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 
 @Composable
 fun GameplanDetail(
@@ -83,7 +85,7 @@ fun GameplanDetail(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(paddingValues = customPageContentPaddingValues(innerPadding))
                 .fillMaxWidth()
         ) {
             Box(
@@ -127,7 +129,6 @@ fun GameplanDetail(
             }
 
             Column {
-                HorizontalDivider(thickness = 1.dp, color = Color.Black)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),

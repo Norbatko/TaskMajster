@@ -15,6 +15,7 @@ import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.list_item.TaskItem
+import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 
 @Composable
 fun ListOfTasks(
@@ -42,7 +43,7 @@ fun ListOfTasks(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(innerPadding)
+                .padding(paddingValues = customPageContentPaddingValues(innerPadding))
         ) {
             items(items = listOfTasks, key = { it.id }) { task ->
                 if (addTaskToGameplan) {

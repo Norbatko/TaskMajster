@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.muni.taskmajster.view.ui.theme.customBorder
+import com.muni.taskmajster.view.ui.theme.util.customBorder
 
 @Composable
 fun PlayerAvatar(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +21,6 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -51,6 +51,7 @@ import com.muni.taskmajster.view.ui.components.common.CustomContainer
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
+import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -99,7 +100,7 @@ fun TaskDetail(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(innerPadding)
+                .padding(paddingValues = customPageContentPaddingValues(innerPadding))
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -158,7 +159,7 @@ fun TaskDetail(
             Text(
                 text = "Photos from previous games",
                 fontSize = 25.sp,
-                modifier = Modifier.padding(20.dp))
+                modifier = Modifier.padding(top = 20.dp))
 
             PhotoGrid(task.imagePaths)
         }
