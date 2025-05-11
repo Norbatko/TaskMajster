@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.GameplanViewModel
 import kotlin.getValue
 
@@ -38,64 +39,66 @@ class GameplanDetailFragment : Fragment() {
         gameplanViewModel.setGameplan(args.gameplan)
 
         setContent {
-            val gameplan = gameplanViewModel.gameplan.observeAsState(args.gameplan).value
-            val tasks by gameplanViewModel.tasks.observeAsState(emptyList())
-            val loading by gameplanViewModel.loading.observeAsState(false)
+            AppTheme {
+                val gameplan = gameplanViewModel.gameplan.observeAsState(args.gameplan).value
+                val tasks by gameplanViewModel.tasks.observeAsState(emptyList())
+                val loading by gameplanViewModel.loading.observeAsState(false)
 
-            when {
-                loading -> {
-                    Box(
-                        Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                else -> {
-                    GameplanDetail(
-                        gameplan = gameplan,
-                        listOfGameplanTasks = tasks,
-                        onArrowBackClicked = {
-                            findNavController().navigateUp()
-                        },
-                        onTaskClicked = { task ->
-                            findNavController().navigate(
-                                GameplanDetailFragmentDirections
-                                    .actionGameplanDetailFragmentToTaskDetailFragment(task)
-                            )
-                        },
-                        onPlayClicked = { game ->
-                            findNavController().navigate(
-                                GameplanDetailFragmentDirections
-                                    .actionGameplanDetailFragmentToAddPlayersPageFragment(game)
-                            )
-                        },
-                        onEditClicked = {
-                            findNavController().navigate(
-                                GameplanDetailFragmentDirections
-                                    .actionGameplanDetailFragmentToGameplanFormFragment(gameplan)
-                            )
-                        },
-                        onDeleteClicked = {
-                            gameplanViewModel.deleteGameplan(gameplan.id) {
-                                findNavController().navigateUp()
-                            }
-                        },
-                        onAddNewTaskClicked = {
-                            findNavController().navigate(
-                                GameplanDetailFragmentDirections
-                                    .actionGameplanDetailFragmentToListOfTasksFragment(gameplan)
-                            )
-                        },
-                        onRemoveFromGameplanClicked = { taskToRemove ->
-                            val updatedTaskIds = gameplan.listOfTaskIds.toMutableList().apply {
-                                remove(taskToRemove.id)
-                            }
-                            val updatedGameplan = gameplan.copy(listOfTaskIds = updatedTaskIds)
-                            gameplanViewModel.updateGameplan(updatedGameplan)
+                when {
+                    loading -> {
+                        Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
                         }
-                    )
+                    }
+
+                    else -> {
+                        GameplanDetail(
+                            gameplan = gameplan,
+                            listOfGameplanTasks = tasks,
+                            onArrowBackClicked = {
+                                findNavController().navigateUp()
+                            },
+                            onTaskClicked = { task ->
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections
+                                        .actionGameplanDetailFragmentToTaskDetailFragment(task)
+                                )
+                            },
+                            onPlayClicked = { game ->
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections
+                                        .actionGameplanDetailFragmentToAddPlayersPageFragment(game)
+                                )
+                            },
+                            onEditClicked = {
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections
+                                        .actionGameplanDetailFragmentToGameplanFormFragment(gameplan)
+                                )
+                            },
+                            onDeleteClicked = {
+                                gameplanViewModel.deleteGameplan(gameplan.id) {
+                                    findNavController().navigateUp()
+                                }
+                            },
+                            onAddNewTaskClicked = {
+                                findNavController().navigate(
+                                    GameplanDetailFragmentDirections
+                                        .actionGameplanDetailFragmentToListOfTasksFragment(gameplan)
+                                )
+                            },
+                            onRemoveFromGameplanClicked = { taskToRemove ->
+                                val updatedTaskIds = gameplan.listOfTaskIds.toMutableList().apply {
+                                    remove(taskToRemove.id)
+                                }
+                                val updatedGameplan = gameplan.copy(listOfTaskIds = updatedTaskIds)
+                                gameplanViewModel.updateGameplan(updatedGameplan)
+                            }
+                        )
+                    }
                 }
             }
         }

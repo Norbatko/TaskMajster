@@ -39,6 +39,7 @@ import kotlin.random.Random
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.muni.taskmajster.view.ui.components.common.CustomContainer
 import kotlinx.coroutines.delay
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
 
@@ -94,6 +95,7 @@ fun PlayingTaskPage(
             )
         },
     ) {
+        //TODO: add CustomPageContent
     PlayingTaskContent(
         description = listOfGameplanTasks[game.currentTask].description,
         taskTime = listOfGameplanTasks[game.currentTask].time)
@@ -166,10 +168,12 @@ fun PlayingTaskContent(
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = bottomSheetPeekHeight)
         ) {
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            CustomContainer {
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 

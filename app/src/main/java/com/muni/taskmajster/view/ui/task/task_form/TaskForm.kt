@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 
 @Composable
 fun TaskForm(
@@ -53,92 +54,97 @@ fun TaskForm(
             )
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState())
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
         ) {
-            OutlinedTextField(
-                value = name,
-                singleLine = true,
-                onValueChange = {
-                    name = it
-                    if (!nameTouched) nameTouched = true
-                },
-                label = { Text("Task Name") },
-                modifier = Modifier.fillMaxWidth(),
-                isError = nameTouched && !isNameValid,
-                supportingText = {
-                    if (nameTouched && !isNameValid) {
-                        Text("Name cannot be empty", color = MaterialTheme.colorScheme.error)
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            OutlinedTextField(
-                value = description,
-                onValueChange = {
-                    description = it
-                    if (!descriptionTouched) descriptionTouched = true
-                },
-                label = { Text("Description") },
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp),
-                isError = descriptionTouched && !isDescriptionValid,
-                supportingText = {
-                    if (descriptionTouched && !isDescriptionValid) {
-                        Text("Description cannot be empty", color = MaterialTheme.colorScheme.error)
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            OutlinedTextField(
-                value = time,
-                singleLine = true,
-                onValueChange = { time = it },
-                label = { Text("Time (seconds)") },
-                modifier = Modifier.fillMaxWidth(),
-                isError = !isTimeValid,
-                supportingText = {
-                    if (!isTimeValid) {
-                        Text(
-                            text = "Please enter a valid full number",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                    .verticalScroll(rememberScrollState())
             ) {
-                LargeButton(
-                    text = if (isEditMode) "Update Task" else "Create Task",
-                    onClicked = {
-                        if (isNameValid && isDescriptionValid && isTimeValid) {
-                            val task = Task(
-                                id = initialTask?.id ?: "",
-                                name = name,
-                                description = description,
-                                time = time.toInt(),
-                                imagePaths = emptyList()
-                            )
-                            onSaveClicked(task)
-                        }
+                OutlinedTextField(
+                    value = name,
+                    singleLine = true,
+                    onValueChange = {
+                        name = it
+                        if (!nameTouched) nameTouched = true
                     },
-                    transparent = false,
-                    enabled = isNameValid && isDescriptionValid && isTimeValid
+                    label = { Text("Task Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    isError = nameTouched && !isNameValid,
+                    supportingText = {
+                        if (nameTouched && !isNameValid) {
+                            Text("Name cannot be empty", color = MaterialTheme.colorScheme.error)
+                        }
+                    }
                 )
+
+                Spacer(modifier = Modifier.size(16.dp))
+
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = {
+                        description = it
+                        if (!descriptionTouched) descriptionTouched = true
+                    },
+                    label = { Text("Description") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    isError = descriptionTouched && !isDescriptionValid,
+                    supportingText = {
+                        if (descriptionTouched && !isDescriptionValid) {
+                            Text(
+                                "Description cannot be empty",
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.size(16.dp))
+
+                OutlinedTextField(
+                    value = time,
+                    singleLine = true,
+                    onValueChange = { time = it },
+                    label = { Text("Time (seconds)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    isError = !isTimeValid,
+                    supportingText = {
+                        if (!isTimeValid) {
+                            Text(
+                                text = "Please enter a valid full number",
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    LargeButton(
+                        text = if (isEditMode) "Update Task" else "Create Task",
+                        onClicked = {
+                            if (isNameValid && isDescriptionValid && isTimeValid) {
+                                val task = Task(
+                                    id = initialTask?.id ?: "",
+                                    name = name,
+                                    description = description,
+                                    time = time.toInt(),
+                                    imagePaths = emptyList()
+                                )
+                                onSaveClicked(task)
+                            }
+                        },
+                        transparent = false,
+                        enabled = isNameValid && isDescriptionValid && isTimeValid
+                    )
+                }
             }
         }
     }

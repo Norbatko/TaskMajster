@@ -8,42 +8,41 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.model.data.Gameplan
+import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 
 @Composable
 fun GameplanItem(
     gameplan: Gameplan,
-    onGameplanClicked: (Gameplan) -> Unit = {},
-
+    onGameplanClicked: ((Gameplan) -> Unit)? = null,
+    // for displaying gameplan item in list for adding task to gameplan
     addToGameplan: Boolean = false,
     onAddToGameplan: () -> Unit = {},
 ) {
-    val clickableModifier = if (!addToGameplan || onGameplanClicked == {}) {
-        Modifier.clickable { onGameplanClicked(gameplan) }
-    } else Modifier
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .then(clickableModifier)
+            .let { base ->
+                // if item is in add task to gameplan list its not clickable (it would be too disruptive)
+                if (!addToGameplan || onGameplanClicked != null) {
+                    base.clickable { onGameplanClicked?.invoke(gameplan) }
+                } else base
+            }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
@@ -51,11 +50,9 @@ fun GameplanItem(
             ) {
                 Text(
                     text = "Gameplan: " + gameplan.name,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 24.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.Black
+                    overflow = TextOverflow.Ellipsis
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -64,13 +61,11 @@ fun GameplanItem(
                     Icon(
                         imageVector = Icons.Default.Menu,
                         contentDescription = null,
-                        tint = Color.Gray,
                         modifier = Modifier.padding(end = 4.dp)
                     )
                     Text(
                         text = gameplan.listOfTaskIds.size.toString(),
-                        color = Color.Gray,
-                        fontSize = 14.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
@@ -86,15 +81,9 @@ fun GameplanItem(
                 }
             }
         }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp, start = 4.dp, end = 4.dp),
-            thickness = 1.dp,
-            color = Color.DarkGray
-        )
+        CustomHorizontalDivider()
     }
+
 }
 
 @Preview

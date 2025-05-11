@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import com.muni.taskmajster.viewModel.TaskViewModel
 
 class TaskDetailFragment: Fragment() {
@@ -23,35 +24,38 @@ class TaskDetailFragment: Fragment() {
             taskViewModel.setTask(args.task)
 
             setContent {
-                val task = taskViewModel.task.observeAsState(args.task).value
+                AppTheme {
+                    val task = taskViewModel.task.observeAsState(args.task).value
 
-                TaskDetail(
-                    task = task,
-                    onArrowBackClicked = {
-                        findNavController().navigateUp()
-                    },
-                    onAddToGameplanClicked = {
-                        findNavController().navigate(
-                            TaskDetailFragmentDirections
-                                .actionTaskDetailFragmentToListOfGameplansFragment(task)
-                        )
-                    },
-                    onPlayClicked = { game ->
-                        findNavController().navigate(
-                            TaskDetailFragmentDirections.actionTaskDetailFragmentToAddPlayersPageFragment(game)
-                        )
-                    },
-                    onEditClicked = {
-                        findNavController().navigate(
-                            TaskDetailFragmentDirections.actionTaskDetailFragmentToTaskFormFragment(task)
-                        )
-                    },
-                    onDeleteClicked = {
-                        taskViewModel.deleteTask(task.id) {
+                    TaskDetail(
+                        task = task,
+                        onArrowBackClicked = {
                             findNavController().navigateUp()
+                        },
+                        onAddToGameplanClicked = {
+                            findNavController().navigate(
+                                TaskDetailFragmentDirections
+                                    .actionTaskDetailFragmentToListOfGameplansFragment(task)
+                            )
+                        },
+                        onPlayClicked = { game ->
+                            findNavController().navigate(
+                                TaskDetailFragmentDirections.actionTaskDetailFragmentToAddPlayersPageFragment(game)
+                            )
+                        },
+                        onEditClicked = {
+                            findNavController().navigate(
+                                TaskDetailFragmentDirections.actionTaskDetailFragmentToTaskFormFragment(task)
+                            )
+                        },
+                        onDeleteClicked = {
+                            taskViewModel.deleteTask(task.id) {
+                                findNavController().navigateUp()
+                            }
                         }
-                    }
-                )
+                    )
+                }
+
             }
         }
 }

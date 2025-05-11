@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +38,7 @@ fun TopBar(
     Row(
         Modifier
             .padding(WindowInsets.statusBars.asPaddingValues())
-            .background(color = Color.LightGray)
+            .background(color = MaterialTheme.colorScheme.tertiary)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -47,7 +46,8 @@ fun TopBar(
             IconButton(onClick = onArrowBackClicked) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onTertiary
                 )
             }
         } else {
@@ -65,6 +65,7 @@ fun TopBar(
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            color = MaterialTheme.colorScheme.onTertiary
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -74,7 +75,7 @@ fun TopBar(
                 TopBarSideButton(
                     onClicked = button.onClicked,
                     icon = button.icon,
-                    contentDescription = button.contentDescription
+                    contentDescription = button.contentDescription,
                 )
             }
         }
@@ -90,7 +91,8 @@ fun TopBarSideButton(
     IconButton(onClick = onClicked) {
         Icon(
             imageVector = icon,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
+            tint = MaterialTheme.colorScheme.onTertiary
         )
     }
 }

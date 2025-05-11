@@ -18,6 +18,7 @@ import androidx.navigation.findNavController
 import com.muni.taskmajster.viewModel.ListOfGameplansViewModel
 import androidx.navigation.fragment.navArgs
 import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.view.ui.theme.AppTheme
 import kotlin.getValue
 
 class ListOfGameplansFragment : Fragment() {
@@ -35,51 +36,53 @@ class ListOfGameplansFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            val gameplans by viewModel.gameplans.observeAsState(emptyList())
-            val loading by viewModel.loading.observeAsState(false)
+            AppTheme {
+                val gameplans by viewModel.gameplans.observeAsState(emptyList())
+                val loading by viewModel.loading.observeAsState(false)
 
-            when {
-                loading -> {
-                    Box(
-                        Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+                when {
+                    loading -> {
+                        Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
-                }
-                else -> {
-                    ListOfGameplans(
-                        listOfGameplans = gameplans,
-                        onArrowBackClicked = { findNavController().navigateUp() },
-                        onGameplanClicked = { gameplan ->
-                            findNavController().navigate(
-                                ListOfGameplansFragmentDirections
-                                    .actionListOfGameplansFragmentToGameplanDetailFragment(gameplan)
-                            )
-                        },
-                        onAddGameplanClicked = {
-                            findNavController().navigate(
-                                ListOfGameplansFragmentDirections
-                                    .actionListOfGameplansFragmentToGameplansFormFragment(null)
-                            )
-                        },
-
-                        addTaskToGameplan = args.task != null,
-                        task = args.task,
-                        onAddTaskToGameplanClicked = { gameplan ->
-                            val task: Task? = args.task
-                            if (task != null) {
-                                val updatedGameplan = gameplan.copy(
-                                    listOfTaskIds = gameplan.listOfTaskIds + task.id
+                    else -> {
+                        ListOfGameplans(
+                            listOfGameplans = gameplans,
+                            onArrowBackClicked = { findNavController().navigateUp() },
+                            onGameplanClicked = { gameplan ->
+                                findNavController().navigate(
+                                    ListOfGameplansFragmentDirections
+                                        .actionListOfGameplansFragmentToGameplanDetailFragment(gameplan)
                                 )
-                                viewModel.updateGameplan(updatedGameplan) { success ->
-                                    if (success) {
-                                        findNavController().navigateUp()
+                            },
+                            onAddGameplanClicked = {
+                                findNavController().navigate(
+                                    ListOfGameplansFragmentDirections
+                                        .actionListOfGameplansFragmentToGameplansFormFragment(null)
+                                )
+                            },
+
+                            addTaskToGameplan = args.task != null,
+                            task = args.task,
+                            onAddTaskToGameplanClicked = { gameplan ->
+                                val task: Task? = args.task
+                                if (task != null) {
+                                    val updatedGameplan = gameplan.copy(
+                                        listOfTaskIds = gameplan.listOfTaskIds + task.id
+                                    )
+                                    viewModel.updateGameplan(updatedGameplan) { success ->
+                                        if (success) {
+                                            findNavController().navigateUp()
+                                        }
                                     }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

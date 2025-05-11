@@ -20,7 +20,6 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -47,6 +46,8 @@ import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.util.GalleryRetrieveUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.ui.components.common.CustomContainer
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
@@ -95,68 +96,76 @@ fun TaskDetail(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LargeButton(
-                    text = "Play Now",
-                    icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
-                    onClicked = { onPlayClicked(
-                        Game(
-                            id = System.currentTimeMillis(),
-                            currentTask = 0,
-                            gameplan = Gameplan(
-                                id = System.currentTimeMillis().toString() + 1,
-                                name = "Task: " + task.name,
-                                listOfTaskIds = List(1){ "1" },
-                            ),
-                            listOfPlayers = emptyList(),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    LargeButton(
+                        text = "Play Now",
+                        icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
+                        onClicked = {
+                            onPlayClicked(
+                                Game(
+                                    id = System.currentTimeMillis(),
+                                    currentTask = 0,
+                                    gameplan = Gameplan(
+                                        id = System.currentTimeMillis().toString() + 1,
+                                        name = "Task: " + task.name,
+                                        listOfTaskIds = List(1) { "1" },
+                                    ),
+                                    listOfPlayers = emptyList(),
+                                )
+                            )
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    LargeButton(
+                        text = "Add to plan",
+                        icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
+                        onClicked = { onAddToGameplanClicked() }
+                    )
+                }
+
+                CustomContainer {
+                    Text(
+                        text = task.description,
+                        Modifier.padding(
+                            horizontal = 20.dp,
+                            vertical = 10.dp
                         )
-                    )}
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(32.dp))
+
+                CustomContainer {
+                    Text(
+                        text = "Time to complete: ${task.time} seconds",
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+
+                Text(
+                    text = "Photos from previous games",
+                    fontSize = 25.sp,
+                    modifier = Modifier.padding(top = 20.dp)
                 )
 
-                Spacer(modifier = Modifier.size(16.dp))
-
-                LargeButton(
-                    text = "Add to plan",
-                    icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
-                    onClicked = { onAddToGameplanClicked() }
-                )
+                PhotoGrid(task.imagePaths)
             }
-            Text(
-                text = task.description,
-                Modifier.padding(
-                    horizontal = 20.dp,
-                    vertical = 10.dp
-                )
-            )
-
-            Spacer(modifier = Modifier.size(32.dp))
-
-            Text(
-                text = "Time to complete: ${task.time} seconds",
-                modifier = Modifier.padding(10.dp)
-            )
-
-            HorizontalDivider(thickness = 2.dp, color = Color.Black)
-
-            Text(
-                text = "Photos from previous games",
-                fontSize = 25.sp,
-                modifier = Modifier.padding(20.dp))
-
-            PhotoGrid(task.imagePaths)
         }
     }
 }
@@ -231,7 +240,10 @@ fun PhotoGrid(photoList: List<String>) {
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(8.dp)
-                            .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(8.dp))
+                            .background(
+                                Color.Black.copy(alpha = 0.6f),
+                                shape = RoundedCornerShape(8.dp)
+                            )
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                             .align(Alignment.CenterHorizontally)
                     )

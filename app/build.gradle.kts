@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.ui.text.google.fonts)
     androidTestImplementation(libs.junit.junit)
     androidTestImplementation(libs.testng)
     debugImplementation("androidx.compose.ui:ui-tooling")

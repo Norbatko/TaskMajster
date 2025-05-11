@@ -26,6 +26,7 @@ junitKtx = "1.2.1"
 junitJunit = "4.12"
 testng = "6.9.6"
 firebaseFirestore = "25.1.4"
+uiTextGoogleFonts = "1.8.1"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
@@ -57,6 +58,7 @@ androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
