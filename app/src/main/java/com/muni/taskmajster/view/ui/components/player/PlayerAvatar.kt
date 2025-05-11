@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.muni.taskmajster.view.ui.theme.customBorder
 
 @Composable
 fun PlayerAvatar(
@@ -22,7 +23,7 @@ fun PlayerAvatar(
             .size(40.dp)
             .clip(CircleShape)
             .background(Color(color))
-            .border(2.dp, Color.DarkGray, CircleShape)
+            .border(customBorder(), CircleShape)
             .let { if (onClicked != null) it.clickable { onClicked() } else it }
     )
 }

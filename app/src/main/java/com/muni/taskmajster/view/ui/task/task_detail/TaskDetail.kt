@@ -47,6 +47,7 @@ import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.util.GalleryRetrieveUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.ui.components.common.CustomContainer
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
@@ -134,22 +135,25 @@ fun TaskDetail(
                     onClicked = { onAddToGameplanClicked() }
                 )
             }
-            Text(
-                text = task.description,
-                Modifier.padding(
-                    horizontal = 20.dp,
-                    vertical = 10.dp
+
+            CustomContainer {
+                Text(
+                    text = task.description,
+                    Modifier.padding(
+                        horizontal = 20.dp,
+                        vertical = 10.dp
+                    )
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.size(32.dp))
 
-            Text(
-                text = "Time to complete: ${task.time} seconds",
-                modifier = Modifier.padding(10.dp)
-            )
-
-            HorizontalDivider(thickness = 2.dp, color = Color.Black)
+            CustomContainer {
+                Text(
+                    text = "Time to complete: ${task.time} seconds",
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
 
             Text(
                 text = "Photos from previous games",
@@ -231,7 +235,10 @@ fun PhotoGrid(photoList: List<String>) {
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(8.dp)
-                            .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(8.dp))
+                            .background(
+                                Color.Black.copy(alpha = 0.6f),
+                                shape = RoundedCornerShape(8.dp)
+                            )
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                             .align(Alignment.CenterHorizontally)
                     )

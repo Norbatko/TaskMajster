@@ -33,6 +33,7 @@ import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.player.PlayerInLeaderboard
 import androidx.activity.compose.rememberLauncherForActivityResult
+import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 import kotlin.random.Random
 
@@ -140,6 +141,7 @@ fun FinalScoreBoard(
             key = { it.id }
         ) { player ->
             PlayerInLeaderboard(player)
+            CustomHorizontalDivider()
         }
     }
 }

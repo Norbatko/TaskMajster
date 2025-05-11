@@ -42,6 +42,7 @@ fun PlayerWithScoreSetter(
             )
             Text(
                 text = "Total: " + player.totalPoints.toString(),
+                style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

@@ -3,6 +3,8 @@ package com.muni.taskmajster.view.ui.game.playing_task_page
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,8 +41,10 @@ import kotlin.random.Random
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.muni.taskmajster.view.ui.components.common.CustomContainer
 import kotlinx.coroutines.delay
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
+import com.muni.taskmajster.view.ui.theme.customBorder
 
 val bottomSheetPeekHeight = 128.dp
 
@@ -166,10 +170,12 @@ fun PlayingTaskContent(
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = bottomSheetPeekHeight)
         ) {
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            CustomContainer {
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 

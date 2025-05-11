@@ -106,8 +106,6 @@ fun GameplanDetail(
                 )
             }
 
-            HorizontalDivider(thickness = 1.dp, color = Color.Black)
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
