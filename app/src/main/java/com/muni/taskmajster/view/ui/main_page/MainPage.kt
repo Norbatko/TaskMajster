@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.view.ui.components.button.MenuButton
 import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.view.ui.components.common.TopBar
-import com.muni.taskmajster.view.ui.theme.util.customBorder
+import com.muni.taskmajster.view.ui.components.common.customBorder
 
 @Composable
 fun MainPage (
