@@ -16,21 +16,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Task
 
 @Composable
 fun TaskItem(
     task: Task,
     onTaskClicked: (Task) -> Unit = {},
-
+    // for displaying task item in list for adding to gameplan
     addToGameplan: Boolean = false,
-    onAddToGameplan: () -> Unit = {},
+    onAddToGameplanClicked: () -> Unit = {},
+    // for displaying task item as part of gameplan (option to remove)
+    inGameplanInfo: Boolean = false,
+    onRemoveFromGameplanClicked: () -> Unit = {}
 ) {
+    // if item is in add to gameplan list its not clickable (it would be too disruptive)
     val clickableModifier = if (!addToGameplan || onTaskClicked == {}) {
         Modifier.clickable { onTaskClicked(task) }
     } else Modifier
@@ -75,11 +81,19 @@ fun TaskItem(
                 }
             }
             if (addToGameplan) {
-                IconButton(onClick = { onAddToGameplan() }
+                IconButton(onClick = { onAddToGameplanClicked() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.AddCircle,
                         contentDescription = "Add to gameplan"
+                    )
+                }
+            } else if (inGameplanInfo) {
+                IconButton(onClick = { onRemoveFromGameplanClicked() }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.remove_circle),
+                        contentDescription = "Remove from gameplan"
                     )
                 }
             }
@@ -102,6 +116,7 @@ fun TaskItemPreview() {
     TaskItem(
         task = Task("1", "task1", 15, "task description", emptyList()),
         onTaskClicked = {},
-        addToGameplan = true
+        //addToGameplan = true,
+        inGameplanInfo = true
     )
 }

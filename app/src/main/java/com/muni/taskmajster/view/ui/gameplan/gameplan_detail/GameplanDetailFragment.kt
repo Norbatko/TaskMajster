@@ -86,7 +86,16 @@ class GameplanDetailFragment: Fragment() {
                                 findNavController().navigate(
                                     GameplanDetailFragmentDirections.actionGameplanDetailFragmentToListOfTasksFragment(gameplan)
                                 )
+                            },
+                            onRemoveFromGameplanClicked = { taskToRemove ->
+                                val updatedTaskIds = gameplan.listOfTaskIds.toMutableList().apply {
+                                    remove(taskToRemove.id)
+                                }
+                                val updatedGameplan = gameplan.copy(listOfTaskIds = updatedTaskIds)
+                                gameplanViewModel.updateGameplan(updatedGameplan)
+                                gameplanDetailViewModel.loadTasksByIds(updatedTaskIds)
                             }
+
                         )
                     }
                 }

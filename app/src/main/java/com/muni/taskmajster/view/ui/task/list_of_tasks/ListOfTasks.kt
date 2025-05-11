@@ -50,7 +50,7 @@ fun ListOfTasks(
                         TaskItem(
                             task = task,
                             addToGameplan = !it, // only if gameplan doesn't already have the task
-                            onAddToGameplan = { onAddTaskToGameplanClicked(gameplan, task) }
+                            onAddToGameplanClicked = { onAddTaskToGameplanClicked(gameplan, task) }
                         )
                     }
                 } else {
