@@ -26,6 +26,7 @@ import com.muni.taskmajster.model.data.Player
 import com.muni.taskmajster.view.ui.components.common.colorpicker.Colorpicker
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.player.EditablePlayer
 import com.muni.taskmajster.view.util.PlayerColorProvider
@@ -63,28 +64,29 @@ fun AddPlayersPage(
             }
         }
     ) { innerPadding ->
-        AddPlayersPageContent(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            players = players,
-            onPlayerNameChanged = { index, newName ->
-                val player = players[index]
-                players[index] = player.copy(name = newName)
-            },
-            onPlayerAvatarColorChanged = { index, newColor ->
-                val player = players[index]
-                players[index] = player.copy(colour = newColor)
-            },
-            onPlayerRemoved = { index ->
-                if (players.size > 1) {
-                    players.removeAt(index)
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
+        ) {
+            AddPlayersPageContent(
+                players = players,
+                onPlayerNameChanged = { index, newName ->
+                    val player = players[index]
+                    players[index] = player.copy(name = newName)
+                },
+                onPlayerAvatarColorChanged = { index, newColor ->
+                    val player = players[index]
+                    players[index] = player.copy(colour = newColor)
+                },
+                onPlayerRemoved = { index ->
+                    if (players.size > 1) {
+                        players.removeAt(index)
+                    }
+                },
+                onAddPlayer = {
+                    players.add(Player.createNew())
                 }
-            },
-            onAddPlayer = {
-                players.add(Player.createNew())
-            }
-        )
+            )
+        }
     }
 }
 

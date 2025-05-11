@@ -1,21 +1,18 @@
 package com.muni.taskmajster.view.ui.task.list_of_tasks
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.model.data.Task
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.list_item.TaskItem
-import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 
 @Composable
 fun ListOfTasks(
@@ -40,22 +37,22 @@ fun ListOfTasks(
             )
         },
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues = customPageContentPaddingValues(innerPadding))
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
         ) {
-            items(items = listOfTasks, key = { it.id }) { task ->
-                if (addTaskToGameplan) {
-                    gameplan?.listOfTaskIds?.contains(task.id)?.let {
-                        TaskItem(
-                            task = task,
-                            addToGameplan = !it, // only if gameplan doesn't already have the task
-                            onAddToGameplanClicked = { onAddTaskToGameplanClicked(gameplan, task) }
-                        )
+            LazyColumn {
+                items(items = listOfTasks, key = { it.id }) { task ->
+                    if (addTaskToGameplan) {
+                        gameplan?.listOfTaskIds?.contains(task.id)?.let {
+                            TaskItem(
+                                task = task,
+                                addToGameplan = !it, // only if gameplan doesn't already have the task
+                                onAddToGameplanClicked = { onAddTaskToGameplanClicked(gameplan, task) }
+                            )
+                        }
+                    } else {
+                        TaskItem(task = task, onTaskClicked = onTaskClicked)
                     }
-                } else {
-                    TaskItem(task = task, onTaskClicked = onTaskClicked)
                 }
             }
         }

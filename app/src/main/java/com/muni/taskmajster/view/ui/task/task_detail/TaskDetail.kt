@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,10 +47,10 @@ import com.muni.taskmajster.util.GalleryRetrieveUtil
 import com.muni.taskmajster.view.ui.components.button.ButtonIcon
 import com.muni.taskmajster.view.ui.components.button.LargeButton
 import com.muni.taskmajster.view.ui.components.common.CustomContainer
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.common.TopBarButton
 import com.muni.taskmajster.view.ui.components.dialog.CustomAlertDialog
-import com.muni.taskmajster.view.ui.theme.util.customPageContentPaddingValues
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -97,71 +96,76 @@ fun TaskDetail(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues = customPageContentPaddingValues(innerPadding))
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LargeButton(
-                    text = "Play Now",
-                    icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
-                    onClicked = { onPlayClicked(
-                        Game(
-                            id = System.currentTimeMillis(),
-                            currentTask = 0,
-                            gameplan = Gameplan(
-                                id = System.currentTimeMillis().toString() + 1,
-                                name = "Task: " + task.name,
-                                listOfTaskIds = List(1){ "1" },
-                            ),
-                            listOfPlayers = emptyList(),
-                        )
-                    )}
-                )
-
-                Spacer(modifier = Modifier.size(16.dp))
-
-                LargeButton(
-                    text = "Add to plan",
-                    icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
-                    onClicked = { onAddToGameplanClicked() }
-                )
-            }
-
-            CustomContainer {
-                Text(
-                    text = task.description,
-                    Modifier.padding(
-                        horizontal = 20.dp,
-                        vertical = 10.dp
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    LargeButton(
+                        text = "Play Now",
+                        icon = ButtonIcon.Vector(Icons.Outlined.PlayArrow),
+                        onClicked = {
+                            onPlayClicked(
+                                Game(
+                                    id = System.currentTimeMillis(),
+                                    currentTask = 0,
+                                    gameplan = Gameplan(
+                                        id = System.currentTimeMillis().toString() + 1,
+                                        name = "Task: " + task.name,
+                                        listOfTaskIds = List(1) { "1" },
+                                    ),
+                                    listOfPlayers = emptyList(),
+                                )
+                            )
+                        }
                     )
-                )
-            }
 
-            Spacer(modifier = Modifier.size(32.dp))
+                    Spacer(modifier = Modifier.size(16.dp))
 
-            CustomContainer {
+                    LargeButton(
+                        text = "Add to plan",
+                        icon = ButtonIcon.Vector(Icons.AutoMirrored.Default.List),
+                        onClicked = { onAddToGameplanClicked() }
+                    )
+                }
+
+                CustomContainer {
+                    Text(
+                        text = task.description,
+                        Modifier.padding(
+                            horizontal = 20.dp,
+                            vertical = 10.dp
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(32.dp))
+
+                CustomContainer {
+                    Text(
+                        text = "Time to complete: ${task.time} seconds",
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+
                 Text(
-                    text = "Time to complete: ${task.time} seconds",
-                    modifier = Modifier.padding(10.dp)
+                    text = "Photos from previous games",
+                    fontSize = 25.sp,
+                    modifier = Modifier.padding(top = 20.dp)
                 )
+
+                PhotoGrid(task.imagePaths)
             }
-
-            Text(
-                text = "Photos from previous games",
-                fontSize = 25.sp,
-                modifier = Modifier.padding(top = 20.dp))
-
-            PhotoGrid(task.imagePaths)
         }
     }
 }

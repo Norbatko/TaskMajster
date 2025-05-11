@@ -15,7 +15,6 @@ import com.muni.taskmajster.view.ui.theme.util.customBorder
 
 @Composable
 fun CustomContainer(
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(12.dp),
     border: BorderStroke = customBorder(),
     content: @Composable () -> Unit

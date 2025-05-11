@@ -4,7 +4,6 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,6 +33,7 @@ import com.muni.taskmajster.view.ui.components.common.TopBar
 import com.muni.taskmajster.view.ui.components.player.PlayerInLeaderboard
 import androidx.activity.compose.rememberLauncherForActivityResult
 import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
+import com.muni.taskmajster.view.ui.components.common.CustomPageContentWrapper
 import com.muni.taskmajster.viewModel.EndOfTaskPageViewModel
 import kotlin.random.Random
 
@@ -56,7 +56,18 @@ fun EndOfTaskPage(
             )
         },
     ) { innerPadding ->
-        EndOfTaskPageContent(game, viewModel, listOfGameplanTasks, lastTask, innerPadding, onFinalizeClicked, onNextTaskClicked)
+        CustomPageContentWrapper(
+            innerPadding = innerPadding
+        ) {
+            EndOfTaskPageContent(
+                game,
+                viewModel,
+                listOfGameplanTasks,
+                lastTask,
+                onFinalizeClicked,
+                onNextTaskClicked
+            )
+        }
     }
 }
 
@@ -66,7 +77,6 @@ fun EndOfTaskPageContent(
     viewModel: EndOfTaskPageViewModel,
     listOfGameplanTasks: List<Task>,
     lastTask: Boolean,
-    padding: PaddingValues,
     onFinalizeClicked: () -> Unit,
     onNextTaskClicked: (Game) -> Unit
 ) {
@@ -80,11 +90,7 @@ fun EndOfTaskPageContent(
             Toast.makeText(context, "Camera cancelled", Toast.LENGTH_SHORT).show()
         }
     }
-    Column(
-        modifier = Modifier
-            .padding(padding)
-            .fillMaxWidth()
-    ) {
+    Column {
         FinalScoreBoard(
             listOfPlayers = game.listOfPlayers,
             modifier = Modifier
