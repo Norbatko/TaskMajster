@@ -122,7 +122,7 @@ fun TaskDetail(
                                     gameplan = Gameplan(
                                         id = System.currentTimeMillis().toString() + 1,
                                         name = "Task: " + task.name,
-                                        listOfTaskIds = List(1) { "1" },
+                                        listOfTaskIds = List(1) { task.id },
                                     ),
                                     listOfPlayers = emptyList(),
                                 )
