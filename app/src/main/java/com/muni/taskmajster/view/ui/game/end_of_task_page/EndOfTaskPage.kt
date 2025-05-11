@@ -151,7 +151,6 @@ fun FinalScoreBoard(
     }
 }
 
-
 @Preview
 @Composable
 fun EndOfTaskPagePreview() {

@@ -8,5 +8,5 @@ data class Game(
     val id: Long,
     var currentTask: Int,
     val listOfPlayers: List<Player>,
-    val gameplan: Gameplan // play random gets list of all tasks randomized
+    val gameplan: Gameplan
 ): Parcelable
