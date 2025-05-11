@@ -1,7 +1,7 @@
 package com.muni.taskmajster.view.ui.components.player
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.muni.taskmajster.model.data.Player
+import com.muni.taskmajster.view.util.PlayerColorProvider
 
 @Composable
 fun PlayerInLeaderboard(
@@ -22,18 +24,36 @@ fun PlayerInLeaderboard(
         verticalAlignment = Alignment.CenterVertically
     ) {
         PlayerAvatar(player.colour)
-        Text(
-            text = player.name,
-            modifier = Modifier
-                .padding(start = 6.dp)
-                .widthIn(max = 150.dp)
-                .weight(1f),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
 
-        Spacer(modifier = Modifier.weight(0.5f))
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 6.dp, end = 10.dp)
+                .widthIn(max = 150.dp)
+        ) {
+
+            Text(
+                text = player.name,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
 
         Text(player.totalPoints.toString(), style = MaterialTheme.typography.titleLarge)
     }
+}
+
+
+@Preview
+@Composable
+fun PlayerInLeaderboardPreview() {
+    PlayerInLeaderboard(
+        player  = Player(
+            id = System.currentTimeMillis(),
+            name = "Player XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            colour = PlayerColorProvider.nextColor(),
+            totalPoints = 0,
+            taskPoints = 0
+        )
+    )
 }
