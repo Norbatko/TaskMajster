@@ -32,9 +32,6 @@ fun MenuButton(
         modifier = Modifier
             .fillMaxWidth(0.8f)
             .height(100.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Black
-        ),
         shape = MaterialTheme.shapes.medium
     ) {
         Row(
