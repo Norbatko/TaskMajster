@@ -38,11 +38,15 @@ import com.muni.taskmajster.view.ui.components.list_item.TaskItem
 fun GameplanDetail(
     gameplan: Gameplan,
     listOfGameplanTasks: List<Task>,
+
     onArrowBackClicked: () -> Unit,
     onTaskClicked: (Task) -> Unit,
     onPlayClicked: (Game) -> Unit,
     onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteClicked: () -> Unit,
+    onAddNewTaskClicked: () -> Unit,
+
+    onRemoveFromGameplanClicked: (Task) -> Unit
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -116,7 +120,9 @@ fun GameplanDetail(
                     itemsIndexed(listOfGameplanTasks) { _, task ->
                         TaskItem(
                             onTaskClicked = { onTaskClicked(task) },
-                            task = task
+                            task = task,
+                            inGameplanInfo = true,
+                            onRemoveFromGameplanClicked = { onRemoveFromGameplanClicked(task) }
                         )
                     }
                 }
@@ -132,7 +138,7 @@ fun GameplanDetail(
                     LargeButton(
                         "Add new task",
                         ButtonIcon.Vector(Icons.Outlined.AddCircle),
-                        onClicked = {},
+                        onClicked = { onAddNewTaskClicked() },
                         true,
                     )
                 }
@@ -164,6 +170,8 @@ fun GameplanDetailPreview() {
         onTaskClicked = {},
         onPlayClicked = {},
         onEditClicked = {},
-        onDeleteClicked = {}
+        onDeleteClicked = {},
+        onAddNewTaskClicked = {},
+        onRemoveFromGameplanClicked = {}
     )
 }

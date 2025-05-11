@@ -29,6 +29,11 @@
         <action
             android:id="@+id/action_listOfTasksFragment_to_taskFormFragment"
             app:destination="@id/taskFormFragment" />
+        <argument
+            android:name="gameplan"
+            app:argType="com.muni.taskmajster.model.data.Gameplan"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment
@@ -79,6 +84,9 @@
         <action
             android:id="@+id/action_gameplanDetailFragment_to_gameplanFormFragment"
             app:destination="@id/gameplanFormFragment" />
+        <action
+            android:id="@+id/action_gameplanDetailFragment_to_listOfTasksFragment"
+            app:destination="@id/listOfTasksFragment" />
         <argument
             android:name="gameplan"
             app:argType="com.muni.taskmajster.model.data.Gameplan" />

@@ -16,29 +16,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Task
 
 @Composable
 fun TaskItem(
     task: Task,
-    onTaskClicked: (Task) -> Unit,
-    showAddButton: Boolean = false,
-    onAddToListClicked: () -> Unit = {},
+    onTaskClicked: (Task) -> Unit = {},
+    // for displaying task item in list for adding to gameplan
+    addToGameplan: Boolean = false,
+    onAddToGameplanClicked: () -> Unit = {},
+    // for displaying task item as part of gameplan (option to remove)
+    inGameplanInfo: Boolean = false,
+    onRemoveFromGameplanClicked: () -> Unit = {}
 ) {
+    // if item is in add to gameplan list its not clickable (it would be too disruptive)
+    val clickableModifier = if (!addToGameplan || onTaskClicked == {}) {
+        Modifier.clickable { onTaskClicked(task) }
+    } else Modifier
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{ onTaskClicked(task) }
+            .clickable { clickableModifier }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 16.dp),
+                .padding(vertical = 8.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
@@ -69,11 +80,20 @@ fun TaskItem(
                     )
                 }
             }
-            if (showAddButton) {
-                IconButton(onClick = onAddToListClicked) {
+            if (addToGameplan) {
+                IconButton(onClick = { onAddToGameplanClicked() }
+                ) {
                     Icon(
                         imageVector = Icons.Default.AddCircle,
-                        contentDescription = "Add task to list"
+                        contentDescription = "Add to gameplan"
+                    )
+                }
+            } else if (inGameplanInfo) {
+                IconButton(onClick = { onRemoveFromGameplanClicked() }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.remove_circle),
+                        contentDescription = "Remove from gameplan"
                     )
                 }
             }
@@ -82,7 +102,7 @@ fun TaskItem(
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(top = 4.dp, start = 4.dp, end = 4.dp),
             thickness = 1.dp,
             color = Color.DarkGray
         )
@@ -96,5 +116,7 @@ fun TaskItemPreview() {
     TaskItem(
         task = Task("1", "task1", 15, "task description", emptyList()),
         onTaskClicked = {},
+        //addToGameplan = true,
+        inGameplanInfo = true
     )
 }
