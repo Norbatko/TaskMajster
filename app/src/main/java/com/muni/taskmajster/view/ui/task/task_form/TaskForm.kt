@@ -136,7 +136,7 @@ fun TaskForm(
                                     name = name,
                                     description = description,
                                     time = time.toInt(),
-                                    imagePaths = emptyList()
+                                    imagePaths = initialTask?.imagePaths ?: emptyList()
                                 )
                                 onSaveClicked(task)
                             }
