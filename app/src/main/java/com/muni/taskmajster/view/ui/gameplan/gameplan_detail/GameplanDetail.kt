@@ -85,7 +85,7 @@ fun GameplanDetail(
             innerPadding = innerPadding
         ) {
             Column {
-                Box (
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 20.dp),
@@ -107,38 +107,39 @@ fun GameplanDetail(
                     )
                 }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
                 ) {
-                    itemsIndexed(listOfGameplanTasks) { _, task ->
-                        TaskItem(
-                            onTaskClicked = { onTaskClicked(task) },
-                            task = task,
-                            inGameplanInfo = true,
-                            onRemoveFromGameplanClicked = { onRemoveFromGameplanClicked(task) }
-                        )
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        itemsIndexed(listOfGameplanTasks) { _, task ->
+                            TaskItem(
+                                onTaskClicked = { onTaskClicked(task) },
+                                task = task,
+                                inGameplanInfo = true,
+                                onRemoveFromGameplanClicked = { onRemoveFromGameplanClicked(task) }
+                            )
+                        }
                     }
                 }
-            }
 
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    LargeButton(
-                        "Add new task",
-                        ButtonIcon.Vector(Icons.Outlined.AddCircle),
-                        onClicked = { onAddNewTaskClicked() },
-                        true,
-                    )
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        LargeButton(
+                            "Add new task",
+                            ButtonIcon.Vector(Icons.Outlined.AddCircle),
+                            onClicked = { onAddNewTaskClicked() },
+                            true,
+                        )
+                    }
                 }
             }
         }

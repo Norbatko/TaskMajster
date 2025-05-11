@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.model.data.Gameplan
-import com.muni.taskmajster.view.ui.components.common.CustomContainer
 import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 
 @Composable
@@ -55,8 +54,7 @@ fun GameplanItem(
             ) {
                 Text(
                     text = "Gameplan: " + gameplan.name,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 24.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -67,13 +65,11 @@ fun GameplanItem(
                     Icon(
                         imageVector = Icons.Default.Menu,
                         contentDescription = null,
-                        tint = Color.Gray,
                         modifier = Modifier.padding(end = 4.dp)
                     )
                     Text(
                         text = gameplan.listOfTaskIds.size.toString(),
-                        color = Color.Gray,
-                        fontSize = 14.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }

@@ -32,8 +32,15 @@ fun ListOfTasks(
                 onArrowBackClicked = onArrowBackClicked,
                 sideButtons= if (!addTaskToGameplan) {
                     listOf(
-                    TopBarButton(onClicked = onAddTaskClicked, icon = Icons.Default.Add, contentDescription = "Add"),
-                )} else { emptyList() },
+                        TopBarButton(
+                            onClicked = onAddTaskClicked,
+                            icon = Icons.Default.Add,
+                            contentDescription = "Add"
+                        ),
+                    )
+                } else {
+                    emptyList()
+                },
             )
         },
     ) { innerPadding ->
@@ -47,7 +54,12 @@ fun ListOfTasks(
                             TaskItem(
                                 task = task,
                                 addToGameplan = !it, // only if gameplan doesn't already have the task
-                                onAddToGameplanClicked = { onAddTaskToGameplanClicked(gameplan, task) }
+                                onAddToGameplanClicked = {
+                                    onAddTaskToGameplanClicked(
+                                        gameplan,
+                                        task
+                                    )
+                                }
                             )
                         }
                     } else {

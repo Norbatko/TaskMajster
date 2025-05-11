@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -16,11 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.R
 import com.muni.taskmajster.model.data.Task
 import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
@@ -57,8 +54,7 @@ fun TaskItem(
             ) {
                 Text(
                     text = "Task: " + task.name,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 24.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -67,15 +63,13 @@ fun TaskItem(
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Lock, // TODO: Change to Clock
+                        painter = painterResource(R.drawable.id_clock_outline),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(end = 4.dp)
                     )
                     Text(
                         text = "${task.time}s",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontSize = 14.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
