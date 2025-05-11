@@ -15,33 +15,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.muni.taskmajster.model.data.Gameplan
 import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 
 @Composable
 fun GameplanItem(
     gameplan: Gameplan,
-    onGameplanClicked: (Gameplan) -> Unit = {},
-
+    onGameplanClicked: ((Gameplan) -> Unit)? = null,
+    // for displaying gameplan item in list for adding task to gameplan
     addToGameplan: Boolean = false,
     onAddToGameplan: () -> Unit = {},
 ) {
-    val clickableModifier = if (!addToGameplan || onGameplanClicked == {}) {
-        Modifier.clickable { onGameplanClicked(gameplan) }
-    } else Modifier
-
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .then(clickableModifier)
-
+            .let { base ->
+                // if item is in add task to gameplan list its not clickable (it would be too disruptive)
+                if (!addToGameplan || onGameplanClicked != null) {
+                    base.clickable { onGameplanClicked?.invoke(gameplan) }
+                } else base
+            }
     ) {
         Row(
             modifier = Modifier

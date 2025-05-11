@@ -25,7 +25,7 @@ import com.muni.taskmajster.view.ui.components.common.CustomHorizontalDivider
 @Composable
 fun TaskItem(
     task: Task,
-    onTaskClicked: (Task) -> Unit = {},
+    onTaskClicked: ((Task) -> Unit)? = null,
     // for displaying task item in list for adding to gameplan
     addToGameplan: Boolean = false,
     onAddToGameplanClicked: () -> Unit = {},
@@ -33,15 +33,15 @@ fun TaskItem(
     inGameplanInfo: Boolean = false,
     onRemoveFromGameplanClicked: () -> Unit = {}
 ) {
-    // if item is in add to gameplan list its not clickable (it would be too disruptive)
-    val clickableModifier = if (!addToGameplan || onTaskClicked == {}) {
-        Modifier.clickable { onTaskClicked(task) }
-    } else Modifier
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { clickableModifier }
+            .let { base ->
+                // if item is in add task to gameplan list its not clickable (it would be too disruptive)
+                if (!addToGameplan || onTaskClicked != null) {
+                    base.clickable { onTaskClicked?.invoke(task) }
+                } else base
+            }
     ) {
         Row(
             modifier = Modifier
