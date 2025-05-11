@@ -1,9 +1,10 @@
 package com.muni.taskmajster.view.ui.components.player
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,25 +31,30 @@ fun PlayerWithScoreSetter(
         verticalAlignment = Alignment.CenterVertically
     ) {
         PlayerAvatar(player.colour)
-        Column (
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 6.dp, end = 10.dp)
+                .widthIn(max = 150.dp)
+        ) {
+            Column (
             modifier = Modifier
                 .padding(start = 6.dp),
-        ){
-            Text(
-                text = player.name,
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Text(
-                text = "Total: " + player.totalPoints.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+            ){
+                Text(
+                    text = player.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    text = "Total: " + player.totalPoints.toString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+            ) }
         }
-
-        Spacer(modifier = Modifier.weight(0.5f))
 
         IconButton(
             onClick = { onScoreChanged(-1) },
@@ -79,7 +85,13 @@ fun PlayerWithScoreSetter(
 @Composable
 fun PlayerWithScorePreview() {
     PlayerWithScoreSetter(
-        player = Player(1, "Player ABC", Random.nextInt(), 2, 5),
+        player = Player(
+            1,
+            "Player ABC",
+            Random.nextInt(),
+            2,
+            5
+        ),
         score = 10,
         onScoreChanged = {}
     )

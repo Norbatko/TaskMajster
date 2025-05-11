@@ -1,8 +1,8 @@
 package com.muni.taskmajster.view.ui.components.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,15 +60,19 @@ fun TopBar(
             }
         }
 
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            color = MaterialTheme.colorScheme.onTertiary
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
+        Box(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onTertiary,
+                modifier = Modifier.align(Alignment.CenterStart)
+            )
+        }
 
         Row {
             sideButtons.forEach { button ->
@@ -101,7 +105,7 @@ fun TopBarSideButton(
 @Composable
 fun TopBarPreview() {
     TopBar(
-        title  = "TopBar",
+        title  = "TopBarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
         onArrowBackClicked = {},
         sideButtons = listOf(
             TopBarButton(onClicked = { }, icon = Icons.Default.Edit, contentDescription = "Edit"),
